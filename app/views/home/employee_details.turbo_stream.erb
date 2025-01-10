@@ -1,0 +1,3 @@
+<%= turbo_stream.update "employee_data" do %>
+  <%= render partial: "all_employee_details", locals: { employees: @employees } %>
+<% end %>

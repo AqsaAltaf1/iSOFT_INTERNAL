@@ -1,0 +1,22 @@
+<%= form.label :employee %>
+<div class="dropdown">
+  <button class="dropdown-toggle employee-group-select" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    Select employee
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li>
+      <% checked_values = employee_group.employee || [] %>
+      <% available_values = User.all %>
+      <% available_values.each do |value| %>
+        <div class="row">
+          <div class="col-md-1 mb-1">
+            <%= form.check_box :employee, { multiple: true, class: "employee-group-checkbox" }, value, checked_values.include?(value) %>
+          </div>
+          <div class="col-md-2 mb-1">
+            <%= form.label value.full_name %>
+          </div>
+        </div>
+      <% end %>
+    </li>
+  </ul>
+</div>

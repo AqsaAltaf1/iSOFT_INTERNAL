@@ -1,0 +1,100 @@
+  <nav class="navbar navbar-expand sub__nav mt-4">
+    <div class="container">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navbar-status">
+          <li class="nav-item">
+            <a style="cursor: pointer;" class="px-5 nav-link text-danger status <%= params[:status].present? ? params[:status].downcase == "pending" ? 'timesheetactive' : '' : 'timesheetactive'%>" >Pending</a>
+          </li>
+          <li class="nav-item">
+            <a style="cursor: pointer;" class="px-5 nav-link text-danger status <%= params[:status].present? ? params[:status].downcase == "approved" ? 'timesheetactive' : '' : ''%>" >Approved</a>
+          </li>
+        </ul>
+        <ul class="text-dark mt-3">
+          <strong>Name:  </strong>
+          <%=@user.full_name%>
+          <%# <strong><%= params[:status].capitalize %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<div class="table-responsive">
+<table class="table admin--timesheet--table">
+<thead>
+  <tr class="">
+    <th>Project</th>
+    <th class="<%= active_day_class("Monday") %>">Monday</th>
+    <th class="<%= active_day_class("Tuesday") %>">Tuesday</th>
+    <th class="<%= active_day_class("Wednesday") %>">Wednesday</th>
+    <th class="<%= active_day_class("Thursday") %>">Thursday</th>
+    <th class="<%= active_day_class("Friday") %>">Friday</th>
+    <th class="<%= active_day_class("Saturday") %>">Saturday</th>
+    <th class="<%= active_day_class("Sunday") %>">Sunday</th>
+    <th>Weekly Total</th>
+  </tr>
+</thead>
+  <tbody>
+    <%= render "time_sheet_data" %>
+    </tbody>
+</table>
+</div>
+
+<div>
+  <%= render 'table' %>
+</div>
+<% unless params[:status] == 'approved' || !@time_sheet.present?%>
+<div class="d-flex">
+  <div>
+    <button onclick="myFunction()" id="show" class="btn btn-secondary">view timesheet details</button>
+  </div>
+  <div class="text-end ms-auto">
+    <%= link_to "Approve" , admins_data_path(start_week: params[:date], end_week: params[:date], user_id: params[:user_id], status_update: "approved",date: @time_sheet.date,status: 'approved'),
+      class: "btn btn-primary approve" %>
+    <%= link_to "Reject" , admins_data_path(start_week: params[:date], end_week: params[:date], user_id: params[:user_id], status_update: "rejected",date: @time_sheet.date),
+      class: "btn btn-danger ms-2 me-5 reject" %>
+    </div>
+</div>
+<%end%>
+<script type="text/javascript">
+  function myFunction () {
+    var x = document.getElementById("hide");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+      document.querySelector('#show').innerHTML = 'Hide timesheet details';
+    }
+    else {
+      x.style.display = "none";
+      document.querySelector('#show').innerHTML = 'view timesheet details';
+    }
+  }
+</script>
+
+<script>
+$('.status').on('click', function () {
+        var Status = $(this).html();
+        if( Status == "Approved"){
+           var st = 'approved'
+        }
+        else if (Status == "Pending"){
+           var st = 'pending'
+        }
+        else {
+            var st = "rejected"
+        }
+        $.ajax({
+            url: '/admins/data',
+            data: {status: st ,user_id: "<%= params[:user_id]%>",date: "<%= Date.today%>"},
+            dataType : 'script'
+        });
+    });
+</script>
+
+<script type="text/javascript">
+        function preventBack() {
+            window.history.forward(); 
+        }
+          
+        setTimeout("preventBack()", 0);
+          
+        window.onunload = function () { null };
+</script>

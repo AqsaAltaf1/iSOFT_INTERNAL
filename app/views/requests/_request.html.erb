@@ -1,0 +1,11 @@
+<%= render 'request_show', request: request%>
+<% if current_user.admin? || (current_user.is_hr && request.user != current_user) %>
+  <div class="d-flex flex-row" style="margin-top: 2%;">
+    <% if request.status == 'pending' %>
+      <%= link_to "Approve", request_path(request: request.id, request_status: "approved"), class: "btn btn-primary btn-block", data: { turbo_frame:"request_data", turbo_action: "advance", turbo_stream: true } %>
+      <%= link_to "Reject", request_path(request: request.id, request_status: "rejected"), style: "margin-left: 1%;",class: "btn btn-danger btn-block", data: { turbo_frame:"request_data", turbo_action: "advance", turbo_stream: true } %>
+    <% else %>
+      <button class="btn btn-danger btn-block" disabled><%= request.status.upcase_first %> by <%= get_name %></button>
+    <% end %>
+  </div>
+<% end %>

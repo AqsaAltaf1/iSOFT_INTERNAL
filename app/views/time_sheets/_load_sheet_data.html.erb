@@ -1,0 +1,96 @@
+
+<section id="datasec">
+  <%if current_user.user? && !current_user.is_hr()%>
+    <div class="row">
+      <div class="col-12">
+        <div class="timeSheetDays my-4">
+          <ul class="nav justify-content-start timsheetlist">
+            <li class="nav-item">
+              <a id="mon_selected" class= "px-3 py-2 <%= select_time_sheet == 1 ? 'timesheetactive' : ''%>">Monday</a>
+            </li>
+            <li class="nav-item">
+              <a id="tue_selected" class= "px-3 py-2 <%= select_time_sheet == 2 ? 'timesheetactive' : ''%>">Tuesday</a>
+            </li>
+            <li class="nav-item">
+              <a id="wed_selected" class= "px-3 py-2 <%= select_time_sheet == 3 ? 'timesheetactive' : ''%>">Wednesday</a>
+            </li>
+            <li class="nav-item">
+              <a id="thu_selected" class= "px-3 py-2 <%= select_time_sheet == 4 ? 'timesheetactive' : ''%>">Thursday</a>
+            </li>
+            <li class="nav-item">
+              <a id="fri_selected"class= "px-3 py-2 <%= select_time_sheet == 5 ? 'timesheetactive' : ''%>">Friday</a>
+            </li>
+            <li class="nav-item">
+              <a id="sat_selected" class= "px-3 py-2 <%= select_time_sheet == 6 ? 'timesheetactive' : ''%>">Saturday</a>
+            </li>
+            <li class="nav-item">
+              <a id="sun_selected" class= "px-3 py-2 <%= select_time_sheet == 0 ? 'timesheetactive' : ''%>">Sunday</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <%end%>
+    <div class="row">
+      <div class="col-12">
+      <div class="table-responsive timeSheetTable">
+        <% if @time_sheets[0] %>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Project Name</th>
+                <th>Description</th>
+                <th>Time: </th>
+                <th><%= current_user.user? && !current_user.is_hr() ? "Action" : "Owner"%> </th>
+              </tr>
+            </thead>
+            <tbody>
+                <% @time_sheets.each do |time_sheet| %>
+                  <%= render time_sheet, time_sheet: time_sheet%>
+                <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <section id="nodatasec">
+            <div class="text-center">
+              <%= image_tag("images/no-data.svg", alt: "No Data", class: 'no-data') %>
+              <p class="mb-0">You have no data yet</p>
+            </div>
+          </section>
+        <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+<script type = "text/javascript" >
+  $('#return-today').hide();
+  $( function() {
+    $('#mon_selected, #tue_selected, #wed_selected, #thu_selected, #fri_selected, #sat_selected, #sun_selected').click(function(){
+    $('#time_sheets').find('.timesheetactive').removeClass('timesheetactive');
+    user_id = '<%= params[:user_id] %>'
+    status = $('#navbar-status').find('.timesheetactive').html();
+    if (status == 'undefined') {
+      status = '<%=params[:status]%>'
+    }
+    day = this.innerHTML;
+    <% date = params[:get_date] %>
+    get_date = "<%= date %>"
+    send_ajax(day, status, get_date,user_id)
+    });
+    function send_ajax(data,status, get_date,user_id){
+      response = $.ajax({
+          url: '/time_sheets',
+          method: 'Get',
+          data: { data, status, get_date,user_id},
+      });
+    }
+  });
+
+  function myFunction(time_sheet, status) {
+    response = $.ajax({
+        url: '/time_sheets',
+        method: 'Get',
+        data: {time_sheet, status},
+    });
+  }
+</script>

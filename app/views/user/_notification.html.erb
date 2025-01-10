@@ -1,0 +1,17 @@
+<a href="<%=notification.to_notification.url%>" class="list-group-item px-1">
+  <div class="row g-0">
+    <div class="col-2">
+      <img src="../assets/icons/notiuser.svg" alt="" />
+    </div>
+    <div class="col-8">
+      <div class="text-dark <%= notification.unread? ? "mb-0 unread" : "mb-0 read"%>">
+        <%= notification.to_notification.message %>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="text-muted small mt-1">
+        <%= time_ago_in_words(notification.created_at.to_datetime) + ' ago'%>
+      </div>
+    </div>
+  </div>
+</a>

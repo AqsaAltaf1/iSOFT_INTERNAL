@@ -1,0 +1,32 @@
+<h5 class="text-center heading-text mt-2 mb-4">All Companies</h5>
+<div class="text-end">
+  <%= link_to(new_company_path, class: "btn addemployeebtn m-2", data: { turbo_frame: "remote_modal" }) do %>
+    +Add New Company
+  <% end %>
+</div>
+<div class="table-responsive announcment--table">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Company Name</th>
+        <th>Company subdomain</th>
+        <th>created_at</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @companies.each do |company|%>
+        <tr>
+          <td><%=company.name%></td>
+          <td class="d-inline-block text-truncate" style="min-width:100%;max-width: 650px;"><%=company.subdomain%></td>
+          <td><%= time_ago_in_words(company.created_at.to_datetime) %>
+          </td>
+          <td><%= link_to  "View", company_path(company), class:"btn addemployeebtn" %>
+            <%= link_to('Edit', edit_company_path(company), data: { turbo_frame: "remote_modal" }, class: 'btn addemployeebtn') %>
+            <%= link_to  "Destroy", company_path(company), method: :delete, data: {confirm: "Are you sure?"}, class: "btn addemployeebtn" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,25 @@
+<p style="color: green"><%= notice %></p>
+<%= link_to(new_employee_group_path, class: "btn attachmentuploadbtn", style: "float: right;", data: { turbo_frame: "remote_modal" }) do %>
+  +Add New
+<% end %>
+<h1>Employee groups</h1>
+
+<div class="table-responsive announcment--table" id="employee_groups">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @employee_groups.each do |employee_group| %>
+        <tr>
+          <%= render employee_group %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

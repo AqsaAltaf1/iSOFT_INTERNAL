@@ -1,0 +1,60 @@
+<div>
+    <%# <p class="show_evaluation_notices"><%= notice %>
+    <p>
+        <%= render "question", evaluation: @evaluation %>
+    </p>
+    <div id="leave-notes" class="ms-5">
+        <h5>Additional Notes</h5>
+        <%unless @evaluation_notes.nil? %>
+        <% @evaluation_notes.map do |note| %>
+            <%if note.user.user_type == current_user.user_type%>
+                <span>
+                    <strong>You:
+                    </strong>
+                    <%= note.content %></span><br/>
+                <%else%>
+                <span>
+                    <strong><%= note.user.user_type %>:
+                    </strong>
+                    <%= note.content %></span><br/>
+                <%end%>
+                <%end %>
+                <%end%>
+            </div>
+            <div class="container-fluid">
+                <div id="notes" class="ms-5 w-80">
+                    <%= render(partial: 'notes/form', locals: { note_created_on: @evaluation, type: "Evaluation"})%>
+                </div>
+                <div class="row text-end mb-4">
+                    <div id="notes" class="col-md-12 ms-5">
+                        <div class="text-center mt-3" id="note-container"></div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="d-inline-flex">
+                            <div class="text-center px-2">
+                                <button id="add__notes" class="btn btn-primary">
+                                    Add Note
+                                </button>
+                            </div>
+                            <%= link_to "Back", evaluations_path,class:"btn btn-outline-primary" %>
+                            <%unless @evaluation.status  == "active" || @evaluation.status  == "approved" || @evaluation.status  == "rejected" %>
+                            <%= link_to "Edit", edit_evaluation_path(@evaluation),class:"btn btn-outline-success mx-3" %>
+                            <%end%>
+                            <%= button_to "Delete", @evaluation, method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Do you want to delete Question?' },class:"btn btn-outline-danger ms-2" %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $("#note-form-container").hide();
+            $("#add__notes").click(function () {
+                $("#note-form-container").show();
+                $("#add__notes").hide();
+            });
+            $(document).on('click', '#cancel--notes', function () {
+                $("#note-form-container").hide();
+                $("#add__notes").show();
+            });
+        </script>

@@ -1,0 +1,22 @@
+<div class="mt-5">
+  <section class="mb-5 pb-4">
+    <div class="row ms-2 ms-lg-5 ps-3">
+      <div class="col-md-6 col-lg-6 col-xl-4 mb-2">
+        <div class="card fullleavecard">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4">
+                <p>Name:</p>
+                <p>Document:</p>
+              </div>
+              <div class="col-7">
+                <div><%=help_document.name%></div>
+                <%=  help_document.file.image? ? help_image_helper(help_document.file) : help_documents_helper(help_document.file) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+

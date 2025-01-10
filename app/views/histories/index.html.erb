@@ -1,0 +1,9 @@
+<h1>Histories</h1>
+
+<div id="histories">
+  <% @histories.each do |history| %>
+    <%= render history %>
+  <% end %>
+</div>
+
+<%= link_to "New history", new_history_path %>

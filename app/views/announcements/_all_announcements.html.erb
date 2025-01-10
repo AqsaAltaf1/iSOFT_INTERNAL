@@ -1,0 +1,40 @@
+<h5 class="text-center heading-text mt-2 mb-4">All Announcments</h5>
+  <div class="col-md-12 text-md-end mb-3">
+    <%= link_to new_announcement_path, class: "btn attachmentuploadbtn text-end" do %>
+      create
+    <% end %>
+  </div>
+  <div class="table-responsive announcment--table">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Announcment</th>
+          <th>Time</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      <%announcements.each do |announcement|%>
+        <tr>
+            <td><%=announcement.title.capitalize%></td>
+            <td  class="d-inline-block text-truncate" style="min-width:100%;max-width: 650px;"><%=announcement.body%></td>
+            <td><%= "#{time_ago_in_words(announcement.created_at.to_datetime)}  ago "%>
+            </td>
+            <td class="text-end d-flex justify-content-evenly">
+              <%= link_to announcement_path(announcement) do %>
+                <%= image_tag("icons/view.svg", alt: "View") %>
+              <% end %>
+
+              <%= link_to edit_announcement_path(announcement) do %>
+                <%= image_tag("icons/edit.svg", alt: "Edit") %>
+              <% end %>
+              <%= link_to announcement_path(announcement), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete do %>
+                <%= image_tag("icons/delete.svg", alt: "Delete") %>
+              <% end %>
+
+            </td>
+        </tr>
+        <% end %>
+    </tbody>
+</table></div>

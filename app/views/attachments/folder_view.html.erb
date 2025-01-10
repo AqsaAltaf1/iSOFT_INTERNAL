@@ -1,0 +1,43 @@
+<div class="container-fluid">
+  <div class="ms-5 ps-3">
+  <%= @error %>
+    <section>
+      <h6 class="openfolderh6"><%= @attachment_name %>
+        <font size=3"> (<%= link_to "Download" , download_zip_helper(@zip), style: "decoration: none;"%>)</font>
+      </h6>
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive openfoldertable">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Owner</th>
+                  <th>File Type</th>
+                  <th>File Size</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @file_name.each do |filename| %>
+                  <tr>
+                    <td>
+                      <img src="../assets/icons/smallimage.svg" alt="" />
+                      <span><%= File.basename(filename.name, File.extname(filename.name)) %></span>
+                    </td>
+                    <td><%= @owner_name %></td>
+                    <% if File.extname(filename.name).empty? %>
+                      <td><font size = 2><i>plain text document (text/plain)</i></font></td>
+                    <% else %>
+                      <td><%= "#{File.extname(filename.name).upcase}".tr('(.)', '') %></td>
+                    <% end %>
+                    <td><%= number_to_human_size(filename.size) %></td>
+                  </tr>
+                <%end%>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

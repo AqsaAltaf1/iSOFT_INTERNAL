@@ -1,0 +1,24 @@
+<section class="mb-5 pb-4">
+  <% @requests.reverse%>
+  <center><%= link_to @user.full_name, user_path(@user), class: "btn attachmentuploadbtn" if @user.present?%></center>
+  <% if @requests.present? %>
+    <% @types_requests.each do |type| %>
+      <% @t=@requests.selected_type(type[0]) %>
+      <% @t.each do |request| %>
+        <div class="ps-3 d-flex">
+          <h5><%= request.request_type.capitalize %> Requests</h5> 
+        </div>    
+        <%= render "request_show", request: request%>
+      <% end %> 
+    <%end%> 
+  <% else %>
+    <div class="nodata text-center">
+      <p class="mb-0">You have no data </p>
+    </div>  
+  <% end %>
+  <div class="col ms-2 ms-lg-5 ps-3">
+    <%if current_user.is_hr() || current_user.admin? %>
+      <%= link_to "Back", admins_requests_section_path, class: "btn btn-danger btn-block" %>
+    <% end %>
+  </div>
+</section>

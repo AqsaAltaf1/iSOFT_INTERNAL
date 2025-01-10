@@ -1,0 +1,143 @@
+<%if current_user&.is_hr()%>
+  <% if params[:status] == "Approved"%>
+    <div align="right" class="active-evaluation-btn">
+      <%# <%= link_to "Active evaluation", active_status_evaluations_path, class: "btn btn-outline-success" %>
+      <button class= "btn btn-outline-success" onclick='active_evaluation()' > Active Evaluation </button><br>
+    </div>
+  <%end%>
+<%end%>
+<%if current_user&.admin? %>
+  <%unless params[:status] == "Approved"%>
+    <div class="approve_button_placement">
+      <button class= "btn btn-danger btn-block" onclick='approved()' > Approve </button><br>
+    </div>
+  <%end%>
+<%end%>
+<div class="container p-3">
+  <div class="d-flex justify-content-between">
+    <div>
+      <h1 class="mb-3">Evaluations Operations</h1>
+     </div>
+    <div>
+     <%if current_user&.is_hr() %>
+        <%unless params[:status] == "Approved"%>
+           
+             <button id="eval" class="btn btn-outline-success" >New evaluation</button>
+        <%end%>
+      <%end%>
+    </div>
+  </div>
+ <%if current_user.is_hr()%>
+    <div class="mb-3 hidden" id="evaluationRes">
+          <%= render "form" %>
+    </div>
+<%end%>
+  <div class="table-responsive">
+ 
+  <div class="table-responsive" id="checkboxes-evals">
+    <table class="table table-striped leave__table">
+    <thead>
+      <tr>
+        <th scope="col">
+          <label for="checkall" class="form-check-label me-2">All</label>
+          <input type="checkbox" class="form-check-input " id="checkall" onclick='toggle()' >
+        </th>
+        <th scope="col">Questions</th>
+        <th scope="col">Options</th>
+        <th scope="col">Actions</th>
+        <%# <th scope="col"></th> %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @questions&.each do|evaluation| %>
+      <tr>
+        <td>
+          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="checkbox" class="form-check-input me-2 select__all" name="question" id=<%= evaluation.id %> >
+        </td>
+        <td><%= render evaluation %></td>
+        <td><%= render 'option', question: evaluation %></td>
+        <td>
+        <%= link_to(evaluation) do %>
+          <i class="fa-solid fa-eye" title="Show"></i> 
+        <% end %>
+        <%= link_to((edit_evaluation_path(evaluation))) do %>
+          <i class="fa-solid fa-pen" title="Edit"></i>
+        <% end %>
+        <%= link_to( evaluation, data: { turbo_method: :delete, turbo_confirm: 'Do you want to delete Question?' }) do %>
+          <i class="fa-solid fa-trash-can"  title="Delete"></i>
+        <% end %>
+        </td>
+      </tr>
+      <%end%>
+    </tbody>
+    
+    </table>
+  </div>
+</div></div>
+<script type = "text/javascript" >
+function status_updation(evaluation, evaluation_status) {
+  response = $.ajax({
+      url: '/evaluations',
+      method: 'Get',
+      data: {evaluation, evaluation_status},
+  });
+}
+
+  $("#eval").click(function() {
+     $(this).attr("disabled", true)
+    $("#evaluationRes").removeClass('hidden');
+  });
+
+  $( document ).ready(function() {
+    if (<%= @question&.errors&.any? %> == true)
+    {
+      $("#evaluationRes").removeClass('hidden');
+    }
+  });
+
+function toggle(){ 
+    $('#checkall').click(function() {
+    var checked = $(this).prop('checked');
+    $('#checkboxes-evals').find('.select__all').prop('checked', checked);
+  });
+}
+
+function approved(){
+  var ele=document.getElementsByName('question');
+  var arr = [];
+  console.log(ele)
+  for(var i=0; i<ele.length; i++){
+    if(ele[i].checked==true){
+      arr.push(ele[i].id);
+    }
+  }
+  for(var i=0; i<arr.length; i++){
+    console.log(arr[i])
+  }
+  $.ajax({
+    url: "/evaluations/approve_evaluation_status",
+    type: 'get',
+    data: {arr},
+  });
+}
+
+function active_evaluation(){
+  var ele=document.getElementsByName('question');
+  var arr = [];
+  console.log(ele)
+  for(var i=0; i<ele.length; i++){
+    if(ele[i].checked==true){
+      arr.push(ele[i].id);
+    }
+  }
+  for(var i=0; i<arr.length; i++){
+    console.log(arr[i])
+  }
+  $.ajax({
+    url: "/evaluations/active_status",
+    type: 'get',
+    data: {arr},
+  });
+}
+
+</script>

@@ -1,0 +1,21 @@
+<%= turbo_frame_tag "remote_modal" do %>
+
+    <div class="modal fade" id="leavemodal" tabindex="-1"  data-controller="remote-modal" data-action="turbo:before-render@document->remote-modal#hideBeforeRender">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content" id="modal_content">
+            <div class="modal-header justify-content-end">      
+            <button  class="btn" data-bs-dismiss="modal" aria-label="Close">
+              <%= image_tag("icons/closebtn.svg", alt: "")%>
+            </button>
+            </div>
+
+            <div class="modal-body leave-modal-body" id="remote_modal_body">
+                <%= yield %>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    
+
+<% end %>

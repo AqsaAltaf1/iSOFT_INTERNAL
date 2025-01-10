@@ -1,0 +1,55 @@
+<%unless current_user&.user? && !current_user.is_hr()%>
+<div class="container-fluid">
+  <div class="row mb-3">
+            <div class="col-md-12">
+              <ul class="nav justify-content-start timsheetlist" id="navbar-status">
+                <li class="nav-item me-4">
+                  <a class="nav-link text-danger  <%= params[:status].present? ? params[:status].downcase == "pending" ? 'status___active' : '' : 'status___active'%>" id="pending"
+                    >Pending</a
+                  >
+                </li>
+                <li class="nav-item mx-4">
+                  <a class="nav-link text-danger <%= params[:status].present? ? params[:status].downcase == "approved" ? 'status___active' : '' : ''%>" id="approved" 
+                    >Approved</a
+                  >
+                </li>
+                <% if current_user.is_hr() %>
+                <li class="nav-item mx-4">
+                  <a class="nav-link text-danger <%= params[:status].present? ? params[:status].downcase == "active" ? 'status___active' : '' : ''%>" id="active"
+                    >Active</a
+                  >
+                </li>
+                <%end%>
+                <li class="nav-item mx-4">
+                  <a class="nav-link text-danger <%= params[:status].present? ? params[:status].downcase == "completed" ? 'status___active' : '' : ''%>" id="completed"
+                    >Completed</a
+                  >
+                </li>
+                <li class="nav-item mx-4">
+                  <a class="nav-link text-danger <%= params[:status].present? ? params[:status].downcase == "rejected" ? 'status___active' : '' : ''%>" id="rejected"
+                    >Rejected</a
+                  >
+                </li>
+              </ul>
+            </div>
+  </div>
+</div>
+<%end%>
+<script>
+$( function() {
+  $('#pending, #approved, #active, #completed, #rejected').click(function(){
+    $('#navbar-status').find('.status___active').removeClass('status___active');
+    $(this).addClass('status___active');
+    status = this.innerHTML
+    send_ajax(status)
+  });
+  function send_ajax(status){
+    response = $.ajax({
+        url: '/evaluations',
+        method: 'Get',
+        data: {status},
+    });
+  }
+});
+
+</script>

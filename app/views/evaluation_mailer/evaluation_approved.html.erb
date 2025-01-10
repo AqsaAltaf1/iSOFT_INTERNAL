@@ -1,0 +1,11 @@
+<h1>Welcome to isoftstudios private Limited</h1>
+
+<p>
+  <h3><%= @user_admin.full_name  %>, have approved the following evaluations: </h3>
+
+  <% @approve_evaluations.each do |approve_evaluation| %>
+  <ul>
+    <li><%= approve_evaluation.title.capitalize %></li>
+  </ul>
+  <%end%>
+</p>

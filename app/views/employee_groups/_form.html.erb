@@ -1,0 +1,106 @@
+<%= form_with(model: employee_group) do |form| %>
+  <div class="row mb-3">
+    <div class="col">
+      <%= form.label :code, style: "display: block" %>
+      <%= form.text_field :code, class: "form-control" %>
+      <% employee_group.errors.full_messages_for(:code).each do |message| %>
+        <p class='text-danger user-error'>
+          <%= message %>
+        </p>
+      <% end %>
+    </div>
+
+    <div class="col">
+      <%= form.label :name, style: "display: block" %>
+      <%= form.text_field :name, class: "form-control" %>
+      <% employee_group.errors.full_messages_for(:name).each do |message| %>
+        <p class='text-danger user-error'>
+          <%= message %>
+        </p>
+      <% end %>
+    </div>
+
+    <div class="col">
+      <%= form.label :description, style: "display: block" %>
+      <%= form.text_area :description, class: "form-control group-description" %>
+        <% employee_group.errors.full_messages_for(:description).each do |message| %>
+        <p class='text-danger user-error'>
+          <%= message %>
+        </p>=
+      <% end %>
+    </div>
+  </div>
+  <hr class="mt-4">
+  <div class="row" data-controller="time-policy-rules">
+    <div class="col-3">
+      <div class="row flex-column">
+        <div class="col mt-4">
+          <button class="btn attachmentuploadbtn" data-controller="time-policy-rules" data-action="click->time-policy-rules#employeeGroup">Group
+            Members
+          </button>
+        </div>
+        <div class="col mt-4">
+          <button class="btn attachmentuploadbtn" data-controller="time-policy-rules" data-action="click->time-policy-rules#timePolicy">Time
+            Policy
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-9">
+      <div class="row">
+        <div class="col" id="employee_group_employees_form">
+          <%= render 'employee' , employee_group: employee_group, form: form %>
+        </div>
+        <div class="col" id="employees_time_policy_form">
+          <%= render 'missing_attendance' , time_policy: @time_policy, form: form %>
+        </div>
+        <div class="col" id="late_arrival_time_policy">
+          <%= render 'late_arrival' , time_policy: @time_policy, form: form %>
+        </div>
+        <div class="col" id="early_out_time_policy">
+          <%= render 'early_out' , time_policy: @time_policy, form: form %>
+        </div>
+        <div class="col" id="hours_per_day_time_policy">
+        <%= render 'hours_per_day', time_policy: @time_policy, form: form %>
+        </div>
+        <div class="col" id="missing_swipe_time_policy">
+          <%= render 'missing_swipe', time_policy: @time_policy, form: form %>
+        </div>
+        <div class="col" id="overtime_time_policy">
+          <%= render 'overtime_policy', time_policy: @time_policy, form: form %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <%= form.submit employee_group.new_record? ? "Create" : "Update" , class: "btn add-announcment-button" %>
+  </div>
+<% end %>
+
+<style>
+  .employee-group-select {
+    border: 1px solid #000 !important;
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-radius: 0.375rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    text-align: justify;
+  }
+
+  .dropdown-toggle::after {
+    float: right;
+    margin-top: 10px;
+  }
+
+  .group-description {
+    height: 40px !important;
+  }
+</style>

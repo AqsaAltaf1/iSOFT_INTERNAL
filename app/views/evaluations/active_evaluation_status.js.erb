@@ -1,0 +1,3 @@
+<% unless current_user.user? && !current_user.is_hr() %>
+    $('#evaluations').html("<%= escape_javascript render(:partial => 'evaluations/evaluation_status')%>");
+<% end %>

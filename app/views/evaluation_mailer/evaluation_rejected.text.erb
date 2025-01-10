@@ -1,0 +1,8 @@
+Welcome to isoftstudios private Limited
+
+
+<%= @admin.full_name  %>, has approved the following evaluations:
+
+<% @rejected_evaluation.each do |evaluation| %>
+  <div class="capitalize_first_letter"><%= evaluation.title.capitalize %></div>
+<%end%>

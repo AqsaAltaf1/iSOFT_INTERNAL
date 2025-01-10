@@ -1,0 +1,82 @@
+<%= form_with(model: company_asset) do |form| %>
+  <div class="row" data-controller="toltip">
+    <div class="col-md-6">
+      <div class="mb-3">
+        <%= form.label :name, class:'form-label' %>
+        <%= form.text_field :name, class:'form-control',  placeholder: 'Device Name'%>
+        <% company_asset.errors.full_messages_for(:name).each do |message| %>
+          <p class='text-danger user-error'><%= message %></p>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="mb-3">
+        <%= form.label :company_assets_type, class:'form-label' %>
+        <%= form.text_field :company_assets_type, class:'form-control', placeholder: 'Asset Category' %>
+        <% company_asset.errors.full_messages_for(:company_assets_type).each do |message| %>
+          <p class='text-danger user-error'><%= message %></p>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="mb-3">
+        <%= form.label :model, class:'form-label' %>
+        <%= form.text_field :model, class:'form-control', placeholder: 'Model Details'  %>
+        <% company_asset.errors.full_messages_for(:model).each do |message| %>
+          <p class='text-danger user-error'><%= message %></p>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="mb-3">
+        <label class="form-label" for="company_asset_unique_identifier">IMEI/Unique ID</label>  
+        <%= form.text_field :unique_identifier, class:'form-control', placeholder: 'IMEI or Serial Number'%>
+        <% company_asset.errors.full_messages_for(:unique_identifier).each do |message| %>
+          <p class='text-danger user-error'><%= message %></p>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="mb-3">
+        <%= form.label :price, class:'form-label' %>
+        <%= form.text_field :price, class:'form-control', placeholder: 'Enter Price' %>
+        <% company_asset.errors.full_messages_for(:price).each do |message| %>
+          <p class='text-danger user-error'><%= message %></p>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="mb-3">
+        <%= form.label :purchase_date, class:'form-label' %>
+        <%= form.date_field :return_date, class:'form-control' %>
+        <% company_asset.errors.full_messages_for(:return_date).each do |message| %>
+          <p class='text-danger user-error'><%= message %></p>
+        <% end %>
+      </div>
+    </div>
+    <div class="mb-3">
+      <%= form.label :status, class:'form-label' %>
+      <%= form.select :status, get_status() , {}, class: 'form-select mb-2' %>
+      <% company_asset.errors.full_messages_for(:status).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="mb-3">
+      <%= form.label :description, class:'form-label' %>
+      <%= form.rich_text_area :description, :rows => 3, :cols => 33 , class: "form-control"%><br>
+      <% company_asset.errors.full_messages_for(:descriptions).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="mb-3">
+      <label for="images">Upload Images</label>
+      <%= form.file_field :images, multiple: true, direct_upload: false, accept: "image/*", class:"form-control"%>
+      <% company_asset.errors.full_messages_for(:images).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+  </div>
+  <div class="text-center">
+    <%= form.submit company_asset.new_record? ? "Create " : "Update ", class:"btn addprojectbutton  " %>
+  </div>
+<% end %>

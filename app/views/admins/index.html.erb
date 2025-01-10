@@ -1,0 +1,34 @@
+
+<p></p>
+<div class="ms-2 ms-md-5 align-items-center justify-content-between">
+  <h1>Pending Approval</h1>
+  <div class="ms-2 ms-md-5 align-items-center justify-content-between">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th style="text-align: center;">Employee ID</th>
+            <th style="text-align: center;">Employee Name</th>
+            <th style="text-align: center;">Employee TimeSheet</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @user_timesheets.each do |user| %>
+          <tr>
+            <td align=center>
+              <%=user.id%>
+            </td>
+            <td align=center>
+              <%= user.full_name %>
+            </td>
+            <td align=center>
+              <%= link_to "View", admins_sheet_path(user_id: user.id), class:"btn attachmentuploadbtn" %>
+            </td>
+          </tr>
+          <%end%>
+        </tbody>
+      </table>
+    </div> 
+  </div>
+</div>
+

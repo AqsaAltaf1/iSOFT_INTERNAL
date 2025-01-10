@@ -1,0 +1,61 @@
+<section data-controller="data-table" data-table-id="leave_section">
+  <div class="container-fluid leave">
+    <div class="row">
+      <div class="col-12">
+        <% if current_user&.admin? || current_user&.super_admin? || current_user&.is_hr() %>
+          <%= link_to(new_apply_leave_path, class: "btn attachmentuploadbtn float-end d-flex", data: { turbo_frame: "remote_modal", controller: "short-type-allowed-hours" }) do %>
+            +Add New leaves type
+          <% end %>
+        <% end %>  
+        <div class="text-center mt-4"> 
+          <h4 class="emp-h4">Employee Leaves</h4>
+        </div>
+        <div class="table-responsive hr-employeeleave_detail">
+        <table id="leave_section" class="display" style="width: 100%">
+          <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Leaves Avail</th>
+                <th scope="col">Remaining Leaves/ Hours</th>
+                <th scope="col">Detail</th>
+                <th scope="col">Pending Leaves</th>
+              </tr>
+          </thead>
+          <tbody>
+              <% @users.each do|user| %>
+              <tr>
+                <td><%=user.full_name %></td>
+                <td><%=user.email %></td>
+                <td><%=display_leaves(availed_leaves(user)) %>days/<%= display_leaves(availed_hours(user)) %>hours</td>
+                <td><%=display_leaves(user_remaining_leaves(user)) %>days/<%= display_leaves(user_remaining_hours_leaves(user)) %> hours</td>
+                <td>
+                <%= link_to  "View Details", leaves_path(user_id: user["id"]) %></td>
+                <% unless current_user == user %>
+                  <td><%= link_to  "New Leave", leave_path(pending_leave(user).id) if pending_leave(user).present?%></td>
+                <% else %>
+                  <td></td>
+                <% end %>
+              </tr>
+              <%end%>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+         
+  
+
+<style>
+.dataTables_length{
+  margin-bottom:10px;
+}
+#example1_filter{
+  margin-bottom:10px;
+}
+#example1{
+  border:1px solid #c1c0c0;
+}
+</style>

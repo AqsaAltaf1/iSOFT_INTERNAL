@@ -1,0 +1,81 @@
+<div class="container-fluid" data-controller="data-table" data-table-id="company_assets_search">
+  <div class="row ms-2 ms-lg-5">
+    <div class="col-12">
+      <section class="mb-4">
+        <div class="hr-asset-userdiv">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <% if current_user.avatar.attached? %>
+                  <%= cl_image_tag(current_user.avatar_thumbnail,class: "hr-userimg rounded-circle") %>
+                <% end %>
+                <span><%= current_user.full_name %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="hr-assets-detail">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <p>Assets</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      <div class="text-end p-3 mb-3">
+        <%= link_to(new_company_asset_path, class: "btn add-asset-btn", data: { turbo_frame: "remote_modal" }) do %>
+          +Add Asset
+        <% end %>
+      </div>
+      <% if @company_assets.any? %>
+        <div class="table-responsive">
+          <table class="table bg-white" id="company_assets_search" class="display" style="width: 100%" data-controller="placeholder-for-data-tables" >
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>IMEI/Unique ID</th>
+                <th>Type</th>
+                <th>Model</th>
+                <th>Added By</th>
+                <th>Added Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @company_assets&.each do |company_asset| %>
+              <tr>
+                <td><%= company_asset.name %></td>
+                <td><%= company_asset.unique_identifier %></td>
+                <td><%= company_asset.company_assets_type %></td>
+                <td><%= company_asset.model %></td>
+                <td><%= company_asset.added_by %></td>
+                <td><%= company_asset.created_at.strftime("%d %b,%Y %I:%M%p") %></td>
+                <td><%= company_asset.status %></td>
+                <td>
+                  <a title="view" href="<%=company_asset_path(company_asset)%>">
+                        <img src="../../assets/icons/view.svg" alt="" />
+                  </a>
+                  <% if current_user.admin? || current_user.super_admin? || current_user.is_hr %>
+                    <%= link_to(edit_company_asset_path(company_asset), data: { turbo_frame: "remote_modal" }) do%>
+                      <img src="../../assets/icons/edit.svg" alt="" />
+                    <%end%>
+                  <% end %>  
+                  <% if current_user.admin? || current_user.super_admin? || current_user.is_hr %>
+                    <%= link_to( company_asset, data: { turbo_method: :delete, turbo_confirm: 'Do you want to delete this company_asset?' }) do %>
+                      <img src="../../assets/icons/delete.svg" alt="" />
+                    <% end %>
+                  <% end %>  
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
+            
+          </table>
+        </div>
+      <%end%>
+    </div>
+  </div>
+</div>

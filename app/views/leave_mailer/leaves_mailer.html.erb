@@ -1,0 +1,41 @@
+<p><b>Employee id:</b><%= @leave.user.id %></p>
+<p><b>Leave Type:</b><%= @leave.apply_leave.allowed_leave_type %></p>
+<p><b>Reason:</b><%= @leave.body.present? ? @leave.body : "no reason given" %></p>
+<% if @user.user? && !@user.is_hr() && (@user == @leave.user) %>
+  <% if @leave.status == "pending" %>
+    you applied for <%= @leave.apply_leave.allowed_leave_type%></br>
+    <% if @leave.apply_leave.allowed_leave_type == "short" %>
+      for date: <b><%= @leave.date_from.strftime("%A, %d %b") %></b> for <b><%= @leave.hours %></b>from time <b><%= display_time(@leave.from_time.to_s)%></b> to <b><%= display_time(@leave.to_time.to_s)%></b>.
+    <% else %>
+      from: <b><%= @leave.date_from.strftime("%A, %d %b") %></b> to <b><%= @leave.date_to.strftime("%A, %d %b") %></b>
+    <% end %>
+  <% else %>  
+    your <%= @leave.apply_leave.allowed_leave_type%> </br>
+    <% if @leave.apply_leave.allowed_leave_type == "short" %>
+      for date: <b><%= @leave.date_from.strftime("%A, %d %b") %></b> for <b><%= @leave.hours %></b> from time <b><%= display_time(@leave.from_time.to_s)%></b> to <b><%= display_time(@leave.to_time.to_s)%></b>.
+    <% else %>
+      from: <b><%= @leave.date_from.strftime("%A, %d %b") %></b> to <b><%= @leave.date_to.strftime("%A, %d %b") %></b>
+    <% end %>
+    has been <%= @leave.status %> by <%= @current_user.email %>
+  <% end %>
+<% elsif @user.is_hr() || @user.admin? %>
+  <% if @leave.status == "pending" %>
+    <%= @leave.user.full_name %> has applied for <%= @leave.apply_leave.allowed_leave_type %> </br>
+    <% if @leave.apply_leave.allowed_leave_type == "short"%>
+      for date: <b><%= @leave.date_from.strftime("%A, %d %b") %></b> for <b><%= @leave.hours %></b>from time <b><%= display_time(@leave.from_time.to_s)%></b> to <b><%= display_time(@leave.to_time.to_s)%></b>.
+    <% else %>
+      from: <%= @leave.date_from.strftime("%A, %d %b") %> to <%= @leave.date_to.strftime("%A, %d %b") %>
+    <% end %>
+    <p>To see update please <a href='<%= get_base_url%>/leaves/<%= @leave.id%>?checked_by=<%= @current_user.id%>&notification_id=<%= @leave.id%>'>click here</a></p>
+    <p>For approval or rejection please <a href='<%= get_base_url%>/leaves/<%= @leave.id%>?notification_id=<%= @leave.id%>'>click on the link </a></p>
+  <% else %>
+    <%= @leave.user.full_name %> <%= @leave.apply_leave.allowed_leave_type %> </br>
+    <% if @leave.apply_leave.allowed_leave_type == "short"%>
+      for date: <b><%= @leave.date_from.strftime("%A, %d %b") %></b> for <b><%= @leave.hours %></b>from time <b><%= display_time(@leave.from_time.to_s)%></b> to <b><%= display_time(@leave.to_time.to_s)%></b>.
+    <% else %>
+      from: <%= @leave.date_from.strftime("%A, %d %b") %> to <%= @leave.date_to.strftime("%A, %d %b") %>
+    <% end %>
+    has been <%= @leave.status %> by <%= @current_user.email %>
+  <% end %>
+<% end %>
+

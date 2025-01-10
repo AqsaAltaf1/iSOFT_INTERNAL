@@ -1,0 +1,11 @@
+<% if current_user&.is_hr() %>
+    <% if status_is_approved?(params[:status]) && @evaluations&.any?  %>
+      <label for="checkall" class="form-check-label me-2">All</label>
+      <input type="checkbox" class="form-check-input " id="checkall" >
+    <%end%>
+<%elsif current_user&.admin? && @evaluations&.any? %>
+    <%if status_is_pending? %>
+      <label for="checkall" class="form-check-label me-2">All</label>
+      <input type="checkbox" class="form-check-input " id="checkall" >
+    <%end%>
+<%end%>

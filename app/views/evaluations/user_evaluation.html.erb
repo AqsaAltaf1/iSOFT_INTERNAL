@@ -1,0 +1,37 @@
+<div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h4 class="text-center emp-eva-heading heading-text">Evaluations</h4>
+          </div>
+        </div>
+        <% if @evaluations&.any? %>
+          <div class="evaluationsmain">
+           <% @evaluations&.each do|evaluation| %>
+            <div class="row ms-5 align-items-center">
+              <div class="col-sm-9">
+                <div class="form-check">
+                  <label class="form-check-label" for="one">
+                    <%= evaluation.title.capitalize %>
+                  </label>
+                </div>
+              </div>
+              <div class="col-sm-3 text-end">
+                <a
+                  href="<%= employee_evaluation_evaluations_path(evaluation_notification: evaluation)%>"
+                  class="btn evaluationviewbtn"
+                >
+                  <span>View</span>&nbsp;<img
+                    src="../assets/icons/eye.svg"
+                    alt=""
+                  />
+                </a>
+              </div>
+            </div>
+            <%end%>
+            <%else%>
+            <div class="text-center mt-4 nodata mx-auto">
+              <p class="fw-bolder mb-0">Currently You Have No Evaluation</p>
+            </div>
+          </div>
+        <%end%>
+</div>

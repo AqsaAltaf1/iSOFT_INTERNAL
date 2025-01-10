@@ -1,0 +1,36 @@
+<section data-controller="data-table">
+  <div class="container-fluid leave">
+    <div class="row">
+      <div class="col-12">
+        <div class="text-center">
+          <h4 class="emp-h4">Employee Requests</h4>
+        </div>
+        <div class="table-responsive hr-employeeleave_detail">
+        <table class="display" style="width: 100%">
+          <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Requests</th>
+                <th scope="col">Pending Requests</th>
+              </tr>
+          </thead>
+          <tbody>
+            <% @users.each do|user| %>
+              <tr>
+                <td><%=user.full_name%></td>
+                <td><%=user.email%></td>
+                <td><%= link_to  "View Details", requests_path(user_id: user["id"]) %></td>
+                <td><%= link_to  "pending Requests", requests_path(status: "pending", user_id: user["id"]) if pending_request(user).present?%></td>
+              </tr>
+            <%end%>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+         
+  
+

@@ -1,0 +1,64 @@
+<%if @search_users.present?%>
+
+<strong><center>Users</center></strong>
+<table id="users" class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">FirstName</th>
+        <th scope="col">LastName</th>
+        <th scope="col">Email</th>
+      </tr>   
+     
+    </thead>
+    
+    <tbody>
+    <% @search_users&.each do|user| %>
+      <tr>
+       <td><%=user["first_name"]%></td>
+       <td><%=user["last_name"]%></td>
+       <td><%=user["email"]%></td>
+        
+      </tr>
+      <%end%>
+    </tbody>
+</table>
+<%end%>
+<%if @search_evaluations.present?%>
+<strong><center>Evaluations</center></strong>
+<table id="timesheets" class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Descrption</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+    <% @search_evaluations&.each do|evaluation| %>
+      <tr>
+        <td><%=evaluation["title"]%></td>
+      </tr>
+      <%end%>
+    </tbody>
+</table>
+<%end%>
+
+<%if @search_projects.present? %>
+<strong><center>Projects</center></strong>
+<table id="search_projects" class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+      </tr>
+    </thead>
+    
+    <tbody>
+    <% @search_projects&.each do|project| %>
+      <tr>
+        <td><%=project["name"]%></td>
+        <td><%=project["description"]%></td>
+      </tr>
+      <%end%>
+    </tbody>
+</table>
+<%end%>

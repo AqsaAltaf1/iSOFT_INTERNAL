@@ -1,0 +1,6 @@
+<% if current_user.admin? && params[:evaluation_status] %>
+    $('#approved').html("<%= escape_javascript render(:partial => 'evaluations/evaluation_with_status') %>");
+<% end %>
+<% unless current_user.user? && !current_user.is_hr() %>
+    $('#evaluations').html("<%= escape_javascript render(:partial => 'evaluations/evaluation_status') %>");
+<% end %>

@@ -1,0 +1,98 @@
+<div class="nested-fields"> 
+  <div id="select_type" class="<%= @evaluation.new_record? ? '' : 'noteditable'%>">
+    <%= f.label :question_type , class:'form-label' %>
+    <%= f.select :question_type,Question.question_types.keys.to_a, {:include_blank => 'select question type'},onchange: 'select(this)',class: 'form-select question-type  mb-2', :disabled => !@evaluation.new_record?  %>
+    <div class="text-end">
+      <%= f.hidden_field :_destroy %>
+      <%= link_to_remove_association( f) do %>
+                                <img src="../../assets/icons/delete.svg" alt="" />
+      <% end %>
+    </div>
+  </div>
+  <div class="row g-3 align-items-center">
+        <div class=" <%= @evaluation.new_record? ? "hidden " : ''%> col-12 questions">
+          <%= f.label :question,class:'form-label mt-2 question_text' %>
+          <%= f.text_field  :question, class: "evaluation_question form-control mb-2", placeholder: "Please enter a question", required: true %>
+          <div id="append_errors">
+          </div>
+        </div>
+        <div id="remove_option ">
+        <%= f.fields_for :evaluation_options do |f|%>
+            <%= render "evaluations/evaluation_option_fields", f: f %>
+        <% end %>
+        </div>
+        <div id="evaluation_option" class="mb-3 hidden evaluation_option">
+          <%= link_to_add_association 'Add options', f, :evaluation_options,class:'btn btn-outline-success mt-2 add_question_option options_added ' %>
+        </div>
+  </div>
+</div> 
+<script>
+  $(function () {
+      function check_to_prevent_add_link_when_question_empty (e) {      
+        if ($(".nested-fields").find(".evaluation_question").last()[0] && $(".nested-fields").find(".evaluation_question").last()[0].value == '' ){
+          $('#' + $(".nested-fields").find(".evaluation_question").last()[0].id).siblings('#append_errors').html('<p class="text-danger">This Field is Required</p>')
+          e.preventDefault();
+          return false; 
+        }
+      }
+    $('#question').on('cocoon:before-insert', function (e) {
+        check_to_prevent_add_link_when_question_empty(e);
+      });
+    $("#question").keyup(function(){
+      $(".text-danger").remove();  
+    });
+  });
+
+  
+  
+  $('.add_question_option').on('click', function (e) {
+    var options = $(this).closest('.nested-fields').find('.nested-fields').length;
+      if (options >= 4) {
+        alert('You cannot add more options');
+        $(this).hide();
+        return false;
+      } else {
+        $('.add_question_option').show();
+      }
+  })
+
+  $(document).on('click', '.remove-option-button', function() {  
+    var options = $(this).closest('.nested-fields').siblings('.nested-fields').length;
+    var addOptionButton = $(this).closest('.nested-fields').siblings('.evaluation_option').find('.add_question_option');
+    if (options <= 4) {
+       addOptionButton.show();
+    }
+    else{
+       addOptionButton.hide();
+    }
+  });
+
+
+  $('.pressquestion').on('click', function(event) {
+    var previousQuestionType = $(this).parent().siblings().closest(".nested-fields").last().find('.form-select').val();
+    var previousQuestionOptionLength = $(this).parent().siblings().closest(".nested-fields").last().find(".nested-fields").length;
+    var firstQuestionType = $(this).parent().siblings().find('.nested-fields').first().find('.form-select').val();
+    var firstQuestionOptionLength = $(this).parent().siblings().find('.nested-fields').first().find('.nested-fields').length
+    if (((previousQuestionType === 'mcqs') && (previousQuestionOptionLength < 2)) || ((firstQuestionType === 'mcqs') && (firstQuestionOptionLength < 2))) {
+      alert("The previous question type is MCQs and it must have at least 2 options. Please add more options before adding a new question.");
+      event.stopImmediatePropagation();
+      return false;
+    }
+  });
+
+     function select(questiontype){
+         $('.questions').removeClass('hidden');
+         if ( $(questiontype).val() == 'mcqs')
+         {
+          $(".evaluation_option").last().removeClass("hidden")
+          $('.question_text').last().text('Mcq Question')
+         }
+         else
+         {
+          $(".evaluation_option").last().addClass("hidden")
+          $('.question_text').last().text('Question')
+         }
+        
+  }
+
+</script>

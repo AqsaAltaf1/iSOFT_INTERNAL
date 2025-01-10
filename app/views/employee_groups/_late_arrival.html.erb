@@ -1,0 +1,37 @@
+<p><b>Late Arrival</b></p>
+<%= form.fields_for :time_policy do |ff| %>
+  <%= ff.fields :late_arrival, model: OpenStruct.new(form.object.time_policy.late_arrival) do |late_arrival| %>
+    <label class="col-form-label">Do you want system to penalize (deduct leave) for late arrival incidents?</label>
+    <div class="mt-3">
+      <%= late_arrival.radio_button :deduct_leave, false, checked: true, data: { controller: "time-policy-rules", action: "input->time-policy-rules#lateArrival", value: false } %>
+      <%= late_arrival.label :deduct_leave, "No", value: "false"%><br>
+      <%= late_arrival.radio_button :deduct_leave, true, data: { controller: "time-policy-rules", action: "input->time-policy-rules#lateArrival", value: true } %>
+      <%= late_arrival.label :deduct_leave, "Yes, Leaves are to be deducted based on the criteria defined below", value: "true"  %>
+    </div>
+    <div class="late_arrival_leaves mt-4">
+      <p>What is the grace period (or tolerance) beyond which the arrival is considered late arrival?</p>
+      <%= late_arrival.label :After %>
+      <%= late_arrival.number_field :after_time %>
+      <p>minute grace period or tolerance period, the deduction will be</p>
+      <div id="late_arrival_deduction_first">
+        <%= late_arrival.radio_button :deduction, false, data: { controller: "time-policy-rules", action: "input->time-policy-rules#lateArrival", type: "include" } %>
+        <%= late_arrival.label :deduction, "Include", value: "include" %><br>
+        <%= late_arrival.radio_button :deduction, true, checked: true, data: { controller: "time-policy-rules", action: "input->time-policy-rules#lateArrival", type: "exclude" } %>
+        <%= late_arrival.label :deduction, "Exclude", value: "exclude" %>
+      </div>
+
+    </div> 
+    <div class="mt-3" id="late_arrival_deduct_leave_type">
+      <label class="col-form-label">How are leaves deducted?</label><br>
+      <%= late_arrival.radio_button :deduct_leave_type, false %>
+      <%= late_arrival.label :deduct_leave, "All missing attendance days are to be treated as Unpaid Leaves (Loss of Pay)", value: "unpaid"%><br>
+      <%= late_arrival.radio_button :deduct_leave_type, true %>
+      <%= late_arrival.label :deduct_leave, "Deduct from available Paid leave balance first", value: "paid"  %>
+    </div>
+    <div class="text-center mt-2 mb-2">
+      <%= link_to 'Back','#', data: {controller: "time-policy-rules", action: "click->time-policy-rules#timePolicy"} %>
+      <%= link_to 'Next','#', data: {controller: "time-policy-rules", action: "click->time-policy-rules#earlyOut"} %>
+    </div>
+   <% end %>  
+<% end %>
+ 

@@ -1,0 +1,8 @@
+<%= render @time_sheet %>
+
+<div>
+  <%= link_to "Edit this time sheet", edit_time_sheet_path(@time_sheet) %> |
+  <%= link_to "Back to time sheets", time_sheets_path %>
+
+  <%= button_to "Destroy this time sheet", @time_sheet, method: :delete %>
+</div>

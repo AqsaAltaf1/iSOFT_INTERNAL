@@ -1,0 +1,16 @@
+<% User.all.each do |user| %>
+  <% full_name = "#{user.first_name} #{user.last_name}" %>
+  <%= CSV.generate(headers: true) do |csv| %>
+    <% csv << ["User ID", "User Name", "Check In", "Check Out"] %>
+
+      <% user.attendances.where(
+        "(check_in BETWEEN :start_date AND :end_date) OR (check_out BETWEEN :start_date AND :end_date)",
+        start_date: @options[:start_date], end_date: @options[:end_date]
+      ).each do |attendance| %>
+      <% check_in = attendance.check_in.present? ? attendance.check_in.strftime("%b %d %I:%M:%S %p %Y") : nil %>
+      <% check_out = attendance.check_out.present? ? attendance.check_out.strftime("%b %d %I:%M:%S %p %Y") : nil %>
+      <% csv << [user.machine_code, full_name, check_in, check_out] %>
+    <% end %>
+  <% end %>
+<% end %>
+  

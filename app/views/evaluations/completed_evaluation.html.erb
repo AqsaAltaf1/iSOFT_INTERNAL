@@ -1,0 +1,31 @@
+<div class="container-fluid">
+    <div class="ms-2 ms-lg-5">
+        <div class="text-start mb-3">
+            <h3 class="evaluationname"><%=@evaluation.title%></h3>
+            <p>submitted By: <%= @user.full_name %></p>
+        </div>
+            <div class="mb-3">
+                <% @feedback&.each_with_index do |feedback, index|%>
+                <div class="evaluationquestion mb-2">
+                    <strong><%=index+1%></strong> &nbsp;<span><%= feedback.question.question%></span>
+                </div>
+                <div class="evaluationoptions">
+                    <%if feedback.question.question_type == 'mcqs' %>
+                        <% feedback.question&.evaluation_options&.each do |option|%>
+                            <ul style="list-style: none;">
+                                <li>
+                                    <%= check_box_tag(option.option, 'true', feedback.evaluation_option_id == option.id, { disabled: true, class: 'form-check-input' }) %>             
+                                    <%= option.option %>
+                                </li>
+                            </ul> 
+                        <%end%>
+                    <%else%>
+                        <p>
+                            <%= feedback.feedback %>
+                        </p>
+                    <%end%>
+                </div>
+                <%end%>
+            </div>
+    </div>
+</div>

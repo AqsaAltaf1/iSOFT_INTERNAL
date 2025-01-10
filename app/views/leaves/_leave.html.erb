@@ -1,0 +1,107 @@
+<section class="mb-5 pb-4">
+  <div class="row ps-3" data-controller="leave-actions">
+    <div class="col-md-6 col-lg-6 mb-2">
+      <div class="card fullleavecard">
+        <div class="card-body">
+          <div class="text-end">
+            <img src="../../assets/icons/Group.svg" alt="" />
+          </div>
+          <div class="row mb-3">
+            <div class="col-4">
+              <p>Name:</p>
+            </div>
+            <div class="col-7">
+              <p><%=leave.user.full_name%></p>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-4">
+              <p>Email:</p>
+            </div>
+            <div class="col-7">
+              <p><%=leave.user.email%></p>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-4">
+              <p>Applied on:</p>
+            </div>
+            <div class="col-7">
+              <p><%=leave.created_at.to_date%></p>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-4">
+            <%if leave.short_type.present? %>
+            <p>Leave:</p>
+            <%end%>
+              <p>Start:</p>
+              <p>End:</p>
+            </div>
+            <div class="col-7">
+              <%if leave.short_type.present? %>
+                <p><%= leave.short_type%></p>
+              <%end%>
+              <p><%= leave.date_from.strftime("%A, %d %b") %></p>
+              <p><%= leave.date_to.strftime("%A, %d %b") %></p>
+            </div>
+          </div>
+          <%if leave.hours.present? %>
+            <div class="row mb-3">
+              <div class="col-4">
+                <p>Applied Hours:</p>
+              </div>
+              <div class="col-7">
+                <p><%= leave.hours%></p>
+              </div>
+            </div>
+          <%end%>  
+          <div class="row mb-3">
+            <div class="col-4">
+              <p>Leave Type:</p>
+            </div>
+            <div class="col-7">
+              <p><%= leave.apply_leave.allowed_leave_type %></p>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-4">
+              <p>Description:</p>
+            </div>
+            <div class="col-7">
+              <p><%= leave.body %></p>
+            </div>
+            <% if leave.files.present?%>
+              <p>Files:</p>
+              <% leave.files.each do |image| %>
+                <%= leave_image(image) %>
+              <% end %>
+            <%end%>
+          </div>
+          <turbo-frame id="notes-frame">
+            <div id="leave_notes_<%= leave.id %>" data-turbo-frame="_top">
+              <%= render( partial: 'leaves/leave_notes')%>
+            </div>
+          </turbo-frame>
+          <div class="text-center">
+            <button id="add__notes" class="btn btn-primary" data-action="click->leave-actions#showNotes">Add Note</button>
+          </div>
+          <div id="notes">
+            <%= render( partial: 'notes/form', locals: { note_created_on:
+            @leave, type: "Leave"} )%>
+          </div>
+          <div class="float-start mt-3">
+            <%= link_to "delete", leave_path(leave), data: {
+              turbo_method: :delete,
+              turbo_confirm: "Are you sure?"
+            }, class: "btn btn-danger btn-block" if (current_user.admin? || (current_user == leave.user)) && !leave.pending? %>
+          </div>
+          <div class="float-end mt-3">
+            <%= link_to "edit", edit_leave_path(leave), class: "btn btn-danger btn-block", data: { controller: "short-type-field", action: "click->short-type-field#selectChange", turbo_frame: "remote_modal" } if current_user.user? && leave.pending? %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

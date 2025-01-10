@@ -1,0 +1,37 @@
+ <div class="nested-fields"> 
+ <%= f.label :option,class:'form-label' %>
+ <div class="row g-3 align-items-center evaluation-option">
+  <div class="col-md-6">
+  <div class="d-flex align-items-center mb-3">
+    <%= f.text_field  :option, placeholder: "Please enter an option" , class:'form-control options' %>
+    <%= f.hidden_field :_destroy %>  
+    <div class="">
+      <%= link_to_remove_association( f) do %>
+        <img src="../../assets/icons/crossred.svg" alt="" class="remove-option-button"/>
+      <% end %>
+    </div>
+  </div>
+  </div>
+</div>
+</div> 
+
+<script>
+  $(function () {
+    function check_to_hide_or_show_add_link() {
+        if ($("#evaluation-option").last().children().find(".evaluation-option").length > 4) {
+        // alert("Warning! This is the last option you were allowed to create.");
+        $('#evaluation_option').hide();
+      } else {
+        $('#evaluation_option .add_fields').show();
+      }
+    }
+    $(".evaluation-option").last().children().find(".evaluation-option").on('cocoon:after-insert', function() {
+      check_to_hide_or_show_add_link();
+    });
+    $(".evaluation-option").last().children().find(".evaluation-option").on('cocoon:after-remove', function() {
+      check_to_hide_or_show_add_link();
+    });
+    check_to_hide_or_show_add_link();
+  });
+
+</script>

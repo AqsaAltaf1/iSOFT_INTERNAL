@@ -1,0 +1,24 @@
+$('#update-div').html("<%= escape_javascript render(:partial => 'time_sheets/load_sheet_data', :locals => { :time_sheet => @time_sheets }) %>");
+$('#update_date').html("<%= escape_javascript render(:partial => 'time_sheets/show_selected_date') %>");
+$('#update_status').html("<%= escape_javascript render(:partial => 'time_sheets/load_status_data') %>");
+$('#next_day').html("<%= escape_javascript render(:partial => 'time_sheets/next_day') %>");
+$('#prev_day').html("<%= escape_javascript render(:partial => 'time_sheets/prev_day') %>");
+$('#submit-button').html("<%= escape_javascript render(:partial => 'time_sheets/submit_week') %>");
+<% if params[:approval_request]%>
+alert("Time sheet submitted successfully..")
+<% end %>
+var date = '<%= select_selected_date %>'
+var today = '<%= Date.today.strftime("%A, %d %b %Y") %>'
+<%# var status = '<%= params[:status]%>
+status = $('#navbar-status').find('.timesheetactive').html();
+if ((status !== 'Draft')){
+    $('#submit').hide();
+}else{
+    $('#submit').show();
+}
+if(date !== today) {
+    $('#return-today').show();
+    $('#return_today').hide();
+} else {
+    $('#return-today').hide();
+}

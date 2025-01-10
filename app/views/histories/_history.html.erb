@@ -1,0 +1,54 @@
+<div class="ms-5 asset-detail-card">
+  <h6 class="text-center heading-text">History's Details</h6>
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="d-flex justify-content-between">
+        <strong>Employee Name:</strong>
+      </div>
+      <div><%=link_to history.user.full_name, user_path(history.user) %></div>
+      <hr>
+
+      <div class="d-flex justify-content-between">
+        <strong>Asset Name:</strong>
+      </div>
+      <div><%=history.company_asset.name %></div>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <strong>Type:</strong>
+      </div>
+      <div><%= history.company_asset.company_assets_type %></div>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <strong>Model:</strong>
+      </div>
+      <div><%= history.company_asset.model %></div>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <strong>Given Date:</strong>
+      </div>
+      <div><%= history.given_date %></div>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <strong>Return Date:</strong>
+      </div>
+      <div><%= history.return_date %></div>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <strong>Given Condition:</strong>
+      </div>
+      <div class="filler-space"><%= history.given_condition %></div>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <strong>Return Condition:</strong>
+      </div>
+      <div class="filler-space"><%= history.return_condition %></div>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <strong>Assigned By:</strong>
+      </div>
+      <div><%= history.assigned_by %></div>
+      <hr>
+    </div>
+  </div>
+</div>
+

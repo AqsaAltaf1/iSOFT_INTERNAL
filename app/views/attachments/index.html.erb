@@ -1,0 +1,49 @@
+<div class="container-fluid">
+<div style="float:right;">
+  <%= link_to(new_attachment_path, class: "btn attachmentuploadbtn", data: { turbo_frame: "remote_modal" }) do %>
+    Upload
+  <% end %>
+</div>
+  <div class="row align-items-center justify-content-between">
+    <h5>Please select attachment owner(s)</h5>
+    <section class="d-flex">
+      <ul class="nav justify-content-start" id="main-nav">
+        <li class="nav-item attachment-selector">
+          <a class="nav-link text-danger px-5" style="cursor: pointer;" id="self archievedbtn" onclick="change(this.innerHTML)">Self</a>
+        </li>
+        <li class="nav-item mx-4 attachment-selector">
+          <a class="nav-link text-danger px-5" style="cursor: pointer;" id="company archievedbtn" onclick="change(this.innerHTML)">Company</a>
+        </li>
+      </ul>
+    </section>
+  </div>
+  <div id="data">
+    <%= render 'attachments' %>
+  </div>
+</div>
+
+<script>
+  function change(value) {
+      $(value).addClass('highlight');
+      var attachmentType = value;
+      $.ajax({
+      url: "/attachments",
+      data: {type: attachmentType},
+      method: "get",
+      format: "javascript"
+    });
+  }
+  $(document).ready(function() {
+  $('#main-nav li:first-child').addClass('timesheetactive');
+  $('#main-nav li:first-child').removeClass('attachment-selector');
+
+  $('#main-nav li a').on('click', function() {
+      var activeLink = $('.timesheetactive');
+      activeLink.removeClass('timesheetactive');
+      activeLink.addClass('attachment-selector');
+      $(this).parent().addClass('timesheetactive');
+      $(this).parent().removeClass('attachment-selector');
+
+  });
+});
+</script>

@@ -1,0 +1,27 @@
+<div class="container">
+  <% if f.object.errors.any? %>
+    <div class="error_messages">
+      <% f.object.errors.full_messages.each do |error| %>
+        <p style="color: red"><%= error %></p>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="input-group mt-2">
+      <%= f.select :payment_method, get_payment_method, {:include_blank => 'Select payment method'}, class: 'form-select  mb-2'%>
+    </div>
+  <div class="form-control">
+    <div class="mt-2">
+      <%= f.text_field :bank_name, class: "form-control", placeholder: "Bank Name"%>
+    </div>
+    <div class="input-group mt-2">
+      <%= f.text_field :branch_name, class: "form-control", placeholder: "Branch Name" %>
+      <%= f.text_field :branch_code, class: "form-control", placeholder: "Branch Code"%>
+    </div>
+    <div class="input-group mt-2">
+      <%= f.text_field :account_number, class: "form-control", placeholder: "Account Number"%>
+    </div>
+    <div class="input-group mt-2">
+    <%= f.text_field :bank_code, class: "form-control", placeholder: "Bank Code/Swift Code"%>
+  </div>
+  </div>
+</div>

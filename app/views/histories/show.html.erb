@@ -1,0 +1,14 @@
+<%= render @history %>
+<div class="container-fluid">
+  <div class="row text-end mb-4">
+    <div class="col-md-12">
+      <div class="d-inline-flex">
+      <% if current_user.is_hr || current_user.admin? || current_user.super_admin? %>
+        <%= link_to "Back", company_asset_path(@history.company_asset),class:"btn btn-outline-primary" %>
+      <% else %>
+        <%= link_to "Back", home_employee_path,class:"btn btn-outline-primary" %>
+      <% end %> 
+      </div>
+    </div>
+  </div>
+</div>

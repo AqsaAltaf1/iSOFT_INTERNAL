@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="form_all">
+    <%= form_with(model: help_document) do |form| %>
+      <% if help_document.errors.any? %>
+        <div style="color: red">
+          <ul>
+            <% help_document.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="mb-3">
+          <%= form.text_field :name, placeholder: "Enter Name", class: "form-control"%>
+      </div>
+        <div class="mb-3">
+          <%= form.file_field :file,class: "form-control", required: true, :accept => '.pdf, .docx, .png, .jpeg, .xlsx' %>
+        </div>
+      
+      <br>
+      <div class="mb-3 text-center">
+        <%= form.submit help_document.new_record? ? "Create " : "Update ", class:"btn add-announcment-button" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+

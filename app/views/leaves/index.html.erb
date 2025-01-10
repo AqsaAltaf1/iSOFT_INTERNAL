@@ -1,0 +1,38 @@
+<div class="container-fluid">
+  <div id="leaves">
+    <%if current_user&.user? && !current_user&.is_hr()%>
+      <div id= 'update_leave_status'>
+        <%= render 'load_leave_status' %>
+      </div>
+    <%end%>
+    <section class="mb-3">
+      <div class="row justify-content-between align-items-center ps-3">
+        <div class="col-md-5 emplyeedetails">
+        <% if current_user.avatar.attached? %>
+          <%=cl_image_tag((Cloudinary::Utils.private_download_url(current_user.avatar.key, "jpg")), class:"img-fluid rounded-circle", alt:"")%>
+        <%else%>
+          <img src="../../assets/icons/username.svg" alt="" />
+        <%end%>
+          <span><%= current_user.full_name%></span>
+        </div>
+        <div class="col-md-4 leavesdetails text-md-end">
+          <%if current_user&.user? %>
+            <%= link_to(new_leave_path, class: "btn attachmentuploadbtn", data: { turbo_frame: "remote_modal" }) do %>
+              +Add New
+            <% end %> 
+          <%end%>
+        </div>
+      </div>
+    </section>
+    <%if @user.present?%>
+      <p class="float-end total-leaves"><b>Total Remaining Leaves:</b> <%=display_leaves(user_remaining_leaves(@user))%>days/ <b>Total Remaining hours Leaves:</b><%=display_leaves(user_remaining_hours_leaves(@user))%>hours</p>
+    <% else%>
+      <p class="float-end total-leaves"><b>Total Remaining Leaves:</b> <%=display_leaves(user_remaining_leaves(current_user))%>days/ <b>Total Remaining hours Leaves:</b><%=display_leaves(user_remaining_hours_leaves(current_user))%>hours</p>
+    <% end %>
+    <div id="leave_data" class="mt-5">
+      <%= render 'load_leave_data' %>
+    </div>
+  </div>
+</div>
+
+

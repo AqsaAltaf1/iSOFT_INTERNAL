@@ -1,0 +1,46 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="text-center">
+        <h4 class="emp-h4">Upcoming holidays</h4>
+        <div class="col-md-12 text-md-end mb-3">
+          <%= (link_to "+Add New", new_upcoming_holiday_path, class: "btn attachmentuploadbtn", data: { turbo_frame: "remote_modal" }) unless current_user.user? && !current_user.is_hr()%>
+        </div>
+      </div>
+      <div class="table-responsive hr-employeeleave">
+        <table id="apply_leave_search" class="display" style="width: 100%">
+          <thead>
+            <tr>
+              <th scope="col" class="text-start">Id</th>
+              <th scope="col" class="text-start">Date</th>
+              <th scope="col" class="text-start">Title</th>
+              <th scope="col" class="text-start">Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% upcoming_holidays.each do |upcoming_holiday| %>
+              <tr class="text-start">
+                <td>
+                  <%= upcoming_holiday.id %>
+                </td>
+                <td>
+                  <%= upcoming_holiday.date.strftime("%A, %d %b") %>
+                </td>
+                <td>
+                  <%= upcoming_holiday.title %>
+                </td>
+                <td>
+                  <%= link_to(upcoming_holiday_path(upcoming_holiday), class: 'me-2') do %>
+                    <%= image_tag("icons/view.svg", alt: "")%>
+                  <% end %> 
+                  <%= (link_to image_tag("icons/edit.svg", alt: ""), edit_upcoming_holiday_path(upcoming_holiday), class: "me-2", data: { turbo_frame: "remote_modal" }) unless current_user.user? && !current_user.is_hr() %>
+                  <%= (link_to image_tag("icons/delete.svg", alt: ""), upcoming_holiday_path(upcoming_holiday), data: { turbo_method: :delete, turbo_confirm: 'Do you want to delete?' }) unless current_user.user? && !current_user.is_hr() %>
+                </td>
+              <tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

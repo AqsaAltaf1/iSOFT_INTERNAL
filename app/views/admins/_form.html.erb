@@ -1,0 +1,37 @@
+<div class="container">
+<div class="row justify-content-center">
+  <div class="col-6">
+    <div class="card add_newuser">
+      <div class=" card-body">
+      <h4 class="text-center"><%= @admin.new_record? ? "Add New User " : "Edit User" %></h4>
+          <%= form_with model: @admin do |form| %>
+          <div class="mb-3">
+            <div style="color: red">
+              <% if @admin.errors.any? %>
+                <h2><%= pluralize(@admin.errors.count, "error") %> prohibited this user from being saved:</h2>
+                <ul>
+                  <% @admin.errors.each do |error| %>
+                    <li><%= error.full_message %></li>
+                  <% end %>
+                </ul>
+              <% end %>
+            </div>
+          </div>
+          <div class="mb-3">
+            <%= form.label :email,class:'form-label' %>
+            <%= form.email_field :user_email,class:"form-control" %>
+            <% if @admin.new_record?  %>
+            <%= form.label :joining_date,class:'form-label' %>
+            <%= form.date_field :joining_date,class:'form-control' %>
+            <%end%>
+          </div>
+
+  <div>
+    <%= form.submit @admin.new_record? ? "Create User" : "Update User",class:'btn btn-success' %>
+  </div>
+<% end %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

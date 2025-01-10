@@ -1,0 +1,19 @@
+<section class="mb-3">
+  <nav class="navbar navbar-expand sub__nav">
+    <div class="container">
+      <div class="collapse navbar-collapse border-bottom" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 " id="navbar-status">
+          <li class="nav-item">
+            <%= link_to "Announcements", announcements_path(status: "announcements"), class: "nav-link #{announcements}", data: { turbo_frame:"announcements_data", turbo_action: "advance", turbo_stream: true } %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Upcoming Holidays", announcements_path(status: "upcomingholidays"), class: "nav-link #{upcomingholidays}", data: { turbo_frame:"announcements_data", turbo_action: "advance", turbo_stream: true } %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Events", announcements_path(status: "events"), class: "nav-link #{events}", data: {turbo_frame:"announcements_data", turbo_action: "advance", turbo_stream: true } %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</section>

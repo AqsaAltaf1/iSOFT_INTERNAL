@@ -1,0 +1,17 @@
+
+
+<div class="designation_form" id="designation_form">
+  <% user_designation.errors.full_messages.each do |message| %>
+    <p class='text-danger user-error'><%= message %></p>
+  <% end %>
+  <%= form_with(model: user_designation) do |form| %>
+    <div class="col-md-6 mb-3 justify-content-center">
+      <label for="name" class="form-label">Name</label>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+
+    <div class="d-flex"> 
+      <%= form.submit user_designation.new_record? ? "Create " : "Update ", class:"btn addprojectbutton  " %>
+    </div>
+  <% end %>
+</div>

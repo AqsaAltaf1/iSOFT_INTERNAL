@@ -1,0 +1,24 @@
+    <div class="container-fluid">
+          <div class="ms-2 ms-lg-5">
+            <div class="text-center mb-3">
+              <h3 class="evaluationname"><%= evaluation&.title%></h3>
+            </div>
+            <% evaluation&.questions&.each_with_index do |question,index| %>
+                <div class="mb-3">
+                <div class="evaluationquestion mb-2">
+                    <strong><%=index+1%>:</strong> &nbsp;<span><%= question.question%></span>
+                </div>
+                    <% if question&.evaluation_options&.present?%>
+                        <div class="evaluationoptions">
+                            <ul>
+                                <% question&.evaluation_options&.each do |option|%>
+                                    <li><%= option.option%></li>
+                                <%end%>
+                            </ul>
+                        </div>
+                    <%end%>
+                </div>
+            <%end%>
+
+          </div>
+    </div>

@@ -1,0 +1,49 @@
+<div class="role_form" id="role_form">
+  <% role.errors.full_messages.each do |message| %>
+    <p class='text-danger user-error'><%= message %></p>
+  <% end %>
+  <%= form_with(model: role) do |form| %>
+    <div class="col-md-6 mb-3 justify-content-center">
+      <label for="name" class="form-label">Name</label>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+
+    <div>
+      <label>Permissions:</label>
+      <br/>
+      <% @permissions&.each do |controller_name, permissions| %>
+        <div data-controller="collapse" data-collapse-target="controller<%= controller_name %>">
+          <div class="row"> 
+            <div class="col-1" style="width:1.3px">
+            <input class="form-check-input" type="checkbox" value="" id="<%= controller_name %>" data-action= "click->collapse#toggleControllerPermissions" style="margin-top: 13px;" <%= @role.permissions.pluck(:name).to_set.superset?(permissions.pluck(:name).to_set) ? 'checked' : '' %>>
+          </div>
+          <div class="col-5">
+            <a data-action="click->collapse#toggle"> 
+              <strong><%= controller_name %></strong>
+              <span class="material-icons-outlined expand-icon" data-collapse-target="expandIcon">
+                expand_more
+              </span>
+            </a>
+          </div>
+        </div>
+        <div data-collapse-target="collapseContent">
+          <% permissions&.each do |permission|%>
+            <div class="row">
+              <div class="col-1" style="width:1.3px">
+              <input type="checkbox" name="role[permission_ids_input][]" id="user_role_permission_ids_input_" value="<%= permission.id %>" data-controller="<%= controller_name%>" class="form-check-input" <%= @role.permission_ids.include?(permission.id) ? 'checked' : '' %>>
+                <%#= check_box_tag "role[permission_ids_input][]", permission.id, false, data: { controller: controller_name }, class: "form-check-input"%>
+              </div>
+              <div class="col-5">
+                <%= permission.description %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="d-flex"> 
+      <%= form.submit role.new_record? ? "Create " : "Update ", class:"btn addprojectbutton  " %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,21 @@
+<section class="mb-3">
+  <% unless current_user.admin? %>
+    <nav class="navbar navbar-expand sub__nav">
+      <div class="container">
+        <div class="collapse navbar-collapse border-bottom" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 " id="navbar-status">
+            <li class="nav-item">
+              <%= link_to "Pending", leaves_path(leave_status: "pending"), class: "nav-link #{status_pending}", data: { turbo_frame:"leave_data", turbo_action: "advance", turbo_stream: true } %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Approved", leaves_path(leave_status: "approved"), class: "nav-link #{status_approved}", data: { turbo_frame:"leave_data", turbo_action: "advance", turbo_stream: true } %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Rejected", leaves_path(leave_status: "rejected"), class: "nav-link #{status_rejected}", data: {turbo_frame:"leave_data", turbo_action: "advance", turbo_stream: true } %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  <% end %>
+</section>

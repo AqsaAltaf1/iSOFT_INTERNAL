@@ -1,0 +1,204 @@
+<div class="col-md-6 col-lg-6 col-xl-5 mb-2">
+  <div class="card fullleavecard" data-controller="leave-actions">
+    <div class="card-body">
+      <div class="row mb-3 justify-content-around">
+        <div class="col-4">
+          <p>Request Type:</p>
+        </div>  
+        <div class="col-7">
+          <p> <%= request.request_type %> </p>
+        </div> 
+      </div>
+      <div class="row mb-3 justify-content-around">
+        <div class="col-4">
+          <p>Employee:</p>
+        </div>  
+        <div class="col-7">
+          <p> <%= request.user.full_name %> </p>
+        </div> 
+      </div> 
+      <div class="row mb-3 justify-content-around">
+        <div class="col-4">
+          <p>status:</p>
+        </div>  
+        <div class="col-7">
+          <p> <%= request.status %> </p>
+        </div> 
+      </div> 
+      <% if request.request_type == 'expense' %>
+        <div class="row mb-3 justify-content-around">
+          <div class="col-4">
+            <p>Expense Category:</p>
+          </div>  
+          <div class="col-7">
+            <p> <%= request[:details]['expense_category'] %> </p>
+          </div> 
+        </div>  
+        <div class="row mb-3 justify-content-around">
+          <div class="col-4">
+            <p>Date from:</p>
+          </div>  
+          <div class="col-7">
+            <p> <%= Date.parse(request[:details]['date_from']).strftime("%B %e, %Y") %> </p>
+          </div> 
+        </div>  
+        <div class="row mb-3 justify-content-around">
+          <div class="col-4">
+            <p>Date To:</p>
+          </div>  
+          <div class="col-7">
+            <p> <%= Date.parse(request[:details]['date_to']).strftime("%B %e, %Y") %> </p>
+          </div> 
+        </div>  
+        <div class="row mb-3 justify-content-around">
+          <div class="col-4">
+            <p>Actual amount:</p>
+          </div>  
+          <div class="col-7">
+            <p>RS.<%= request[:details]['actual_amount'] %> </p>
+          </div> 
+        </div> 
+        <div class="row mb-3 justify-content-around">
+          <div class="col-4">
+            <p>Approved amount:</p>
+          </div>  
+          <div class="col-7">
+            <p>RS.<%= request[:details]['approved_amount'].present? ? request[:details]['approved_amount'] : 0 %></p>
+          </div> 
+        </div>  
+        <div class="row mb-3 justify-content-around">
+          <div class="col-4">
+            <p>Reason:</p>
+          </div>  
+          <div class="col-7">
+            <p> <%= request[:details]['reason'] %> </p>
+          </div> 
+        </div>  
+      <% elsif request.request_type == 'loan' %>
+        <div class="row mb-3 justify-content-around">
+          <div class="col-4">
+            <p>Loan Type::</p>
+          </div>  
+          <div class="col-7">
+            <p> <%= request[:details]['loan_type'] %> </p>
+          </div> 
+        </div> 
+        <% if request[:details]['payment_start_date'].present? %>
+          <div class="row mb-3 justify-content-around">
+            <div class="col-4">
+              <p>Payment Start Date:</p>
+            </div>  
+            <div class="col-7">
+              <p> <%= Date.parse(request[:details]['payment_start_date']).strftime("%B %e, %Y") %> </p>
+            </div> 
+          </div>
+        <% end %>
+        <% if request[:details]['recovery_method'].present? %>
+          <div class="row mb-3 justify-content-around">
+            <div class="col-4">
+              <p>Recovery method:</p>
+            </div>  
+            <div class="col-7">
+              <p> <%= request[:details]['recovery_method'] %> </p>
+            </div> 
+          </div>
+        <% end %>  
+        <div class="row mb-3 justify-content-around">
+          <div class="col-4">
+            <p>Loan Taken Date:</p>
+          </div>  
+          <div class="col-7">
+            <p> <%= Date.parse(request[:details]['taken_date']).strftime("%B %e, %Y") %> </p>
+          </div> 
+        </div>
+        <div class="row mb-3 justify-content-around">
+          <div class="col-4">
+            <p>Loan Amount:</p>
+          </div>  
+          <div class="col-7">
+            <p>RS.<%= request[:details]['loan_amount'] %> </p>
+          </div> 
+        </div>
+        <% if request[:details]['recovery_loan_amount'].present? %>
+          <div class="row mb-3 justify-content-around">
+            <div class="col-4">
+              <p>Recovery loan Amount:</p>
+            </div>  
+            <div class="col-7">
+              <p>RS:<%= request[:details]['recovery_loan_amount'] %>
+            </div> 
+          </div> 
+        <% end %>  
+        <% if request[:details]['installment_amount'].present? %>
+          <div class="row mb-3 justify-content-around">
+            <div class="col-4">
+              <p>Installment amount:</p>
+            </div>  
+            <div class="col-7">
+              <p> <%= request[:details]['installment_amount'] %> </p>
+            </div> 
+          </div>
+        <% end %>  
+        <div class="row mb-3 justify-content-around">
+          <div class="col-4">
+            <p>Reason:</p>
+          </div>  
+          <div class="col-7">
+            <p> <%= request[:details]['reason'] %> </p>
+          </div> 
+        </div>
+      <% elsif request.request_type == 'document' %>
+        <div class="row mb-3 justify-content-around">
+          <div class="col-4">
+            <p>Template:</p>
+          </div>  
+          <div class="col-7">
+            <p> <%= request[:details]['template'] %> </p>
+          </div> 
+        </div>
+        <div class="row mb-3 justify-content-around">
+          <div class="col-4">
+            <p>Name:</p>
+          </div>  
+          <div class="col-7">
+            <p> <%= request[:details]['name'] %> </p>
+          </div> 
+        </div>
+        <div class="row mb-3 justify-content-around">
+          <div class="col-4">
+            <p>Remarks:</p>
+          </div>  
+          <div class="col-7">
+            <p> <%= request[:details]['remarks'] %> </p>
+          </div> 
+        </div>
+      <% end %>
+      <turbo-frame id="notes-frame">
+        <div id="leave_notes_<%= request.id %>" data-turbo-frame="_top">
+          <%= render( partial: 'requests/request_notes')%>
+        </div>
+      </turbo-frame>
+      <div class="text-center">
+        <button id="add__notes" class="btn btn-primary" data-action="click->leave-actions#showNotes">Add Note</button>
+      </div>
+      <div id="notes">
+        <%= render( partial: 'notes/form', locals: { note_created_on:
+        request, type: "Request"} )%>
+      </div>
+      <div class="float-start mt-3">
+        <%= link_to "delete", request_path(request), data: {
+          turbo_method: :delete,
+          turbo_confirm: "Are you sure?"
+        }, class: "btn btn-danger btn-block" if (current_user.admin? || (current_user == request.user)) && !request.pending? %>
+      </div>
+      <% if request.details['attachment'].present? %>
+        <div class="mt-3">
+          <%= request_image_helper(request.details['attachment_url'])%> 
+        </div>  
+      <% end %>  
+      <div class="float-end mt-3">
+        <%= link_to "edit", edit_request_path(request), class: "btn btn-danger btn-block", data: { controller: "short-type-field", action: "click->short-type-field#selectChange", turbo_frame: "remote_modal" } if ((request.user == current_user) || current_user.is_hr || current_user.admin?) && request.pending? && (request.request_type == "expense")%>
+      </div>
+    </div>
+  </div>
+</div>

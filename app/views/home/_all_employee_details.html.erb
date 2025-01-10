@@ -1,0 +1,90 @@
+<section data-controller="data-table" data-table-id="employee_details_search">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="text-center">
+          <h4 class="emp-h4">Employee profiles</h4>
+        </div>
+        <div class="text-end mb-3">
+          <%# <button
+            class="btn addemployeebtn"
+            data-bs-toggle="modal"
+            data-bs-target="#addemployeemodal"
+          >
+            +Add New
+          </button> %>
+          <%# link_to(new_user_path, class: "btn addemployeebtn", data: { turbo_frame: "remote_modal" }) do %> 
+          <%# end %>
+          <%= link_to(new_user_path, class: "btn addemployeebtn") do %>
+            +Add New
+          <% end %>
+        </div>
+        <div class="table-responsive hr-employeetable">
+          <table id="employee_details_search" class="display table" style="width: 100%" data-controller="placeholder-for-data-tables">
+            <thead>
+              <tr>
+                <th>Employee Id</th>
+                <th>Email</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>joining Date</th>
+                <th>Role</th>
+                <th>Department</th>
+                <th>Employement Type</th>
+                <th>Reporting manager</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% employees&.each do |employee| %>
+              <tr>
+                <td> <%= employee.id %> </td>
+                <td><%= employee&.email%></td>
+                <td> <%= employee.full_name %> </td>
+                <td> <%= employee.status %> </td>
+                <td> <%=employee.joining_date? ? employee.joining_date.strftime("%d %B, %Y"): '-'%> </td>
+                <td> <%=employee.role&.name%> </td>
+                <td> <%=employee.department&.name%> </td>
+                <td> <%=employee&.employment_type? ? employee.employment_type&.humanize: '-'%> </td>
+                <td> <%=employee&.report_to_id? ? employee.report_to&.display_name : '-'%> </td>
+                <td class='d-flex'>
+                  <%#= link_to(edit_user_path(id: employee.id), class: "btn edit-profile-button mt-4 mb-3", data: { turbo_frame: "remote_modal" }) do %>
+                  <%= link_to(edit_user_path(id: employee.id), class: "btn edit-profile-button mt-4 mb-3") do %>
+                    Edit
+                  <% end %>
+                  <%= link_to 'View', user_path(id: employee.id), class: "mt-4 mb-3"%>
+                  <% unless current_user.user? && current_user.is_hr() %>
+                    <%= link_to 'delete',
+                      user_path(id: employee.id),
+                      class: "btn delete-user-button mt-4 mb-3",
+                      data: {
+                        turbo_method: :delete,
+                        turbo_confirm: "Are you sure?"
+                      } %>
+                    <% if employee.status== "active" %>
+                      <%= link_to "inactive", home_employee_details_path(id: employee.id, status: "inactive") ,class: "btn delete-user-button mt-4 mb-3", data: { turbo_frame:"user_data", turbo_action: "advance", turbo_stream: true }  %>
+                    <% else %>
+                      <%= link_to "active", home_employee_details_path(id: employee.id, status: "active"), class: "btn active-user-button mt-4 mb-3", data: { turbo_frame:"user_data", turbo_action: "advance", turbo_stream: true }  %>
+                    <% end %>
+                  <% end %> 
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
+            <!-- <tfoot>
+              <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Start date</th>
+                <th>Salary</th>
+              </tr>
+            </tfoot> -->
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- Add Employee Modal -->
+  </div>
+</section>

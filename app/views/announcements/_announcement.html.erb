@@ -1,0 +1,24 @@
+<h5>
+  <%= announcement.title%>
+</h5>
+<div class="border p-2 mt-3 rounded">
+  <p>
+    <%= announcement.body %>
+  </p>
+  <% if announcement.files.present?%>
+    <% announcement.files.each do |image| %>
+        <%= announcement_image(image) %>
+    <% end %>
+  <%end%>
+</div>
+
+<%= link_to(announcements_path, id: "all_announcements_id", class: "btn btn-info mt-3", data: { turbo_frame: "remote_modal" }) do %>
+  Back
+<%end%>
+<script>
+  $(document).ready(function () { 
+	  $('#all_announcements_id').on("click",function(){
+      $('.modal').modal('hide');
+    });
+  });
+</script>

@@ -1,0 +1,25 @@
+<div id="note-form-container">
+  <% @note ||= Note.new %>
+  <%= form_with(model: @note, local: true) do |form| %>
+    <div class="mb-3">
+      <div style="color: red">
+        <% if @note.errors.any? %>
+          <ul>
+            <% @note.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+    <%= form.hidden_field :note_created_on, value: note_created_on.id %>
+    <%= form.hidden_field :type, value: type %>
+    <div class="mb-3">
+      <%= form.text_area :content , class: "form-control", id:"exampleFormControlTextarea1", rows:3 %>
+    </div>
+    <div class="" id="new_note">
+      <%= form.submit "Save", class: "btn btn-success savetimesheet", id:"cancel--notes" %>
+      <button type="reset" id="cancel--notes" class="btn btn-danger" data-controller="leave-actions" data-action="click->leave-actions#hideNotes"> Cancel </button>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,40 @@
+<%if false %>
+<span class="badge rounded-pill bg-danger ">
+        <i class="fa fa-bell "></i>
+        <span id="notify_count" class="position-absolute top-0 translate-middle badge rounded-pill bg-primary ">
+            <span class="value">
+                <%= @unread.count >= 9 ? "9+" : @unread.count %>
+            </span> 
+        </span>
+</span>
+<%end%>
+<a
+    class="nav-icon dropdown-toggle"
+    href="#"
+    id="alertsDropdown"
+    data-bs-toggle="dropdown"
+>
+<div class="position-relative">
+    <i class="fa-regular fa-bell"></i>
+    <span class="indicator value">
+        <%= @unread.count >= 9 ? "9+" : @unread.count %>
+    </span>
+</div>
+</a>
+
+
+
+
+
+
+
+<script type="text/javascript">
+var unread_count = <%= @unread&.count %>
+if(unread_count === 0) {
+    $(".value").html(0);
+    $('.value').hide();
+} else {
+    $('.value').show();
+    $("#alertsDropdown").addClass("has_notification");
+}
+</script>

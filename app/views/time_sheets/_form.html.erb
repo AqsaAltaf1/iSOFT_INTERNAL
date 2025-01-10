@@ -1,0 +1,57 @@
+<%= form_with(model: time_sheet) do |form| %>
+
+  <div class="mb-3">
+    <div style="color: red">
+      <% if time_sheet.errors.any? %>
+        <ul>
+          <% time_sheet.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+  <div data-controller="extended-character-counter">
+    <div class="mb-3" >
+      <%= form.hidden_field :date %>
+      <%= form.label :project, style: "display: block", class: "form-label" %>
+      <%= form.select(:project_id, @projects.collect {|p| [ p.name, p.id ] },{ prompt: "Select a Project" },class: "form-control") %>
+      
+      <%= form.label :time, style: "display: block", class: "form-label" %>
+      <%= form.time_select :time, {include_seconds: false, start_hour:1, end_hour:12,
+      prompt: { hour: 'Select hour', minute: 'Select minute' }}, 
+      {class: "ang_select"} %>
+      
+      <div class="mb-3 mt-3">
+        <%= form.label :description, class: "form-label" %>
+        <span class="text-muted small">(minimum 50 character)</span>
+        <%= form.text_area :description, class: "form-control", id: "description-textarea", 
+          data: { "extended-character-counter-target": "input" }, rows: 3 %>
+        <p hidden>
+          There are
+          <strong data-extended-character-counter-target="counter"></strong> characters in this textarea.
+        </p>
+      </div>
+    </div>
+    <div class="d-grid gap-2">
+      <%= form.submit "Save", class: "btn savetimesheet", id: "submit-button", disabled: true %>
+    </div>
+  </div>
+<% end %>
+
+<script>
+$('form').submit(function (evt) {
+      $('form').find('#time_sheet_date').val($(".selected_date_value").html());
+      $('form').submit();
+    
+  });
+</script>
+<script>
+  $('#time_sheet_time_4i').on('change',function () {
+  if ( $(this).val() == '12')
+    $('#time_sheet_time_5i').attr('disabled', true);
+    else
+    $('#time_sheet_time_5i').attr('disabled', false);
+  });
+
+</script>

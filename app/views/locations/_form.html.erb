@@ -1,0 +1,38 @@
+<%= form_with(model: location) do |form| %>
+  <div class="card-title text-center">
+    <h2 class="p-3 ">Location</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3 justify-content-center">
+      <%= form.label :work_location, style: "display: block" %>
+      <%= form.text_field :work_location, class: "form-control" %>
+      <% location.errors.full_messages_for(:work_location).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-3 justify-content-center">
+      <%= form.label :zip_code, style: "display: block" %>
+      <%= form.text_field :zip_code, class: "form-control" %>
+      <% location.errors.full_messages_for(:zip_code).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+  </div>
+  <div class="input-group mt-2" data-controller = "address">
+    <%= form.select :country, options_for_select(@countries, @selected_country), {prompt: "Select Country"}, data: { action: "change->address#locationstates", id: "country" },class: "form-select" %>
+    <%= form.select :state, options_for_select(@states, @selected_state), {prompt: "Select State"}, data: { action: "change->address#locationstates", id: "state" },class: "form-select" %>
+    <%= form.select :city, options_for_select(@cities), {prompt: "Select City"}, class: "form-select" %>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-6 mb-3 justify-content-center">
+      <%= form.label :address, style: "display: block" %>
+      <%= form.text_area :address, class: "form-control" %>
+      <% location.errors.full_messages_for(:address).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+  </div>
+  <div class="d-flex"> 
+    <%= form.submit location.new_record? ? "Create " : "Update ", class:"btn addprojectbutton  " %>
+  </div>
+<% end %>

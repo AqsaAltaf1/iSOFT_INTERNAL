@@ -1,0 +1,67 @@
+<%= form_with(model: request) do |form| %>
+  <%= form.fields :details, model: OpenStruct.new(form.object.details) do |data_fields| %>
+    <h3 class="text-center">Expense Request</h3>
+    <% if request.errors.any? %>
+      <div class="text-danger">
+        <h6>Following errors are prohibited from saving this request.</h6>
+        <% request.errors.each do |error| %>
+          <p class='text-danger user-error'><%= error.full_message %></p>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="row g-3 align-items-center mb-3">
+      <div class="col-md-6">
+        <label for="employee" class="col-form-label">Employee</label>
+        <%= data_fields.text_field :employee, value: "#{current_user.first_name} #{current_user.last_name}", readonly: true, class: "form-control" %>
+      </div>
+
+      <div class="col-md-6">
+        <label for="expense_category" class="col-form-label">Expense Catagory</label>
+        <%= data_fields.select :expense_category,
+          options_for_select(['expense'], selected: (@request.new_record? ? 'expense' : @request.details["expense_category"])),
+          { include_blank: 'Select category' },
+          { class: "form-control", required: true }
+        %>
+      </div>
+    </div>
+    <div class="row g-3 align-items-center mb-3">
+      <div class="col-md-6">
+        <label for="date_from" class="col-form-label">From Date</label>
+        <%= data_fields.date_field :date_from, min: Date.today.to_s, class: "form-control", required: true %>
+      </div>
+
+      <div class="col-md-6">
+        <label for="date_to" class="col-form-label">To Date</label>
+        <%= data_fields.date_field :date_to, min: Date.today.to_s, class: "form-control", required: true %>
+      </div>
+    </div>
+    <div class="row g-3 align-items-center mb-3">
+      <div class="col-md-6">
+        <label for="actual_amount" class="col-form-label">Actual amount</label>
+        <%= data_fields.number_field :actual_amount, class: "form-control", required: true %>
+      </div>
+
+      <% if current_user.is_hr || current_user.admin? %>
+        <div class="col-md-6">
+          <label for="approved_amount" class="col-form-label">Approved amount</label>
+          <%= data_fields.number_field :approved_amount, class: "form-control" %>
+        </div>
+      <% end %>  
+    </div>
+    <div class="mb-3">
+      <label for="attachments" class="col-form-label">Attachments</label>
+      <%= data_fields.file_field :attachment, direct_upload: false, class:"form-control mb-3", id:"formFile" %>
+    </div>  
+    <div class="mb-3">
+      <label for="reason" class="col-form-label">Reason</label>
+      <%= data_fields.text_area :reason,class: "form-control", required: true %> 
+    </div>  
+  <% end %>
+  <%= form.hidden_field :request_type,value: @request_type %>
+  <div class="d-flex justify-content-center">
+    <%= form.submit request.new_record? ? "Create" : "Update" , class: 'btn leavecreatebtn' %>
+  </div>
+<% end %>
+
+
+

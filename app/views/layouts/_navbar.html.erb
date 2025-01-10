@@ -1,0 +1,176 @@
+<%if false%>
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container">
+    <%if current_user && current_user.admin?%>
+      <a class="navbar-brand" href="<%=admin_path%>">
+        <%= image_tag 'ISOFTSTUDIOS.png' %>
+      </a>
+    <% elsif current_user && current_user.user? && !current_user.is_hr() %>
+      <a class="navbar-brand" href="<%=home_employee_path%>">
+        <%= image_tag 'ISOFTSTUDIOS.png' %>
+      </a>
+    <% elsif current_user && current_user.is_hr() %>
+      <a class="navbar-brand" href="<%=home_hr_path%>">
+        <%= image_tag 'ISOFTSTUDIOS.png' %>
+      </a>
+    <% else %>
+      <a class="navbar-brand" href="<%=root_path%>">
+        <%= image_tag 'ISOFTSTUDIOS.png' %>
+      </a>
+    <% end %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mx-auto">
+        <% if current_user && current_user.user? && !current_user.is_hr() %>
+          <li class="nav-item">
+            <a class="nav-link <%= controller_name == 'home' ? 'active' : ''%>" aria-current="page" href="<%=home_employee_path%>">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link  <%= controller_name == 'time_sheets' && action_name == 'index' ? 'active' : ''%>" href="<%=time_sheets_path%>">TimeSheet</a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link  <%= controller_name == 'leaves' && action_name == 'index' ? 'active' : ''%>" href="<%=leaves_path%>">Leaves</a>
+          </li>
+        <% elsif current_user && (current_user.admin? || current_user.is_hr())%>
+          <% if current_user.admin?%>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="<%=admin_path%>">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="<%=home_contact_list_path%>">Contact_list</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link  <%= controller_name == 'questions' ? 'active' : ''%>" href="<%=evaluations_path%>">Evaluations</a>
+            </li>
+          <% else %>
+             <li class="nav-item">
+               <a class="nav-link <%= controller_name == 'home' ? 'active' : ''%>" aria-current="page" href="<%=home_hr_path%>">Home</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link  <%= controller_name == 'questions' ? 'active' : ''%>" href="<%=evaluations_path%>">Evaluations</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link <%= controller_name == 'admins' && action_name == 'attachments_users' ? 'active' : ''%>" aria-current="page" href="<%= admins_attachments_users_path%>">Employees Attachments</a>
+             </li>
+          <%end%>
+             <li class="nav-item">
+               <a class="nav-link" aria-current="page" href="<%=admins_leave_section_path%>">Employee_Leaves</a>
+             </li>
+             <li class="nav-item">
+               <a class="nav-link" aria-current="page" href="<%=admins_path%>">TimeSheet</a>
+             </li>
+        <% else %>
+          <% if current_user %>
+            <li class="nav-item">
+              <a class="nav-link <%= action_name == 'home' ? 'active' : ''%>" aria-current="page" href="<%=root_path%>">Home</a>
+            </li>
+          <% end %>
+        <%end%>
+        <% if current_user %>
+        <div >
+            <%= form_tag(search_path, :method => "get") do%>
+              <%= search_field_tag :q, params[:q],
+                class: "form-control search-bar rounded-pill bg-transparent",
+                placeholder: "Find people,Document,Project",
+                id: "example-search-input1"
+              %>
+              <%end%>
+            </div>
+          <li class="nav-item">
+            <a class="nav-link  <%= controller_name == 'attachments' ? 'active' : ''%>" href="<%=attachments_path%>">Attachments</a>
+          </li>
+        <% end %>
+        <% if current_user&.user? && !current_user&.is_hr() %>
+          <li class="nav-item">
+            <a class="nav-link  <%= controller_name == 'questions' ? 'active' : ''%>" href="<%=evaluations_user_evaluation_path%>">Evaluations</a>
+          </li>
+        <% end %>
+        <% if current_user&.is_hr() || current_user&.admin? %>
+          <li class="nav-item">
+            <a class="nav-link  <%= controller_name == 'apply_leave' ? 'active' : ''%>" href="<%=new_apply_leave_path%>">CreateLeave</a>
+          </li>
+        <% end %>
+      </ul>
+      <ul class="navbar-nav" id="unread-notification">
+        <%= render 'user/notifications' %>
+      </ul>
+      <ul class="navbar-nav">
+        <%= render 'user/session_manager' %>
+      </ul>
+    </div>
+  </div>
+</nav>
+<%end%>
+
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light ms-5 my-2">
+    <div class="container-fluid">
+      <div class="d-flex">
+        <a class="navbar-brand" href="<%=root_path%>"
+          ><img src="../../assets/ISOFTSTUDIOS 2.png" alt=""
+        /></a>
+        <button
+          class="btn offcanvasbtn"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#staticBackdrop"
+          aria-controls="staticBackdrop"
+        >
+          <i class="fa-solid fa-grip-lines"></i>
+        </button>
+      </div>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <form class="">
+              <input
+                class="form-control search-bar rounded-pill bg-transparent"
+                type="search"
+                placeholder="Find people,Document,Project"
+                id="example-search-input1"
+              />
+            </form>
+          </li>
+          <li class="nav-item ms-3">
+            <div id="clock"></div>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <span id="notifications_data">
+            <%= render 'user/notifications' %>
+          </span>
+          <li class="nav-item mx-5 profilenavitem">
+            <a href="<%= user_path(current_user.id) %>">
+              <% if current_user.avatar.attached? %>
+                <%=cl_image_tag((Cloudinary::Utils.private_download_url(current_user.avatar.key, "jpg")), class:"img-fluid", alt:"")%>
+             <%else%>
+                <img
+                  src="../assets/icons/Ellipse_111.svg"
+                  class="img-fluid"
+                  alt=""
+                />
+              <% end %>
+            </a>
+          </li>
+          <li class="nav-item logout--icon">
+          <%= link_to(destroy_user_session_path, method: :delete) do %>
+               <i class="fa-solid fa-power-off fa-2x"></i>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

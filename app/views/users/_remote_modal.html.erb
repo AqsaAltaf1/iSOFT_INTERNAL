@@ -1,0 +1,18 @@
+<%= turbo_frame_tag "remote_modal" do %>
+
+    <div class="modal fade" id="editprofilemodal" tabindex="-1" aria-labelledby="newItemRemoteModalLabel" aria-hidden="true" data-controller="remote-modal" data-action="turbo:before-render@document->remote-modal#hideBeforeRender">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content modal-lg" id="modal_content">
+                <div class="modal-header">
+                    <h4 style="font-style: normal; font-weight: 600; font-size: 24px; line-height: 36px; color: #78B7D1; text-align: center;"><%= title %></h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body remote_modal_body" id="remote_modal_body">
+                    <%= yield %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<% end %>

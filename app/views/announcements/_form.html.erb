@@ -1,0 +1,59 @@
+<section id="announcment-top">
+  <div class="container-fluid">
+    <div class="row justify-content-between top-row align-items-center">
+      <div class="col-md-4">
+        <img
+          class="hr-userimg"
+            src="../../assets/icons/username.svg"
+            alt=""
+          />
+          <span>UserName</span>
+      </div>
+      <div class="col-md-12 text-md-end mb-3">
+        <%= link_to announcements_path, class: "btn attachmentuploadbtn text-end" do %>
+      All Announcements
+    <% end %>
+  </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="container-fluid">
+    <div class="add-announcment-form mt-4">
+      <%= form_with(model: announcement) do |form| %>
+        <% if announcement.errors.any? %>
+          <div style="color: red">
+            <h2><%= pluralize(announcement.errors.count, "error") %> prohibited this announcement from being saved:</h2>
+            <ul>
+              <% announcement.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <div class="row mb-3">
+          <div class="col-4 mb-3">
+            <%= form.text_field :title, placeholder: "Enter your title", class: "form-control announcement-field" %>
+          </div>
+            <div class="col-12"> 
+              <%= form.text_area :body, rows: "10", class: "form-control", placeholder: "Enter message"%>
+            </div>
+        </div>
+        <div class="row justify-content-between">
+          <div class="col-md-4">
+            <label
+                  for="formFile"
+                  class="form-label upload-file-announcment-icon add-announcment-button"
+                >
+               Upload
+            </label>
+            <%= form.file_field :files, multiple: true, direct_upload: false, class:"form-control visually-hidden", id: "formFile"%>
+          </div>
+          <div class="col-md-4 text-end">
+            <%= form.submit announcement.new_record? ? "Create " : "Update ", class:"btn add-announcment-button" %>
+          </div>
+        </div> 
+      <% end %>
+    </div>
+  </div>
+</section>

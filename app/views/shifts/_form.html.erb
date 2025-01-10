@@ -1,0 +1,59 @@
+<%= form_with(model: shift) do |form| %>
+  <div class="card-title text-center">
+    <h2 class="p-3 ">Shift</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3 justify-content-center">
+      <%= form.label :name, style: "display: block" %>
+      <%= form.text_field :name, class: "form-control" %>
+      <% shift.errors.full_messages_for(:name).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+
+    <div class="col-md-6 mb-3 justify-content-center">
+      <%= form.label :working_hours, style: "display: block" %>
+      <%= form.number_field :working_hours, class: "form-control" %>
+      <% shift.errors.full_messages_for(:working_hours).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3 justify-content-center">
+      <%= form.label :start_time, style: "display: block" %>
+      <%= form.time_field :start_time, class: "form-control" %>
+      <% shift.errors.full_messages_for(:start_time).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+
+    <div class="col-md-6 mb-3 justify-content-center">
+      <%= form.label :end_time, style: "display: block" %>
+      <%= form.time_field :end_time, class: "form-control" %>
+      <% shift.errors.full_messages_for(:end_time).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <% checked_values = shift&.working_days || [] %>
+    <% available_values = ["Monday", "Tuesday", "Wednesday","Thursday","Friday","Saturday", "Sunday"] %>
+    <h3>Working Days</h3>
+    <% available_values.each do |value| %>
+      <div class="row">
+        <div class="col-md-2 mb-1">
+          <%= form.label value %>
+        </div>
+        <div class="col-md-1 mb-1">
+          <%= form.check_box :working_days, { multiple: true, class: "working-day-checkbox" }, value, checked_values.include?(value) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+ 
+  <div class="d-flex"> 
+    <%= form.submit shift.new_record? ? "Create " : "Update ", class:"btn addprojectbutton  " %>
+  </div>
+<% end %>
+

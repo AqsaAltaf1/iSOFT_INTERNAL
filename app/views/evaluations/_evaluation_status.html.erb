@@ -1,0 +1,155 @@
+<div class="container">
+            <div class=" text-end">
+              <% if current_user&.is_hr() %>
+                <% if status_is_pending? %>
+                  <a href="<%=new_evaluation_path%>" class="btn addevaluationbtn"
+                    >+ Add New</a
+                  >
+                <% end %>
+                <% if status_is_approved?(params[:status]) && @evaluations&.any? %>
+                  <button class= "btn addevaluationbtn active_button" disabled onclick="evaluation_array('active')" > Active </button>
+                <%end%>
+              <% end %>
+              <%if current_user&.admin? && @evaluations&.any? %>
+                 <% if status_is_pending?%>
+                  <div class="d-inline-flex approve-evaluation-admin">
+                    <button class= "btn addevaluationbtn approve_button" disabled onclick="evaluation_array('approve')"> Approve </button><br>
+                    <button class= "btn rejectevaluationbtn reject_button ms-2" disabled onclick="evaluation_array('reject')"> Reject </button><br>
+                  </div>
+                <%end%>
+              <%end%>
+            </div>
+          <div id="pendingevaluations">
+            <div class="row mb-3">
+              <div class="col-12">
+                  <%= render 'select_all' %>
+              </div>
+            </div>
+            <%unless params[:status]&.capitalize == "Completed"%>
+            <%if @evaluations.any?%>
+                <div class="hr-evaluationsmain">
+                  <% @evaluations&.each do |evaluation| %>
+                  <div class="row align-items-center">
+                    <div class="col-md-8">
+                      <div class="form-check">
+                        <% if current_user&.is_hr() %>
+                          <% if status_is_approved?(params[:status]) %>
+                            <input type="checkbox" class="form-check-input me-2 select__all aligning_with_upper_element for__check" name="evaluation"  id=<%= evaluation.id %> >
+                          <%end%>
+                        <%elsif current_user&.admin? %>
+                          <% if status_is_pending? %>
+                            <input type="checkbox" class="form-check-input me-2 select__all aligning_with_upper_element for__check" name="evaluation"  id=<%= evaluation.id %> >
+                          <%end%>
+                        <%end%>
+                        <label class="form-check-label" for="one">
+                          <%=evaluation.title%>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-md-4 text-end">
+                      <a title="view" href="<%=evaluation_path(evaluation)%>">
+                        <%= image_tag("icons/view.svg", alt: "View") %>
+                      </a>
+                      <%unless evaluation.status  == "active" || evaluation.status  == "approved" || evaluation.status  == "rejected" %>
+                      <a title="edit" href="<%=edit_evaluation_path(evaluation)%>">
+                        <%= image_tag("icons/edit.svg", alt: "Edit") %>
+                      </a>
+                      <% end %>
+                      <%= link_to( evaluation, data: { turbo_method: :delete, turbo_confirm: 'Do you want to delete Evaluation?' }) do %>
+                                    <%= image_tag("icons/delete.svg", alt: "Delete") %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <%end%>
+                </div>
+            <%else%>
+                <div class="text-center mt-4 nodata mx-auto">
+                  <p class="fw-bolder mb-0">Currently You Have No Evaluation</p>
+                </div>
+            <%end%>
+          </div>
+          <%else%>
+            <div id="completeevaluations">
+            <div class="table-responsive">
+              <table class="table">
+              <%if @feedbacks.any?%>
+                <thead>
+                  <tr>
+                    <th>Employee Name</th>
+                    <th>Evaluation Name</th>
+                  </tr>
+                </thead>
+              <%else%>
+                <div class="text-center nodata mx-auto">
+                  <p class="fw-bolder mb-0">Currently You Have No FeedBack</p>
+                </div>
+              <%end%>
+                <tbody>
+                <% @feedbacks&.each do|feedback| %>
+                 <tr>
+                    <td>
+                       <%= feedback.assigned_user.user.full_name %>
+                    </td>
+                    <td>
+                       <%= link_to feedback.assigned_user.evaluation.title, completed_evaluation_evaluations_path(:evaluation_notification => feedback.assigned_user.evaluation, :assigned_user => feedback.assigned_user) %>
+                     </td>
+                 </tr>
+                <%end%>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <%end%>
+</div>
+<script type = "text/javascript" >
+  function status_updation(evaluation, evaluation_status) {
+    response = $.ajax({
+        url: '/evaluations',
+        method: 'Get',
+        data: {evaluation, evaluation_status},
+    });
+  }
+
+   $('#checkall').click(function() {
+    if ($(this).is(':checked')) {
+        $('div input.select__all').prop('checked', true);
+        $('.active_button').prop('disabled', false);
+        $('.approve_button').prop('disabled', false);
+        $('.reject_button').prop('disabled', false);
+    } else {
+        $('div input.select__all').prop('checked', false);
+        $('.active_button').prop('disabled', true);
+        $('.approve_button').prop('disabled', true);
+        $('.reject_button').prop('disabled', true);
+    }
+  });
+
+  $('.select__all').click(function() {
+        if($('input.select__all:checked').length >=1 )
+        {
+          $('.active_button').prop('disabled', false);
+          $('.approve_button').prop('disabled', false);
+          $('.reject_button').prop('disabled', false);
+        }
+        else
+        {
+          $('.active_button').prop('disabled', true);
+          $('.approve_button').prop('disabled', true);
+          $('.reject_button').prop('disabled', true);
+        }
+    if ($('.select__all').length == $('input.select__all:checked').length) {
+        $('#checkall').prop('checked', true);
+    } else {
+        $('#checkall').prop('checked', false);
+    }
+  });
+
+  function evaluation_array(status){
+    var evaluations_status_update = $('input[name="evaluation"]:checked').map(function() {return this.id;}).get();
+    $.ajax({
+      url: `/evaluations/${status}_evaluation_status`,
+      type: 'get',
+      data: {evaluations_status_update, status},
+    });
+  }
+</script>

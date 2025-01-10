@@ -1,0 +1,36 @@
+<div class="container-fluid">
+  <div id="leaves">
+    <%if current_user&.user? && !current_user&.is_hr()%>
+      <div id= 'update_request_status'>
+        <%= render 'load_request_status' %>
+      </div>
+    <%end%>
+    <section class="mb-3">
+      <div class="row justify-content-between align-items-center ps-3">
+        <div class="col-md-5 emplyeedetails">
+          <% if current_user.avatar.attached? %>
+            <%=cl_image_tag((Cloudinary::Utils.private_download_url(current_user.avatar.key, "jpg")), class:"img-fluid rounded-circle", alt:"")%>
+          <%else%>
+            <img src="../../assets/icons/username.svg" alt="" />
+          <%end%>
+            <span><%= current_user.full_name%></span>
+          </div>
+        <div class="col-md-5 dropdown">
+          <button class="dropdown-toggle btn attachmentuploadbtn float-end" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="nav_name">+Add New</span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><%= link_to "loan request", new_request_path(request_type: "loan"), class:"dropdown-item" ,data: { turbo_frame: "remote_modal", turbo_action: "advance", turbo_stream: true } %></li>
+            <li><%= link_to "expense request", new_request_path(request_type: "expense"), class:"dropdown-item", data: { turbo_frame: "remote_modal", turbo_action: "advance", turbo_stream: true } %></li>
+            <li><%= link_to "document request", new_request_path(request_type: "document"), class:"dropdown-item", data: { turbo_frame: "remote_modal", turbo_action: "advance", turbo_stream: true } %></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <div id="request_data">
+      <%= render 'load_request_data' %>
+    </div>
+  </div>
+</div>
+
+

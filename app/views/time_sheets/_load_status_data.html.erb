@@ -1,0 +1,56 @@
+<section>
+  <nav class="navbar navbar-expand sub__nav">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="nav justify-content-start ms-4 timsheetlist navbar-nav" id="navbar-status">
+          <%if current_user.user? && !current_user.is_hr() %>
+            <li class="nav-item mx-">
+              <a class="px-4 nav-link <%= params[:status].present? ? params[:status].downcase == "archived" ? 'timesheetactive' : '' : ''%> text-danger" id="archived"  aria-current="page">Archived</a>
+            </li>
+            <li class="nav-item mx-4">
+              <a class="px-4 nav-link <%= params[:status].present? ? params[:status].downcase == "draft" ? 'timesheetactive' : '' : 'timesheetactive'%> text-danger" id="draft">Draft</a>
+            </li>
+          <%end%>
+          <li class="nav-item mx-4">
+            <a class="px-4 nav-link <%= params[:status].present? ? params[:status].downcase == "pending" ? 'timesheetactive' : '' : ''%> text-danger" id="pending">Pending</a>
+          </li>
+          <li class="nav-item mx-4">
+            <a class="px-4 nav-link <%= params[:status].present? ? params[:status].downcase == "approved" ? 'timesheetactive' : '' : ''%> text-danger" id="approved">Approved</a>
+          </li>
+          <li class="nav-item mx-4">
+            <a class="px-4 nav-link <%= params[:status].present? ? params[:status].downcase == "rejected" ? 'timesheetactive' : '' : ''%> text-danger" id="rejected">Rejected</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-ms-md-2">
+      <% if date_is_in_current_week(params[:get_date]) %>
+        <%= link_to(new_time_sheet_path, class: "btn addtimesheet add__newsheet", data: { turbo_frame: "remote_modal" }) do %>
+          + Add New
+        <% end %>
+      <% end %>
+      </div>
+    </div>
+  </nav>
+</section>
+<hr />
+
+<script type = "text/javascript" >
+$('#return-today').hide();
+$( function() {
+  $('#archived, #draft, #pending, #approved, #rejected').click(function(){
+    active_div = $('#time_sheets').find('.timesheetactive');
+    active_div.removeClass('timesheetactive');
+    status = this.innerHTML
+    <% date = params[:get_date] %>
+    get_date = "<%= date %>"
+    send_ajax(status, get_date)
+  });
+  function send_ajax(status, get_date){
+    response = $.ajax({
+        url: '/time_sheets',
+        method: 'Get',
+        data: {status, get_date},
+    });
+  }
+});
+</script>

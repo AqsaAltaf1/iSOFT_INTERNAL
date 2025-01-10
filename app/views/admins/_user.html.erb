@@ -1,0 +1,4 @@
+<% User.joins(:time_sheets).uniq.each do |user| %>
+   
+    <%= link_to user.email, admin_index_path(user_id: user.id) %><br>
+<% end %>

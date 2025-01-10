@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+  <h3><b>This is a reminder eamil to perform any due action, thanks</b></h3>
+    <%= render(
+      partial: 'leaves/leave',
+      locals: { leave: @leave}
+    )%>
+    <%if @user.user? && !@user.is_hr() %>
+      <a href='<%= get_base_url%>/leaves/<%=@leave.id%>?notification_id=<%= @leave.id%>'>To see update please click here </a>
+    <%elsif @user.is_hr() || @user.admin? %>
+      <%if @status.present?%>
+        <a href='<%= get_base_url%>/leaves/<%= @leave.id%>?checked_by=<%= @current_user.id%>&notification_id=<%= @leave.id%>'> To see update please click here</a>
+      <%else%>
+        <a href='<%= get_base_url%>/leaves/<%= @leave.id%>?notification_id=<%= @leave.id%>'>For approval or rejection please click on the link </a>
+      <%end%>
+    <%end%>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+<h1>Welcome to isoftstudios private Limited</h1>
+
+<p>
+  <h3><%= @admin.full_name  %>, has rejected the following evaluations: </h3>
+
+  <% @rejected_evaluation.each do |evaluation| %>
+  <ul>
+    <li><%= evaluation.title.capitalize %></li>
+  </ul>
+  <%end%>
+</p>

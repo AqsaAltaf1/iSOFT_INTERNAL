@@ -1,0 +1,30 @@
+:logfile: ./log/sidekiq.log
+:concurrency: 2
+staging:
+ :concurrency: 2
+develop:
+ :concurrency: 2
+:queues:
+ - critical
+ - default
+ - mailers
+ - low
+:schedule:
+  upload_json_to_cloudinary_11am:
+    cron: "0 11 * * *"
+    class: "AttendanceDataUploadJob"
+
+  upload_json_to_cloudinary_8pm:
+    cron: "0 20 * * *"
+    class: "AttendanceDataUploadJob"
+
+  sink_attendance_data_11am:
+    cron: "0 11 * * *"
+    class: "CreateAttendanceJob"
+
+  sink_attendance_data_8pm:
+    cron: "0 20 * * *"
+    class: "CreateAttendanceJob"
+
+  
+  

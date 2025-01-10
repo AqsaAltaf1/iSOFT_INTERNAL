@@ -1,0 +1,33 @@
+<%= form_with(model: company) do |form| %>
+  <% if company.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(company.errors.count, "error") %>
+        prohibited this company from being saved:</h2>
+
+      <ul>
+        <% company.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label 'Company Name', class:'form-label' %>
+    <%= form.text_field :name, class:'form-control', placeholder: 'Enter Company Name' %>
+  </div>
+  <div class="mb-3">
+    <%= form.label 'Company Subdomain', class:'form-label' %>
+    <%= form.text_field :subdomain, class:'form-control', placeholder: 'Enter Company Subdomain' %>
+  </div>
+  <div class="mb-3">
+    <%= form.label 'Company Status', class:'form-label' %>
+    <%= form.select :status, Company.statuses.keys.map { |s| [s.humanize, s] } %>
+  </div>
+  <div class="mb-3">
+    <%= form.label 'logo', class:'form-label'%>
+    <%= form.file_field :avatar, direct_upload: true %>
+  </div>
+  <div class="text-center">
+    <%= form.submit company.new_record? ? "Create " : "Update ", class:"btn addprojectbutton  " %>
+  </div>
+<% end %>

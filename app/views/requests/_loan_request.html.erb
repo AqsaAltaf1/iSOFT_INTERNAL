@@ -1,0 +1,88 @@
+<%= form_with(model: request) do |form| %>
+  <%= form.fields :details, model: OpenStruct.new(form.object.details) do |data_fields| %>
+    <% if request.errors.any? %>
+      <div class="text-danger">
+        <h6>Following errors are prohibited from saving this request.</h6>
+        <% request.errors.each do |error| %>
+          <p class='text-danger user-error'><%= error.full_message %></p>
+        <% end %>
+      </div>
+    <% end %>
+    <h3 class="text-center">Loan Request</h3>
+    <div class="row g-3 align-items-center mb-3">
+      <div class="col-md-6">
+        <label for="employee" class="col-form-label">Employee</label>
+        <%= data_fields.text_field :employee, value: "#{current_user.first_name} #{current_user.last_name}", readonly: true, class: "form-control" %>
+      </div>
+
+      <div class="col-md-6">
+        <label for="loan_type" class="col-form-label">Loan type</label>
+        <%= data_fields.select :loan_type,
+          options_for_select(['Loan', 'Advanced', 'Provident Fund'], selected: (@request.new_record? ? 'Loan' : @request.details["loan_type"])),
+          { include_blank: 'Select loan type' },class: "form-select", required: true,
+          data: { controller: 'loan-type', action: 'change->loan-type#selectChange' }
+        %>
+      </div>
+    </div>
+    <div class="mb-3 fund-loan-type" data-controller="loan-type", data-action="change->loan-type#loanChange">
+      <label for="fund_loan_type" class="col-form-label">Fund Loan Type</label>
+      <%= data_fields.radio_button :fund_loan_type, false, checked: true %>
+      <%= data_fields.label :fund_loan_type, "temporary", value: "temporary"%>
+      <%= data_fields.radio_button :fund_loan_type, true %>
+      <%= data_fields.label :fund_loan_type, "permanent", value: "permanent"  %>
+    </div>
+    <div class="mb-3">
+      <label for="reason" class="col-form-label">Description</label>
+      <%= data_fields.text_area :reason,class: "form-control", required: true %> 
+    </div>
+    <h3 class="mt-5">Loan Recovery Details</h3>
+    <% if request.new_record? || (request.details["recovery_method"].present? && request.details["installment_amount"].present?) %>
+      <div class="row g-3 align-items-center mb-3 loan-recovery">
+        <div class="col-md-6">
+          <label for="recovery_method" class="col-form-label">Loan Recovery Method</label>
+          <%= data_fields.select :recovery_method,
+            options_for_select(['salary','cash'], selected: (@request.new_record? ? 'salary' : @request.details["recovery_method"])),
+            { include_blank: 'Select' },
+            { class: "form-control", required: true }
+          %>
+        </div>
+
+        <div class="col-md-6">
+          <label for="installment_amount" class="col-form-label">Payment Installment Amount</label>
+          <%= data_fields.select :installment_amount,
+            options_for_select(['fixed','percentage of basic salary'], selected: (@request.new_record? ? 'fixed' : @request.details["installment_amount"])),
+            { include_blank: 'Select' },
+            { class: "form-control",required: true }
+          %>
+        </div>
+      </div>
+    <% end %>  
+    <div class="row g-3 align-items-center mb-3">
+      <div class="col-md-6">
+        <label for="taken_date" class="col-form-label">Loan Taken Date</label>
+        <%= data_fields.date_field :taken_date, min: Date.today.to_s, class: "form-control", required: true %>
+      </div>
+      <% if request.new_record? || request.details["payment_start_date"].present? %>
+        <div class="col-md-6 payment_start_date">
+          <label for="payment_start_date" class="col-form-label">Payment Start Date</label>
+          <%= data_fields.date_field :payment_start_date, min: Date.today.to_s, class: "form-control", required: true %>
+        </div>
+      <% end %>
+    </div>
+    <div class="row g-3 align-items-center mb-3">
+      <div class="col-md-6">
+        <label for="loan_amount" class="col-form-label">Loan amount</label>
+        <%= data_fields.number_field :loan_amount, class: "form-control", required: true %>
+      </div>
+    
+      <div class="col-md-6 recovery_loan_amount">
+        <label for="recovery_loan_amount" class="col-form-label">Recovery Loan amount</label>
+        <%= data_fields.number_field :recovery_loan_amount, class: "form-control", required: true %>
+      </div> 
+    </div>
+  <% end %>
+  <%= form.hidden_field :request_type,value: @request_type %>
+  <div class="d-flex justify-content-center">
+    <%= form.submit request.new_record? ? "Create" : "Update" , class: 'btn leavecreatebtn' %>
+  </div>
+<% end %>

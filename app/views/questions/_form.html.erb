@@ -1,0 +1,45 @@
+<%= form_for @question  do |f| %>
+  <% if @question.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@question.errors.count, "error") %> prohibited this evaluation from being saved:</h2>
+      <ul>
+        <% @question.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+     <div class="mb-3">
+       <%= f.label :user_type , class:'form-label' %>
+       <%= f.select :user_type, Question.user_types.keys.to_a, { :include_blank => 'select user type'}, class: 'form-select' %>
+      </div>
+      <div id="test" class="<%= @question.new_record? ? "hidden" : ''%> mb-3 ">
+        <%= f.label :question ,class:'form-label'%>
+        <%= f.text_field :question ,class:'form-control'%>
+        <div class="d-flex justify-content-end">
+            <button class="next-step btn btn-outline-success mt-2 <%= @question.new_record? ? '' : "hidden"%>">Next</button>
+        </div>
+      </div>
+        <div id="options" class="<%= @question.new_record? ? "hidden" : ''%> mb-3">
+          <%= f.fields_for :evaluation_options do |f|%>
+          <%= render "evaluation_option_fields", f: f %>
+          <% end %>
+          <div id="evaluation_option" class="mb-3">
+            <%= link_to_add_association 'Add options', f, :evaluation_options,class:'btn btn-outline-success mt-2' %>
+          </div> 
+        </div> 
+      <div class="update__btn  <%= @question.new_record? ? "hidden create" : ''%> ">
+        <%= f.submit @question.new_record? ? "Create " : "Update ", class:"btn btn-outline-primary  " %>
+      </div>
+<% end %>
+<script>
+  
+$("#evaluation_user_type").change(function(){
+    $("#test").removeClass('hidden');
+  });
+  $(".next-step").click(function(){
+    $(this).attr("disabled", true)
+    $("#options,.create").removeClass('hidden');
+  });
+
+</script>

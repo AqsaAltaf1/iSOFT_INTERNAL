@@ -1,0 +1,21 @@
+<%= render @leave %>
+<div class="col ps-3">
+  <%if current_user.is_hr() || current_user.admin? || (@leave&.user&.report_to && (@leave.user != current_user))%>
+    <div class="d-flex flex-row" style="margin-top: 2%;">
+      <% if @leave.status == 'pending' %>
+        <%= link_to "Approve", leaves_path(leave: @leave.id,leave_status: "approved"), class: "btn btn-primary btn-block", data: { turbo_frame:"leave_data", turbo_action: "advance", turbo_stream: true } %>
+        <%= link_to "Reject", leaves_path(leave: @leave.id,leave_status: "rejected"), style: "margin-left: 1%;",class: "btn btn-danger btn-block", data: { turbo_frame:"leave_data", turbo_action: "advance", turbo_stream: true } %>
+      <% else %>
+        <button class="btn btn-danger btn-block" disabled><%= @leave.status.upcase_first %> by <%= get_name %></button>
+      <% end %>
+    </div>
+    <div style="margin-top: 1%;">
+      <%= link_to "Back", admins_leave_section_path, class: "btn btn-danger btn-block" if current_user.admin? || current_user.is_hr() %>
+    </div>
+  <%end%>
+  <%if current_user.user? && !current_user.is_hr() %>
+    <div>
+      <%= link_to "Back to leaves", leaves_path, class:'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

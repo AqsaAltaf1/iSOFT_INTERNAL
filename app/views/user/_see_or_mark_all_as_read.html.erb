@@ -1,0 +1,27 @@
+<div
+    class="d-flex justify-content-between align-items-center notificationheader"
+>
+    <div class="dropdown-menu-header text-center p-3">
+        <a href="<%=see_all_notifications_path%>">See all</a>
+    </div>
+
+    <div class="dropdown-menu-footer p-3">
+        <%= link_to 'Mark all as read',  mark_all_notifications_as_read_path, data: {turbo_method: :post}, remote: true%>
+    </div>
+</div>
+
+<script>
+    var all_current_user_notify = <%= current_user&.notifications&.count %>
+    var all_unread_count = <%= @unread.count %>
+    if(all_current_user_notify > 9) {
+        $('.dropdown-menu-header').show();
+    } else {
+        $('.dropdown-menu-header').hide();
+    }
+    if(all_unread_count > 0) {
+        $('.dropdown-menu-footer').show();
+    } else {
+        $('.dropdown-menu-footer').hide();
+    }
+
+</script>

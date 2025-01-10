@@ -1,0 +1,13 @@
+<%= render 'table' %>
+<div>
+  <%= link_to "Back to Evaluations", evaluations_path %>
+</div>
+<script>
+function status_updation(evaluation, evaluation_status) {
+  response = $.ajax({
+      url: '/evaluations',
+      method: 'Get',
+      data: {evaluation, evaluation_status},
+  });
+}
+</script>

@@ -1,0 +1,51 @@
+<div class="container-fluid">
+  <div class="row ms-2 ms-lg-5">
+    <div class="col-12">
+      <% if histories.any? %>
+        <section class="hr-assets-detail">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <p>History</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="table-responsive">
+          <table class="table bg-white">
+            <thead>
+              <tr>
+                <th>Employee Name</th>
+                <th>Given Date</th>
+                <th>Return Date</th>
+                <th>Actions</th>
+              </tr>
+              <% if company_asset.broken? || company_asset.sold_out? %>
+                <tr class = "justify-content-center">
+                  <strong><p>Company Asset is <%= company_asset.status %></p></strong>
+                </tr>
+              <% end %>
+            </thead>
+            <% histories&.each do |history| %>
+            <tbody>
+              <tr>
+                <td><%= link_to history.user.full_name, user_path(history.user) %></td>
+                <td><%= history.given_date %></td>
+                <td><%= history.return_date %></td>
+                <td>
+                  <a title="view" href="<%= history_path(history)%>">
+                    <img src="../../assets/icons/view.svg" alt="" />
+                  </a>
+                  <%= link_to(edit_history_path(history), data: { turbo_frame: "remote_modal" }) do%>
+                    <img src="../../assets/icons/edit.svg" alt="" />
+                  <%end%>
+                </td>
+              </tr>
+            </tbody>
+            <% end %>
+          </table>
+        </div>
+      <%end%>
+    </div>
+  </div>
+</div>

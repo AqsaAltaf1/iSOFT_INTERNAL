@@ -1,0 +1,20 @@
+<div>
+  <strong> Evaluation:  </strong>
+  <%= evaluation.title %>
+  <p>
+    <%= render 'question', evaluation: evaluation %>
+  </p>
+</div>
+<script type = "text/javascript">
+    $( function() {
+        $('input[type=checkbox]').click(function(){
+            var $check_boxes = $(this).parent('li').siblings().find("input[type=checkbox]").prop('checked', false);
+            $check_boxes.click(function() {
+                $check_boxes.prop('checked', false);
+                $(this).prop('checked', true);
+            });
+        });
+    });
+</script>
+
+</div>

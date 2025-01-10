@@ -1,0 +1,648 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/admin/admins":
+    get:
+      summary: list admins
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create admin
+      responses:
+        '200':
+          description: successful
+  "/api/v1/admin/admins/new":
+    get:
+      summary: new admin
+      responses:
+        '200':
+          description: successful
+  "/api/v1/admin/admins/{id}/edit":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: edit admin
+      responses:
+        '200':
+          description: successful
+  "/api/v1/admin/admins/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show admin
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update admin
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update admin
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete admin
+      responses:
+        '200':
+          description: successful
+  "/api/v1/admin/leaves":
+    get:
+      summary: list leaves
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create leave
+      responses:
+        '200':
+          description: successful
+  "/api/v1/admin/leaves/new":
+    get:
+      summary: new leave
+      responses:
+        '200':
+          description: successful
+  "/api/v1/admin/leaves/{id}/edit":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: edit leave
+      responses:
+        '200':
+          description: successful
+  "/api/v1/admin/leaves/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show leave
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update leave
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update leave
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete leave
+      responses:
+        '200':
+          description: successful
+  "/api/v1/admin/time_sheets":
+    get:
+      summary: list time_sheets
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create time_sheet
+      responses:
+        '200':
+          description: successful
+  "/api/v1/admin/time_sheets/new":
+    get:
+      summary: new time_sheet
+      responses:
+        '200':
+          description: successful
+  "/api/v1/admin/time_sheets/{id}/edit":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: edit time_sheet
+      responses:
+        '200':
+          description: successful
+  "/api/v1/admin/time_sheets/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show time_sheet
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update time_sheet
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update time_sheet
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete time_sheet
+      responses:
+        '200':
+          description: successful
+  "/api/v1/employee/attachments":
+    get:
+      summary: list attachments
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create attachment
+      responses:
+        '200':
+          description: successful
+  "/api/v1/employee/attachments/new":
+    get:
+      summary: new attachment
+      responses:
+        '200':
+          description: successful
+  "/api/v1/employee/attachments/{id}/edit":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: edit attachment
+      responses:
+        '200':
+          description: successful
+  "/api/v1/employee/attachments/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show attachment
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update attachment
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update attachment
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete attachment
+      responses:
+        '200':
+          description: successful
+  "/api/v1/employee/leaves":
+    get:
+      summary: list leaves
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create leave
+      responses:
+        '200':
+          description: successful
+  "/api/v1/employee/leaves/new":
+    get:
+      summary: new leave
+      responses:
+        '200':
+          description: successful
+  "/api/v1/employee/leaves/{id}/edit":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: edit leave
+      responses:
+        '200':
+          description: successful
+  "/api/v1/employee/leaves/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show leave
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update leave
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update leave
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete leave
+      responses:
+        '200':
+          description: successful
+  "/api/v1/employee/time_sheets/timesheet_status":
+    get:
+      summary: timesheet_status time_sheet
+      responses:
+        '200':
+          description: successful
+  "/api/v1/employee/time_sheets/approval_request":
+    get:
+      summary: approval_request time_sheet
+      responses:
+        '200':
+          description: successful
+  "/api/v1/employee/time_sheets":
+    get:
+      summary: list time_sheets
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create time_sheet
+      responses:
+        '200':
+          description: successful
+  "/api/v1/employee/time_sheets/new":
+    get:
+      summary: new time_sheet
+      responses:
+        '200':
+          description: successful
+  "/api/v1/employee/time_sheets/{id}/edit":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: edit time_sheet
+      responses:
+        '200':
+          description: successful
+  "/api/v1/employee/time_sheets/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show time_sheet
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update time_sheet
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update time_sheet
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete time_sheet
+      responses:
+        '200':
+          description: successful
+  "/api/v1/hr/leaves":
+    get:
+      summary: list leaves
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create leave
+      responses:
+        '200':
+          description: successful
+  "/api/v1/hr/leaves/new":
+    get:
+      summary: new leave
+      responses:
+        '200':
+          description: successful
+  "/api/v1/hr/leaves/{id}/edit":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: edit leave
+      responses:
+        '200':
+          description: successful
+  "/api/v1/hr/leaves/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show leave
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update leave
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update leave
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete leave
+      responses:
+        '200':
+          description: successful
+  "/api/v1/hr/time_sheets":
+    get:
+      summary: list time_sheets
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create time_sheet
+      responses:
+        '200':
+          description: successful
+  "/api/v1/hr/time_sheets/new":
+    get:
+      summary: new time_sheet
+      responses:
+        '200':
+          description: successful
+  "/api/v1/hr/time_sheets/{id}/edit":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: edit time_sheet
+      responses:
+        '200':
+          description: successful
+  "/api/v1/hr/time_sheets/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show time_sheet
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update time_sheet
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update time_sheet
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete time_sheet
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/password/new":
+    get:
+      summary: new password
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/password/edit":
+    get:
+      summary: edit password
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/password":
+    patch:
+      summary: update password
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update password
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create password
+      responses:
+        '200':
+          description: successful
+  "/api/v1/projects":
+    get:
+      summary: list projects
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create project
+      responses:
+        '200':
+          description: successful
+  "/api/v1/projects/new":
+    get:
+      summary: new project
+      responses:
+        '200':
+          description: successful
+  "/api/v1/projects/{id}/edit":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: edit project
+      responses:
+        '200':
+          description: successful
+  "/api/v1/projects/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show project
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update project
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update project
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete project
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/sign_in":
+    get:
+      summary: new session
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create session
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/sign_out":
+    delete:
+      summary: delete session
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users":
+    get:
+      summary: list users
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create user
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/new":
+    get:
+      summary: new user
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/{id}/edit":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: edit user
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show user
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update user
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update user
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete user
+      responses:
+        '200':
+          description: successful
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com

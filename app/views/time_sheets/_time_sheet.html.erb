@@ -1,0 +1,32 @@
+<div id="<%= dom_id time_sheet %>" >
+  <tr scope="row">
+    <td>
+      <span class="project--name"><%= time_sheet.project.name %></span>
+    </td>
+    <td class="description--td">
+      <span class="project--des"><%= time_sheet.description %></span>
+    </td>
+    <td>
+      <p><%= time_sheet.time.strftime("%H:%M:%S") %></p>
+    </td>
+    <td>
+        <%if current_user.user? && !current_user.is_hr()%>
+          <% if validate_dates(time_sheet) %>
+          <%= link_to(time_sheet, data: { turbo_method: :delete, turbo_confirm: 'Do you want to delete Time sheet?' }) do %>
+              <img src="../../assets/icons/delete.svg" alt="" />
+            <% end %>
+            <%= link_to(edit_time_sheet_path(time_sheet), data: { turbo_frame: "remote_modal" }) do %>
+              <img src="../../assets/icons/edit.svg" alt=""/>
+            <% end %>
+            <% if time_sheet.status == "draft"%>
+              <img src="../../assets/icons/archieved.svg" alt="" onclick="myFunction(<%=time_sheet.id%>, 'archived')" title="Move To Archive" />
+            <% else %>
+              <img src="../../assets/icons/archieved.svg" alt="" onclick="myFunction(<%=time_sheet.id%>, 'draft')" title="Remove from Archive" />
+            <% end %>
+          <% end %>
+        <%else%>
+          <p><%= time_sheet.user.full_name %></p>
+        <% end %>
+      </td>
+  </tr>
+</div>

@@ -1,0 +1,6 @@
+<%= turbo_stream.update "request_data" do %>
+  <%= render partial: "requests/load_request_data", locals: { requests: @requests } %>
+<% end %>
+<%= turbo_stream.update "update_request_status" do %>
+  <%= render partial: "requests/load_request_status", locals: { requests: @requests } %>
+<% end %>

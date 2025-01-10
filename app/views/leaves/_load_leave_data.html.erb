@@ -1,0 +1,112 @@
+<section class="mb-5 pb-4" data-controller="short-type-field">
+<% @leaves.reverse%>
+  <center><%= link_to @user.full_name, user_path(@user), class: "btn attachmentuploadbtn" if @user.present?%></center>
+    <% if @leaves.present? %>
+      <% @types_leaves.each do |type| %>
+        <% @t=@leaves.selected_type(type[0]) %>
+        <div class="col-12">
+          <div class="ps-3 d-flex">
+          <h5><%= ApplyLeave.find(type[0])&.allowed_leave_type.capitalize%> Leaves</h5> 
+            <div class=" leavesdetails ms-auto">
+              <strong><%= remaining_leaves_details(type[0], @user) %></strong>
+            </div>
+          </div>
+          <div class="row ps-3">
+          <% @t.each do |leave| %>
+            <div class="col-md-6 col-lg-6 mb-2">
+              <div class="card fullleavecard">
+                <div class="card-body">
+                  <div class="text-end">
+                    <img src="../../assets/icons/Group.svg" alt="" />
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-4">
+                        <%if leave.hours.present? %>
+                        <p>Applied Hours:</p>
+                        <%end%>
+                        <div class="mb-3"><p>Start:</p></div>
+                        <p>End:</p>
+                    </div>
+                    <div class="col-7">
+                      <%if leave.hours.present? %>
+                        <p><%= display_leaves(leave.hours)%></p>
+                      <%end%>
+                      <div class="mb-3"> <p><%= leave.date_from.strftime("%A, %d %b")  %></p></div>
+                      <p><%= leave.date_to.strftime("%A, %d %b") %></p>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-4">
+                      <%if leave.from_time.present? %>
+                      <p>From Time:</p>
+                      <%end%>
+                    </div>
+                    <div class="col-7">
+                      <%if leave.from_time.present? %>
+                        <p><%= display_time(leave.from_time.to_s)%></p>
+                      <%end%>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-4">
+                      <%if leave.to_time.present? %>
+                      <p>To Time:</p>
+                      <%end%>
+                    </div>
+                    <div class="col-7">
+                      <%if leave.to_time.present? %>
+                        <p><%= display_time(leave.to_time.to_s)%></p>
+                      <%end%>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-4">
+                      <p>Type:</p>
+                    </div>
+                    <div class="col-7">
+                      <p id="edit-leave-type"><%= leave.apply_leave.allowed_leave_type %></p>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-4">
+                      <p>Description:</p>
+                    </div>
+                    <div class="col-7">
+                      <p><%= leave.body %></p>
+                    </div>
+                  </div>
+                  <% if leave.files.present?%>
+                    <p>Files:</p>
+                    <% leave.files.each do |image| %>
+                      <%= leave_image(image) %>
+                    <% end %>
+                  <%end%>
+                  <div>
+                    <div class="float-start">
+                      <%= link_to "delete", leave_path(leave), data: {
+                        turbo_method: :delete,
+                        turbo_confirm: "Are you sure?"
+                      }, class: "btn btn-danger btn-block" if (current_user.admin? || (current_user == leave.user)) && !leave.pending? %>
+                    </div>
+                    <div class="float-end">
+                      <%= link_to "edit", edit_leave_path(leave), class: "btn btn-danger btn-block", data: { controller: "short-type-field", action: "click->short-type-field#selectChange", turbo_frame: "remote_modal" } if current_user.user? && leave.pending? %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <%end%>
+    <% else %>
+      <div class="nodata text-center">
+        <p class="mb-0">You have no data </p>
+      </div>  
+    <% end %>
+  
+  <div class="col ms-2 ms-lg-5 ps-3">
+    <%if current_user.is_hr() || current_user.admin? %>
+      <%= link_to "Back", admins_leave_section_path, class: "btn btn-danger btn-block" %>
+    <% end %>
+  </div>
+</section>

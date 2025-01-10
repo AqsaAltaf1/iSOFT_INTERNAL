@@ -1,0 +1,11 @@
+<h1>Edit Company</h1>
+
+<%= render "users/remote_modal", title: "Edit Company" do %>
+    <%= render "form", company: @company %>
+<% end %>
+
+<br>
+
+    <div>
+        <%= link_to "Back", companies_path %>
+    </div>

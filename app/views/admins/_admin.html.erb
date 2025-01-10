@@ -1,0 +1,8 @@
+<strong>Email:</strong>
+<%= admin.user_email %><br>
+<strong>Joining Date:</strong>
+<%= admin.joining_date %><br>
+<%= link_to(admin, class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }) do %>
+          <i class="fa-solid fa-trash-can"  title="Delete"></i>
+<% end %>
+<%= link_to "Edit", edit_admin_path(admin), class: "btn btn-success btn-block" %><br>

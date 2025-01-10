@@ -1,0 +1,16 @@
+<hr />
+<div id="leave-notes">
+  <h5>Additional Notes</h5>
+	<%unless @request_notes.nil? %>
+		<% @request_notes.map do |request| %>
+			<%content = request.content%>
+			<%if request.user.user_type == current_user.user_type && request.user.is_hr %>
+				<span><strong>Hr: </strong> <%= content %></span><br/>
+      <%elsif request.user.user_type == current_user.user_type && request.user.user_type == 'user'%>
+        <span><strong>Employee: </strong> <%= content %></span><br/>
+			<%else%>
+				<span><strong><%= request.user.user_type %>: </strong><%= content %></span><br/>
+			<%end%>
+		<%end.join.html_safe %>
+	<%end%>
+</div>

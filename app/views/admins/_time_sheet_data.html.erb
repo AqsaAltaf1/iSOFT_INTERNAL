@@ -1,0 +1,22 @@
+<% @project_vise_log.each do |project_name, day_log| %>
+  <tr>
+    <td><%= project_name %></td>
+    <% day_log.each_value do |time_log| %>
+      <td class="text-center"><%= time_log %></td>
+    <% end %>
+    <td class="text-center"><strong><%= total_h(day_log.values) %></strong></td>
+  </tr>
+<%end%>
+
+<tr>
+  <td class="text-primary"><strong>Daily Total</strong></td>
+  <% total_time_logs_array = [] %>
+  <% @day_vise_log.each do |day_projects_log| %>
+    <td class="text-center">
+      <% one_day_time_log = day_projects_log[:total_time] %>
+      <% total_time_logs_array.push(one_day_time_log) %>
+      <strong><%= one_day_time_log %></strong>
+    </td>
+  <% end %>
+  <td class="text-center"><strong><%= total_h(total_time_logs_array) %></strong></td>
+</tr>

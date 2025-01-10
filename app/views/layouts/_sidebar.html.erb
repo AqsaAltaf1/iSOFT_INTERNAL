@@ -1,0 +1,216 @@
+<div class="v3-menu">
+  <div class="v3-navbar open-sidebar" id="nav-bar">
+    <nav class="nav">
+    <div class="nav_list">
+      <ul class="pt-3">
+        <% if current_user.is_hr() %>
+          <li class="v3-side-li menu-item <%= active_class('home') %>">
+            <a href="<%= home_hr_path%>" class="nav_link">
+              <span class="material-icons-outlined">
+                dashboard
+              </span>
+              <span class="nav_name">Dashboard</span>
+            </a>
+          </li>
+        <% elsif current_user.admin? || current_user.super_admin? %>
+          <li class="v3-side-li menu-item <%= active_class('home') %>">
+            <a href="<%= home_admin_path%>" class="nav_link">
+              <span class="material-icons-outlined">
+                dashboard
+              </span>
+              <span class="nav_name">Dashboard</span>
+            </a>
+          </li>
+        <% else %>
+          <li class="v3-side-li menu-item <%= active_class('home') %>">
+            <a href="<%= home_employee_path%>" class="nav_link">
+              <span class="material-icons-outlined">
+                dashboard
+              </span>
+              <span class="nav_name">Dashboard</span>
+            </a>
+          </li>
+        <% end %>
+          <% if current_user.user? %>
+            <li class="v3-side-li menu-item <%= active_class('time_sheets') %>">
+              <a href="<%= calander_view_time_sheets_path%>" , class="nav_link">
+                <span class="material-icons-outlined">
+                  schedule
+                </span>
+                <span class="text nav_name">Timesheet</span>
+              </a>
+            </li>
+          <% else %>
+            <li class="v3-side-li menu-item <%= active_class('time_sheets') %>">
+              <a href="<%= time_sheets_path%>" , class="nav_link">
+                <span class="material-icons-outlined">
+                  schedule
+                </span>
+                <span class="text nav_name">Timesheet</span>
+              </a>
+            </li>
+          <% end %>
+          <%if has_permission_of(current_user,"view_all_employee_leaves") || current_user.admin? || current_user.super_admin? || current_user.is_hr() %>
+            <li class="v3-side-li menu-item <%= active_class_controller(admins_leave_section_path) %>">
+              <a href="<%= admins_leave_section_path%>" class="nav_link" >
+                <span class="material-icons-outlined">
+                  holiday_village
+                </span>
+                <span class="nav_name">Employee Leaves</span>
+              </a>
+            </li>
+          <% end %>
+          <%if has_permission_of(current_user,"view_all_employee_requests") || current_user.admin? || current_user.super_admin? || current_user.is_hr() %>
+            <li class='v3-side-li menu-item <%= active_class_controller(admins_requests_section_path) %>'>
+              <a href="<%= admins_requests_section_path %>" class="nav_link">
+                <span class="material-icons-outlined">
+                  campaign
+                </span>
+                <span class="nav_name">Employee Requests</span>
+              </a>
+            </li>
+          <% end %>
+          <%if has_permission_of(current_user,"view_all_projects") || current_user.admin? || current_user.super_admin? || current_user.is_hr() %>
+            <li class="v3-side-li menu-item <%= active_class('projects') %>">
+              <a href="<%= projects_path%>" class="nav_link" >
+                <span class="material-icons-outlined">
+                  task
+                </span>
+                <span class="nav_name">Projects</span>
+              </a>
+            </li>
+          <% end %>
+          <%if has_permission_of(current_user,"view_all_roles") || current_user.admin? || current_user.super_admin? || current_user.is_hr() %>
+            <li class="v3-side-li menu-item <%= active_class('roles') %>">
+              <a href="<%= roles_path%>" class="nav_link" >
+                <span class="material-icons-outlined">
+                  add
+                </span>
+                <span class="nav_name">Role</span>
+              </a>
+            </li>
+          <% end %>  
+          <%if has_permission_of(current_user,"view_all_designations") || current_user.admin? || current_user.super_admin? || current_user.is_hr() %>
+            <li class="v3-side-li menu-item <%= active_class('user_designations') %>">
+              <a href="<%= user_designations_path%>" class="nav_link" >
+                <span class="material-icons-outlined">
+                  add
+                </span>
+                <span class="nav_name">Designation</span>
+              </a>
+            </li>
+          <% end %>  
+          <% if current_user.user? && (!current_user.admin? || !current_user.hr() || !curren_user.super_admin?) %>
+            <li class="v3-side-li menu-item <%= active_class('leaves') %>">
+              <a href="<%= leaves_path %>" class="nav_link" >
+                <span class="material-icons-outlined">
+                  holiday_village
+                </span>
+                <span class="nav_name">Leaves</span>
+              </a>
+            </li>
+            <li class='v3-side-li menu-item <%= active_class('requests') %>'>
+              <a href="<%= requests_path %>" class="nav_link">
+                <span class="material-icons-outlined">
+                  campaign
+                </span>
+                <span class="nav_name">Requests</span>
+              </a>
+            </li>
+          <% end %>
+          <li class="v3-side-li menu-item <%= active_class('attachments') %>">
+            <a href="<%=attachments_path%>" class="nav_link">
+              <span class="material-icons-outlined">
+                attach_file
+              </span>
+              <span class="nav_name">Attachment</span>
+            </a>
+          </li>
+          <% if current_user.user? && !current_user.is_hr() %>
+            <li class="v3-side-li menu-item <%= active_class('evaluations') %>">
+              <a href="<%= user_evaluation_evaluations_path%>" class="nav_link">
+                <span class="material-icons-outlined">
+                  quiz
+                </span>
+                <span class="nav_name">Evaluation</span>
+              </a>
+            </li>
+          <% else %>
+            <li class="v3-side-li menu-item <%= active_class('evaluations') %>">
+              <a href="<%=evaluations_path %>" class="nav_link">
+                <span class="material-icons-outlined">
+                  quiz
+                </span>
+                <span class="nav_name">Evaluation</span>
+              </a>
+            </li>
+          <% end %>
+          <% if current_user&.admin? || current_user&.super_admin? || current_user&.is_hr() || has_permission_of(current_user,"view_all_employee_attendances") %>
+            <li class="v3-side-li menu-item <%= active_class('') %>">
+              <a href="<%= admins_all_employee_attendance_path %>" class="nav_link" >
+                <span class="material-icons-outlined">
+                  laptop_chromebook
+                </span>
+                <span class="nav_name">Employees Attendance</span>
+              </a>
+            </li>
+          <% end %>
+          <% if current_user&.admin? || current_user&.super_admin? || current_user&.is_hr() || has_permission_of(current_user,"view_all_company_assests") %>
+            <li class="v3-side-li menu-item <%= active_class('company_assets') %>">
+              <a href="<%= company_assets_path %>" class="nav_link" >
+                <span class="material-icons-outlined">
+                  laptop_chromebook
+                </span>
+                <span class="nav_name">Comapny Assets</span>
+              </a>
+            </li>
+          <% end %>
+          <%if current_user.company_assets.present? %>
+            <li class="v3-side-li menu-item <%= active_class('projects') %>">
+              <a href="<%= user_assets_company_assets_path %>" class="nav_link" >
+                <span class="material-icons-outlined">
+                  task
+                </span>
+                <span class="nav_name">Your Assets</span>
+              </a>
+            </li>
+          <% end %>  
+          <% if current_user&.admin? || current_user&.super_admin? || current_user&.is_hr() || has_permission_of(current_user,"create_user") %>
+            <li class="v3-side-li">
+              <%= link_to(new_user_path, class: "nav_link", data: { turbo_frame: "remote_modal" }) do %>
+                <span class="material-icons-outlined">
+                  add
+                </span>
+                <span class="nav_name">New Hiring</span>
+              <% end %>   
+            </li>
+            <li class="v3-side-li">
+              <%= link_to(employee_groups_path, class: "nav_link") do %>
+                <span class="material-icons-outlined">
+                  add
+                </span>
+                <span class="nav_name">Employee group</span>
+              <% end %>   
+            </li>
+          <% end %>
+          <li class='v3-side-li menu-item <%= active_class('announcements') %>'>
+            <a href="<%= announcements_path %>" class="nav_link">
+              <span class="material-icons-outlined">
+                campaign
+              </span>
+              <span class="nav_name">Announcments</span>
+            </a>
+          </li>
+          <li class="v3-side-li menu-item <%= active_class('attendances') %>">
+            <a href="<%= attendances_path %>" class="nav_link" >
+              <span class="material-icons-outlined">
+                laptop_chromebook
+              </span>
+              <span class="nav_name">Attendance</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</div>

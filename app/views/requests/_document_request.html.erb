@@ -1,0 +1,43 @@
+<%= form_with(model: request) do |form| %>
+  <%= form.fields :details, model: OpenStruct.new(form.object.details) do |data_fields| %>
+    <% if request.errors.any? %>
+      <div class="text-danger">
+        <% request.errors.each do |error| %>
+          <p class='text-danger user-error'><%= error.full_message %></p>
+        <% end %>
+      </div>
+    <% end %>
+    <h3 class="text-center">Document Request</h3>
+    <div class="row g-3 align-items-center mb-3">
+      <div class="col-md-6">
+        <label for="employee" class="col-form-label">Employee</label>
+        <%= data_fields.text_field :employee, value: "#{current_user.first_name} #{current_user.last_name}", readonly: true, class: "form-control" %>
+      </div>
+
+      <div class="col-md-6">
+        <label for="template" class="col-form-label">Template</label>
+        <%= data_fields.select :template,
+          options_for_select(['template'], selected: (@request.new_record? ? 'template' : @request.details["template"])),
+          { include_blank: 'Select' },
+          { class: "form-control", required: true }
+        %>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="name" class="col-form-label">Name</label>
+      <%= data_fields.text_field :name, class: "form-control", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <div class="">
+        <label for="remarks" class="col-form-label">Remarks</label>
+        <%= data_fields.text_area :remarks,class: "form-control", required: true %> 
+      </div>
+    </div>
+  <% end %>
+    <%= form.hidden_field :request_type,value: @request_type %>
+  <div class="d-flex justify-content-center">
+    <%= form.submit request.new_record? ? "Create" : "Update" , class: 'btn leavecreatebtn' %>
+  </div>
+<% end %>

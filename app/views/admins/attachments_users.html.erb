@@ -1,0 +1,27 @@
+<h1>Please select any user</h1>
+
+<%if current_user.admin?%>
+
+<h2>HR</h2>
+<table class="table">
+  <tbody>
+  <% @hrs.each do |user| %>
+    <tr>
+        <td><%= link_to user.email, admins_view_attachments_path(user_id: user.id) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% end %>
+
+<h2>Employees</h2>
+<table class="table">
+  <tbody>
+  <% @employees.each do |user| %>
+    <tr>
+        <td><%= link_to user.email, admins_view_attachments_path(user_id: user.id) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

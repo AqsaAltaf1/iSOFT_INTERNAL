@@ -1,0 +1,22 @@
+<div class="ms-5 asset-detail-card" id="<%= dom_id @company %>">
+  <h6 class="text-center heading-text">Company Details</h6>
+  <div class="mb-3">
+    <div class="d-flex justify-content-between">
+      <strong>Company Name:</strong>
+      <%= @company.name %>
+    </div>
+  </div>
+</div>
+<div class="mb-3">
+  <div class="d-flex justify-content-between">
+    <strong>Company Subdomain:</strong>
+    <%= @company.subdomain %>
+  </div>
+  <div class="d-flex justify-content-between">
+    <strong>Company Status:</strong>
+    <%= @company.status %>
+  </div>
+  <% if @company.avatar.attached? %>
+    <%= cl_image_tag @company.avatar.key, :width=>150, :crop=>"fill" %>
+  <% end %>
+</div>

@@ -1,0 +1,48 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="text-center">
+        <h4 class="emp-h4">Help Documents</h4>
+        <div class="col-md-12 text-md-end mb-3">
+          <%= link_to(new_help_document_path, class: "btn attachmentuploadbtn", data: { turbo_frame: "remote_modal" }) do %>
+            +Add New
+          <% end %> 
+        </div>
+      </div>
+      <div class="table-responsive hr-employeeleave">
+        <table id="apply_leave_search" class="display" style="width: 100%">
+          <thead>
+            <tr>
+              <th scope="col" class="text-start">Name</th>
+              <th scope="col" class="text-start">File</th>
+              <th scope="col" class="text-start">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @help_documents&.each do |help_document| %>
+              <tr class="text-start">
+                <td>
+                  <%= help_document.name %>
+                </td>
+                <td>
+                  <%=  help_document.file.image? ? help_image_helper(help_document.file) : help_documents_helper(help_document.file) %>
+                </td>
+                <td>
+                  <%= link_to(help_document_path(help_document), class: 'me-2') do %>
+                    <%= image_tag("icons/view.svg", alt: "")%>
+                  <% end %> 
+                  <%= link_to(edit_help_document_path(help_document), data: { turbo_frame: "remote_modal" }, class: 'me-2') do %>
+                    <%= image_tag("icons/edit.svg", alt: "")%>
+                  <% end %> 
+                  <%= link_to(help_document_path(help_document), data: { turbo_method: :delete, turbo_confirm: 'Do you want to delete Document?' }) do %>
+                    <%= image_tag("icons/delete.svg", alt: "")%>                 
+                  <% end %>
+                </td>
+              <tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

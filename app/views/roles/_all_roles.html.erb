@@ -1,0 +1,19 @@
+<tbody id = 'users_roles' >
+  <% roles&.each do |role| %>
+  <tr>
+    <td><%= role.name %></td>
+    <td><% role.permissions.each do |permission| %>
+            <%= permission.description %>
+        <%end%>
+    </td>
+    <td>
+      <a title='view' href="<%= role_path(role)%>">
+            <img src="../../assets/icons/view.svg" alt="" />
+      </a>
+      <%= link_to(edit_role_path(role), data: { turbo_frame: "remote_modal" }) do%>
+        <img src="../../assets/icons/edit.svg" alt="" />
+      <%end%>
+    </td>
+  </tr>
+  <% end %>
+</tbody>

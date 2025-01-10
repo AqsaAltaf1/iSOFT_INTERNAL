@@ -1,0 +1,71 @@
+<div class="mt-3" style="text-align:center">
+  <span><h5><%= current_user.full_name%>'s Notifications </h5></span>
+</div>
+<div class="mt-3" style="">
+<% if @notifications.any? %>
+  <% if @notifications.unread.present? %>
+  <div class="unread_sec d-flex justify-content-between">
+    <p>Unread</p>
+    <button class= "btn me-5 all-notification markall_btn"> Mark all as read </button>
+  </div>
+    <% @notifications.unread&.each do |notification| %>
+    <%= link_to notification.to_notification.url, class:'all_notification' do%>
+    <div class="notification_sec">
+    <div>
+      <% if notification.type == 'TimeSheetApprovelNotification' || notification.type == 'TimeSheetNotification' %>
+            <%= image_tag ("time sheet icon.png"),style:"width:25px; height:25px" %>
+            <% elsif notification.type == 'LeaveNotification' || notification.type == 'LeaveApprovalNotification'%>
+            <%= image_tag ("leave icon.png"),style:"width:25px; height:25px" %>
+            <%else%>
+            <%= image_tag ("evaluation icon.png"),style:"width:25px; height:25px" %>
+          <%end%>
+    </div>
+    <div>
+      <p class="mb-0"> <%=  notification.to_notification.message %> </p>
+      <p class="card-subtitle mb-2 text-muted muted_p">
+      <%= time_ago_in_words(notification.created_at.to_datetime) + ' ago'%>
+      </p>
+    </div>
+    </div>
+    <%end%>
+    <%end%>
+  <%end%>
+    <% if @notifications.read.present? %>
+    <div class="unread_sec">
+      <p>Read</p>
+    </div>
+    <% @notifications.read&.each do |notification| %>
+    <%= link_to notification.to_notification.url, class:'read__notification' do%>
+    <div class="readnoti_sec">
+      <div>
+        <% if notification.type == 'TimeSheetApprovelNotification' || notification.type == 'TimeSheetNotification' %>
+            <%= image_tag ("time sheet icon.png"),style:"width:25px; height:25px" %>
+            <% elsif notification.type == 'LeaveNotification' || notification.type == 'LeaveApprovalNotification'%>
+            <%= image_tag ("leave icon.png"),style:"width:25px; height:25px" %>
+            <%else%>
+            <%= image_tag ("evaluation icon.png"),style:"width:25px; height:25px" %>
+          <%end%>
+      </div>
+      <div>
+        <p class="mb-0 read__p"> <%=  notification.to_notification.message %> </p>
+        <p class="card-subtitle mb-2 text-muted muted_p"><%= time_ago_in_words(notification.created_at.to_datetime) + ' ago'%> </p>
+      </div>
+    </div>
+    <%end%>
+    <%end%>
+    <%end%>
+<% else %>
+    <div class="text-center mt-4">
+     <h2> <strong class="text-dark">No Notification Yet</strong></h2>
+    </div>
+<% end %>
+<div>
+<script>
+   $('.all-notification').click(function() {
+     $.ajax({
+      url: "/time_sheets/mark_all_notification",
+      type: 'get',
+    });
+  });
+</script> 
+

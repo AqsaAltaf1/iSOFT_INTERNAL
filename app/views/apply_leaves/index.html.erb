@@ -1,0 +1,61 @@
+<section data-controller="data-table" data-table-id="apply_leave_search">
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="text-center">
+          <h4 class="emp-h4">Leave Types</h4>
+          <div class="col-md-12 text-md-end mb-3">
+            <%= link_to(new_apply_leave_path, class: "btn attachmentuploadbtn", data: { turbo_frame: "remote_modal", controller: "short-type-allowed-hours" }) do %>
+                +Add New
+              <% end %> 
+          </div>
+        </div>
+        
+        <div class="table-responsive hr-employeeleave">
+        <table id="apply_leave_search" class="display" style="width: 100%">
+
+          <thead>
+              <tr>
+                <th scope="col">Type</th>
+                <th scope="col">Allowed Days/hours</th>
+                <th scope="col">Actions</th>
+              </tr>
+          </thead>
+          <tbody>
+              <% @apply_leaves.each do|apply_leave| %>
+                <tr>
+                  <td><%=apply_leave["allowed_leave_type"]%></td>
+                  <td><%= apply_leave.allowed_leave_type == "short" ? apply_leave.allowed_hours: apply_leave.allowed_day%></td>
+                  <td>
+                  <%= link_to(apply_leave_path(apply_leave), class: 'me-2') do %>
+                    <img src="../../assets/icons/view.svg" alt=""/>
+                  <% end %> 
+                  <%= link_to(edit_apply_leave_path(apply_leave), data: { turbo_frame: "remote_modal" }, class: 'me-2') do %>
+                    <img src="../../assets/icons/edit.svg" alt=""/>
+                  <% end %> 
+                  <%= link_to(apply_leave_path(apply_leave), data: { turbo_method: :delete, turbo_confirm: 'Do you want to delete Time sheet?' }) do %>
+                    <img src="../../assets/icons/delete.svg" alt="" />
+                  <% end %>
+                </tr>
+              <%end%>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+         
+  
+<style>
+.dataTables_length{
+  margin-bottom:10px;
+}
+#apply_leave_search{
+  margin-bottom:10px;
+}
+#apply_leave_search{
+  border:1px solid #c1c0c0;
+}
+</style>
+

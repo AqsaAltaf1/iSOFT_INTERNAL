@@ -1,0 +1,47 @@
+<div class="container-fluid" data-controller="data-table" data-table-id="user_designation"  id="user--designation">
+  <div class="row ms-2 ms-lg-5">
+    <div class="col-12">
+      <section class="mb-4">
+        <div class="hr-asset-userdiv">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <% if current_user.avatar.attached? %>
+                  <%= cl_image_tag(current_user.avatar_thumbnail,class: "hr-userimg rounded-circle") %>
+                <% end %>
+                <span><%= current_user.full_name %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="hr-assets-detail">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+                <p>Designation</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      <div class="text-end p-3 mb-3">
+        <%= link_to(new_user_designation_path, class: "btn add-asset-btn", data: { turbo_frame: "remote_modal" }) do %>
+          +Add Designation
+        <% end %>
+      </div>
+      <% if @user_designations.any? %>
+        <div class="table-responsive">
+          <table class="table bg-white" id="user_designation" class="display" style="width: 100%" data-controller="placeholder-for-data-tables" >
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <%= render partial: 'all_designations', locals: { user_designations: @user_designations}%>
+          </table>
+        </div>
+      <%end%>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<% attendance_for_date = attendances.find { |attendance| attendance.check_in.to_date == date } %>
+<div class="mat-cell Present-circle ng-star-inserted attendances-image">
+  <% if attendance_for_date %>
+    <%= link_to attendance_path(attendance_for_date), class: "attendance-link", data: { turbo_frame: "remote_modal" } do %>
+      <%= check_status(attendance_for_date, user) %>
+    <% end %>
+  <% elsif date.saturday? || date.sunday? %>
+    <%= 'W' %>
+    <% elsif date <= Date.today %>
+        <%= image_tag("images/absent.png")%>
+  <% end %>
+</div>

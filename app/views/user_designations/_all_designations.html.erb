@@ -1,0 +1,15 @@
+<tbody id="users_designations">
+  <% user_designations&.each do |user_designation| %>
+    <tr>
+      <td><%= user_designation.name %></td>
+      <td>
+        <a title="view" href="<%= user_designation_path(user_designation)%>">
+          <img src="../../assets/icons/view.svg" alt="" />
+        </a>
+        <%= link_to(edit_user_designation_path(user_designation), data: { turbo_frame: "remote_modal" }) do%>
+          <img src="../../assets/icons/edit.svg" alt="" />
+        <%end%>
+      </td>
+    </tr>
+  <% end %>
+</tbody>  

@@ -1,0 +1,836 @@
+@import "actiontext.css";
+@import "bootstrap";
+@import "style";
+@import "responsive";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap");
+/*
+*= require select2
+*/
+
+//  .active {
+//      color: #c10017 !important;
+//      // border-bottom: 5px solid red;
+//  }
+//  .sidebar {
+//      width: 200px;
+//      background: #fff;
+//      box-shadow: -6px -3px 16px #d4e3de;
+//      position: fixed;
+//      height: 100%;
+//      overflow: auto;
+//      // top: 0px;
+//      left: 0px;
+//      right: 0px;
+//    }
+
+//    .sidebar a {
+//      display: block;
+//      color: black;
+//      padding: 10px;
+//      text-decoration: none;
+
+//    }
+
+//    .sidebar a.active {
+//      background-color: #c10017;
+//      color: white;
+//    }
+//    .btn-active {
+//      background-color: #04AA6D;
+//      color: #fff;
+//      border-color: #04AA6D;
+//      // width: 20.76%;
+//    }
+
+//    .sidebar a:hover:not(.active) {
+//      background-color: rgb(99, 99, 99);
+//      color: white;
+//    }
+
+//    div.content {
+//      margin-left: 200px;
+//      padding: 1px 16px;
+//      height: 1000px;
+//    }
+//    .leave___card p{
+//      margin-bottom: 0px;
+//    }
+//    .card__leave{
+//      background-color: #f8f8f8;
+//      color: #000;
+//      min-height: 275px;
+//      border-radius: 20px;
+//      box-shadow: 8px 8px 24px gray;
+//    }
+//    @media screen and (max-width: 700px) {
+//      .sidebar {
+//        width: 100%;
+//        height: auto;
+//        position: relative;
+//      }
+//      .sidebar a {float: left;}
+//      div.content {margin-left: 0;}
+//    }
+
+//    @media screen and (max-width: 400px) {
+//      .sidebar a {
+//        text-align: center;
+//        float: none;
+//      }
+//    }
+
+//    .size {
+//      font-size: 20px;
+//    }
+//    #table tbody tr th{
+//      background-color: #1d1e1c12;
+//      color: #1d1e1cb3;
+//      font-size: 13px;
+//      font-weight: 400;
+//      line-height: 1.25;
+//    }
+//    .navbar{
+//      width: 100%;
+//      height: 80px;
+//      background: var(--white);
+//      box-shadow: 0px -5px 17px #D4E3DE;
+//    }
+//    .navbar___brand{
+//      height: 70px;
+//      width: 160px;
+//    }
+//    #mynavbar .btn:hover{
+//      color: #FFFFFF !important;
+//    }
+//    .form__main{
+//      background: #FFFFFF;
+//        box-shadow: 0px 4px 30px #E9F4F0;
+//        border-radius: 18px;
+//        width: 341px;
+//        height: auto;
+//        margin: 0 auto;
+//        margin-top: 60px;
+//        padding: 45px !important;
+//        border: none;
+//    }
+//    .navbar .dropdown img{
+//      border-radius: 50px;
+//    }
+//    .form__main h2{
+//      color: #c10017;
+//    }
+//    .form__main h6{
+//      color: #c10017;
+//      font-size: 20px;
+//    }
+//    .form__main p{
+//      font-size: 14px;
+//      color: red;
+//    }
+//    .form__main li{
+//      font-size: 14px;
+//      color: red;
+//    }
+//    .form__main ul{
+//      list-style: none;
+//      padding-left: 0px !important;
+//    }
+//    // .form__main label{
+//    //   color: #c10017;
+//    // }
+//    .form__main input:focus{
+//      box-shadow: none;
+//    }
+
+//    .background-image{
+//      // display: flex;
+//      // align-items: center;
+//      background:url("https://images.unsplash.com/photo-1655853079719-b288ca887461?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80");
+//      background-size: cover;
+//      background-repeat: no-repeat;
+//      // background-attachment: fixed;
+//      background-position: center;
+//      height: 100vh;
+//      // opacity: 2;
+//    }
+//    .background-image .overlay{
+//      background-color: rgba(43,45,66,0.7);
+//      height: 100%;
+//    }
+//    .landing{
+//      display: flex;
+//      align-items: center;
+//      height: calc(100vh - 100px);
+//    }
+//    .button__row{
+//      padding: 10px;
+//      border-bottom: 2px solid #c10017;
+//    }
+//    .button__row button{
+//      margin: 10px ;
+//    }
+//    .deleteselect_btn{
+//      margin-top: 10px;
+//      margin-bottom: 10px;
+//    }
+//    .attach__card{
+//      box-shadow: 0px 4px 30px #E9F4F0;
+//      border-radius: 18px;
+//    }
+
+//    .navbar{
+//      background: #ffffff;
+//      box-shadow: 0px -5px 17px #D4E3DE;
+//      height: 80px;
+//    }
+//    .navbar .navbar-brand img{
+//      width: 180px !important;
+//      height: 60px !important;
+//    }
+//    .navbar ul li a{
+//      text-decoration: none;
+//      color: #c10017;
+//      font-size: 18px;
+//      font-weight: 700;
+//    }
+//    .navbar ul li a:hover{
+//      color: #c10017;
+//    }
+//    .navbar .active{
+//      border-bottom: 1px solid #c10017;
+//    }
+//    .sign__out__button{
+//      color: #c10017;
+//      font-weight: 700;
+//    }
+//    .sub__nav{
+//      background: #c10017;
+//      height: 48px;
+//    }
+//    .sub__nav .active{
+//      border-bottom: 1px solid #ffffff;
+//    }
+//    .sub__nav ul li a{
+//      color: #ffffff !important;
+//      font-size: 14px;
+//      font-weight: normal;
+//      cursor: pointer;
+//    }
+//    .sub__nav ul li a:hover{
+//      color: #ffffff;
+//    }
+//  .size strong{
+//    font-size: 30px;
+//    font-weight: 500;
+//    line-height: 1.2;
+//  }
+//  .size span{
+//    font-size: 28px;
+//    font-weight: 400;
+//    line-height: 1.2;
+//  }
+//  #prev_day_selected{
+//    border: 1px solid #000;
+//    padding: 5px;
+//    border-radius: 5px;
+//    cursor: pointer;
+//  }
+//  #next_day_selected{
+//    border: 1px solid #000;
+//    padding: 5px;
+//    border-radius: 5px;
+//    cursor: pointer;
+//  }
+//  .timesheet__table table tbody td:last-child :where(a, .fa-box-archive){
+//    color: rgb(146, 170, 221);
+//    border-bottom: none;
+//    text-decoration: none;
+//    cursor: pointer !important;
+//  }
+//  .timesheet__table table tbody td:last-child :where(a, .fa-box-archive):hover{
+//    color: rgb(0, 78, 247);
+//  }
+
+//  #me-2 {
+//    color: #fff !important;
+//    width: 46px !important;
+//    border-radius: 9px !important;
+//  }
+//  .video_div video{
+//    width: 385px !important;
+//  }
+//  .edit__card{
+//    border: none;
+//  }
+//  .edit_img img{
+//    border-radius: 100%;
+//  }
+//  .image__old img{
+//    border-radius: 100%;
+//  }
+
+//  .info__head h5{
+//    color: #c10017;
+//  }
+//  .info__head p{
+//    color: #000000;
+//    margin-bottom: 5px !important;
+//  }
+//  .info__head span{
+//      background: transparent;
+//      border: 1px solid rgba(29,30,28,.3);
+//      border-radius: 24px;
+//      color: #1d1e1cb3;
+//      display: inline-block;
+//      font-size: 13px;
+//      font-weight: 400;
+//      line-height: 1;
+//      padding: 4px 8px;
+//      vertical-align: middle;
+//      white-space: nowrap;
+//  }
+//  .form__card label{
+//    color: #c10017;
+//  }
+//  .form__card input[type=text],input[type=password],[type=number]{
+//    box-shadow: none !important;
+//  }
+//  .form__card input:focus{
+//    outline: none !important;
+//    border-color: #c10017;
+//  }
+
+//  .deactive{
+//    display: none;
+//  }
+//  .form_all{
+//      border-radius: 3px;
+//      // box-shadow: 0 4px 4px rgb(87 100 126 / 21%);
+//      background-color: #fff;
+//      max-width: 752px;
+//      display: flex;
+//      -ms-flex-direction: column;
+//      flex-direction: column;
+//      margin: 72px auto;
+//      width: 100%;
+//  }
+
+//  /*
+//  * This is a manifest file that'll be compiled into application.css, which will include all the files
+//  * listed below.
+//  *
+//  * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+//  * vendor/assets/stylesheets directory can be referenced here using a relative path.
+//  *
+//  * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+//  * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+//  * files in this directory. Styles in this file should be added after the last require_* statement.
+//  * It is generally better to create a new file per style scope.*
+//  *= require_tree .
+//  *= require_self
+//  */
+//  @import "./actiontext.css";
+
+//  .position-absolute{
+//    left: 34px;
+//    top: 18% !important;
+//  }
+//  .dropdown-toggle::after{
+//    display: none;
+//  }
+.unread {
+  color: #000000 !important;
+  font-size: 14px !important;
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.read {
+  color: #7c7171 !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+//  .no_notifications{
+//    color: #000 !important;
+//    font-size: 17px !important;
+//    font-weight: 700 !important;
+//  }
+//  // .leave__table{
+//  //   width: 800px;
+//  //   margin: 0 auto;
+//  // }
+//  .leave__table thead {
+//    background: #c10017;
+//    color: #ffffff;
+//    border-bottom: 5px solid #ffffff;
+//  }
+//  .leave__table tbody tr{
+//    border-bottom:5px solid #ffffff;
+//  }
+//  .leave__table tbody tr td a{
+//    text-decoration: none !important;
+//  }
+//  .leave__table thead tr th:last-child{
+//    text-align: left;
+//  }
+//  .leave__table tbody tr td:last-child{
+//    text-align: center;
+//  }
+//  .add_newuser{
+//    background: #FFFFFF;
+//        box-shadow: 0px 4px 30px #E9F4F0;
+//        border-radius: 18px;
+//        height: auto;
+//        margin-top: 60px;
+//        padding: 45px !important;
+//        border: none !important;
+//  }
+//  .timesheet__table table thead tr th{
+//    cursor: pointer !important;
+//  }
+//  @media(max-width:540px){
+//    .navbar{
+//      height: auto !important;
+//    }
+//    .sub__nav{
+//      height: 48px !important;
+//    }
+//    .add__newsheet{
+//      width: 40px;
+//      height: 35px;
+//      padding: 3px;
+//    }
+//    .add__newsheet .fa-plus{
+//      width: 20px;
+//      height: 20px;
+//    }
+//    .not__dropdown{
+//      width: 285px;
+//    }
+//    .not__dropdown .dropdown-item{
+//      white-space: normal;
+//    }
+//     .position-absolute{
+//      left: 28px;
+//      top: 10px !important;
+//    }
+//  }
+//  @media(min-width:541px) and (max-width:767px){
+//    .navbar{
+//      height: auto !important;
+//    }
+//    .sub__nav{
+//      height: 48px !important;
+//    }
+//    .add__newsheet{
+//      width: 40px;
+//      height: 35px;
+//      padding: 3px;
+//    }
+//    .add__newsheet .fa-plus{
+//      width: 20px;
+//      height: 20px;
+//    }
+//  }
+//  @media(min-width:768px) and (max-width:998px){
+//    .navbar{
+//      height: auto !important;
+//    }
+//    .add__newsheet{
+//      width: 40px;
+//      height: 35px;
+//      padding: 3px;
+//    }
+//    .add__newsheet .fa-plus{
+//      width: 20px;
+//      height: 20px;
+//    }
+//  }
+
+//  .ang_select{
+//    width: 174px;
+//    height: 30px;
+//    background: #FFFFFF;
+//    border-radius: 4px;
+//    font-style: normal;
+//    font-weight: 300;
+//    font-size: 14px;
+//    line-height: 15px;
+//    color: #000000;
+//  }
+//  .blue_icon{
+//    color: rgb(0, 78, 247);
+//    cursor: pointer;
+//  }
+//  .blue_icon:hover{
+//    color: rgb(0, 78, 247);
+//  }
+//  .hidden{
+//    display: none;
+//  }
+//  #evaluationRes form{
+//    background: #FFFFFF;
+//    box-shadow: 0px 4px 30px #e9f4f0;
+//    padding: 20px;
+//    height: auto !important;
+//    width: 500px;
+//    margin: 0 auto;
+//  }
+//  .edit_evaluation{
+//    background: #FFFFFF;
+//    box-shadow: 0px 4px 30px #e9f4f0;
+//    padding: 20px;
+//    height: auto !important;
+//    width: 500px;
+//    margin: 0 auto;
+//  }
+//  .create .btn-outline-primary{
+//    width: 150px;
+//  }
+//  .update__btn .btn-outline-primary{
+//    width: 150px;
+//  }
+//  #evaluation_option .btn-outline-success{
+//    width: 150px;
+//  }
+//  .active-evaluation-btn{
+//    padding-right: 8%;
+//    margin-top: 2%;
+//    margin-bottom: -2%;
+//  }
+
+//  .active-evaluation-hr{
+//    float: right;
+//  }
+
+//  .approve-evaluation-admin{
+//    float: right;
+//    margin-right: 8%;
+//    margin-top: 2%;
+//  }
+
+//  .employee-survey{
+//    align-items: center;
+//  }
+
+//  .evaluation_form_errors{
+//    color: red;
+//  }
+
+//  .options_position_styling{
+//    // margin-top: -3.4%;
+//    margin-left: 50%;
+//  }
+//  .show_evaluation_notices{
+//    color: green;
+//  }
+//  .questions_position_styling{
+//    margin-left: 7.2%;
+//    text-align: left;
+//  }
+//  .aligning_with_upper_element{
+//    margin-left: 1%;
+//  }
+//  div.actions_on_right{
+//    flex: 1;
+//    display: flex;
+//    justify-content: flex-end;
+//    margin-left: auto;
+//    margin-right: 2%;
+//  }
+//  .title_margin_from_checkbox{
+//    margin-left: 4%;
+//  }
+//  .approve_button_placement{
+//    margin-right: 8%;
+//    margin-top: 2%;
+//  }
+//  .accordion_action_icons_difference{
+//    margin-right: 1%;
+//  }
+//  .accordion-button::after {
+//    content: none;
+//  }
+//  table {
+//    counter-reset: rowNumber;
+//  }
+//  table td button .title_margin_from_checkbox::before {
+//    counter-increment: rowNumber;
+//    content: counter(rowNumber) ".";
+//    padding-right: 0.3em;
+//    text-align: right;
+//  }
+//  .table.timesheet-table td{
+//    width: 150px;
+//  }
+//  .timesheet-table-description{
+//    width: 0px;
+//  }
+//  .distance-from-arrow-keys{
+//    padding-left: 14px;
+//  }
+//  .distance-from-bottom{
+//    margin-bottom: 18px;
+//  }
+//  .evaluation_showcard{
+//    box-shadow: 3px 3px 3px 3px #e5e5e5;
+//    border: none;
+//  }
+//  .evaluation_showtitle{
+//    box-shadow: 3px 3px 3px 3px #e5e5e5;
+//    border: none;
+//    border-top: 5px solid #0d6efd;
+//  }
+//  div.chekcboxes a{
+//    pointer-events: none;
+//  }
+//  // .notification_data .dropdown-item li a {
+//  //   padding-left: 10px;
+//  //   padding-top: 5px;
+//  //   padding-right: 10px;
+//  //   padding-bottom: 5px;
+//  // }
+//  .dropdown-menu-lg-end .noti__li{
+//    padding: 0px;
+//  }
+//  .dropdown-menu-lg-end .noti__li a{
+//    display: block !important;
+//    // padding: 10px 15px;
+//  }
+//  .see_allbtn{
+//    color: rgb(13, 110, 253) !important;
+//    font-weight: 400 !important;
+//  }
+//  .see_allbtn:hover{
+//    color: rgb(13, 110, 253) !important;
+//  }
+//  .unread_sec{
+//    background-color: #77BBD1;
+//  }
+//  .unread_sec p{
+//    color: #fff;
+//    padding: 10px;
+//    margin-bottom: 0px;
+//  }
+//  .notification_sec{
+//    background-color: #E3E3E3;
+//    padding: 8px 10px;
+//    border-bottom: 1px solid #000;
+//    display: flex;
+//  }
+//  .notification_sec a{
+//    color: #000;
+//    text-decoration: none;
+//  }
+//  .readnoti_sec{
+//    background-color: #ffffff;
+//    padding: 8px 10px;
+//    border-bottom: 1px solid #000;
+//  }
+//  .readnoti_sec a{
+//    color: rgb(83, 82, 82);
+//    text-decoration: none;
+//  }
+//  .markall_btn{
+//    border: none;
+//    color: #fff;
+//    padding: 0px;
+//  }
+//  .markall_btn:hover{
+//    border: none;
+//    color: #fff !important;
+//  }
+//  .muted_p{
+//    font-size: 12px;
+//  }
+//  .all_notification{
+//    text-decoration: none;
+//  }
+//  .all_notification p:first-child{
+//    color: black;
+//  }
+//  .read__notification{
+//    text-decoration: none;
+//  }
+//  .read__notification .readnoti_sec{
+//    display: flex;
+//  }
+//  .read__notification .readnoti_sec .read__p{
+//    color: rgb(122, 122, 122);
+//  }
+.password-field-icon-2 {
+  position: absolute;
+  right: 26px;
+  top: 41px;
+  cursor: pointer;
+}
+
+.user-error {
+  margin-bottom: 0px;
+  font-size: 14px;
+}
+
+.menu-item.active {
+  background-color: #6c7074;
+
+}
+
+#search-results {
+  position: absolute;
+  top: 40px;
+  left: 20px;
+  padding: 20px;
+  margin-top: 5px;
+}
+
+#search-results a {
+  text-decoration: none;
+  color: black;
+}
+
+.dataTables_scrollHead {
+  overflow: unset !important;
+}
+
+.dataTables_scrollBody {
+  overflow: unset !important;
+  height: auto !important;
+}
+
+#employee_details_search_paginate,
+#leave_section_paginate,
+#company_assets_paginate {
+  position: absolute !important;
+  bottom: 0 !important;
+  right: 20px !important;
+  top: 680px !important;
+}
+
+#employee_details_search_info,
+#leave_section_info,
+#company_assets_info {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 290px !important;
+  top: 680px !important;
+}
+
+.dataTables_length {
+  display: none !important;
+}
+
+.dataTables_filter {
+  float: left !important;
+}
+
+#employee_details_search,
+#leave_section {
+  position: relative !important;
+}
+
+.hr-employeetable,
+.dataTables_wrapper {
+  position: unset !important;
+}
+
+#leave_apply_leave_id {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  appearance: none;
+  border-radius: 0.375rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.dataTables_length {
+  margin-bottom: 10px;
+}
+
+#example_filter,
+#company_assets_search_filter {
+  margin-bottom: 10px;
+}
+
+#example {
+  border: 1px solid #c1c0c0;
+}
+
+.dataTables_length {
+  margin-bottom: 10px;
+}
+
+#employee_details_search,
+#company_assets_search {
+  margin-bottom: 10px;
+}
+
+#employee_details_search,
+#company_assets_search {
+  border: 1px solid #c1c0c0;
+}
+
+.delete-user-button {
+  background: #e01b36;
+  border-radius: 16px;
+  padding: 5px 10px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.delete-user-button:hover {
+  background: #e01b36;
+  border-radius: 16px;
+  padding: 5px 10px;
+  margin-right: 5px;
+  color: white;
+}
+
+.active-user-button {
+  background: #16cabd;
+  border-radius: 16px;
+  padding: 5px 10px;
+}
+
+.active-user-button:hover {
+  background: #16cabd;
+  border-radius: 16px;
+  padding: 5px 10px;
+  margin-right: 5px;
+  color: white;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 2px solid #e1b478;
+}
+
+.profile-picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.total-leaves {
+  padding-bottom: 0px;
+}

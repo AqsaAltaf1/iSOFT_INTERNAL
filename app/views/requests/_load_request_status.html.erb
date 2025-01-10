@@ -1,0 +1,21 @@
+<section class="mb-3">
+  <% unless current_user.admin? %>
+    <nav class="navbar navbar-expand sub__nav">
+      <div class="container">
+        <div class="collapse navbar-collapse border-bottom" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 " id="navbar-status">
+            <li class="nav-item">
+              <%= link_to "Pending", requests_path(request_status: "pending"), class: "nav-link #{pending}", data: { turbo_frame:"request_data", turbo_action: "advance", turbo_stream: true } %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Approved", requests_path(request_status: "approved"), class: "nav-link #{approved}", data: { turbo_frame:"request_data", turbo_action: "advance", turbo_stream: true } %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Rejected", requests_path(request_status: "rejected"), class: "nav-link #{rejected}", data: {turbo_frame:"request_data", turbo_action: "advance", turbo_stream: true } %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  <% end %>
+</section>

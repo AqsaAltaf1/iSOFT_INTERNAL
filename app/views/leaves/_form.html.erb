@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="form_all">
+    <%= form_with(model: leave) do |leave_form| %>
+      <h1>Request for Leave</h1>
+      <p> Request your leave details below</p><hr>
+      <% if leave.errors.any? %>
+        <div class="text-danger">
+          <% leave.errors.each do |error| %>
+            <p class='text-danger user-error'><%= error.full_message %></p>
+          <% end %>
+        </div>
+      <% end %>
+      <div>
+        <p style="color: red;">* required fields</p>
+      </div>
+      <div class="mb-3">
+        <div class="selected field">
+        <%= leave_form.select :apply_leave_id,
+          options_from_collection_for_select(
+          @apply_leaves, :id, :allowed_leave_type, leave_form.object.apply_leave_id),
+          { class:"form-control"},
+          data: { controller: 'short-type-field', action: 'change->short-type-field#selectChange'} %>       
+        </div>
+      </div>
+      <div class="row g-3 align-items-center mb-3">
+        <div class="col-md-6">
+          <div class="date_field leaves required">
+            <label for="starttime" class="col-form-label">Start Date</label>
+            <%= leave_form.date_field :date_from , class: "form-control"%>
+          </div>
+        </div>
+    
+        <div class="col-md-6">
+          <div class="date_field leaves required">
+            <label for="endtime" class="col-form-label">End Date</label>
+            <%= leave_form.date_field :date_to , class: "form-control"%>
+          </div>
+        </div>
+      </div>
+      <div class="row g-3 align-items-center mb-3" id="shorttime">
+        <div class="col-md-6">
+          <div class="">
+            <label for="from_time" class="col-form-label">From Time</label>
+            <%= leave_form.time_field :from_time , class: "form-control"%>
+          </div>
+        </div>
+    
+        <div class="col-md-6">
+          <div class="date_field leaves required">
+            <label for="to_time" class="col-form-label">To Time</label>
+            <%= leave_form.time_field :to_time , class: "form-control"%>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="shorttype">
+          <%= leave_form.select :short_type, @short_type, { include_blank: "Select half Type" },class: "form-control" %> 
+        </div>
+        <div class="hours">
+          <label for="hours" class="col-form-label">hours</label>
+          <%= leave_form.number_field :hours ,class: "form-control", min: 1, max: 4 %> 
+        </div>
+      </div>
+      <div class="mb-3">
+        <div>
+          <label for="file">Upload File</label>
+          <%= leave_form.file_field :files, multiple: true, direct_upload: false, class:"form-control mb-3", id:"formFile"%>
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class = "required">
+          <label for="comments">Comments</label>
+          <%= leave_form.rich_text_area :body, :rows => 3, :cols => 33 , class: "form-control"%><br>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <%= leave_form.submit leave.new_record? ? "Create" : "Update" , class: 'btn leavecreatebtn' %>
+      </div>
+    <% end %>
+  </div>
+</div>

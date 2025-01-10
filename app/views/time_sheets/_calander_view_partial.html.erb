@@ -1,0 +1,11 @@
+
+  <h3 class="text-center heading-text mt-2 mb-4">
+                TimeSheet
+  </h3>
+  <section id="nodatasec">
+    <div id="calendar-wrapper">
+        <%= month_calendar() do |date| %>        
+            <%= link_to date.day, time_sheets_path(get_date: date), class: "btn btn-default date-link #{current_week.include?(date) ? 'current-week' : ''}" if date.present? %>    
+        <% end %>
+    </div>
+  </section>

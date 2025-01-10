@@ -1,0 +1,5 @@
+<% if select_selected_date == Date.today.strftime("%A, %d %b")%>
+    <span class="size"><strong>Today:</strong> <span class="selected_date_value"><%=select_selected_date%></span></span>
+<%else%>
+    <span class="size"><span id="update_date" class="selected_date_value"><%=select_selected_date%></span></span>
+<%end%>

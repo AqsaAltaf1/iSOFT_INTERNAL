@@ -1,0 +1,30 @@
+# SQLite. Versions 3.8.0 and up are supported.
+#   gem install sqlite3
+#
+#   Ensure the SQLite 3 gem is defined in your Gemfile
+#   gem "sqlite3"
+#
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  url: postgres://u7n1ftavqe4711:p451d271d37c961e1d784cd04099a69c959368b688f37980f01d83cc8d6a5e7bc@c6m2hub4lh1mqp.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d3b819rv6qj0b1
+  # username: <%= ENV['dbuser'] %> 
+  # password: <%= ENV['dbpassword'] %> 
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  # #host: localhost
+  # timeout: 5000
+
+development:
+  <<: *default
+  url: postgres://u7n1ftavqe4711:p451d271d37c961e1d784cd04099a69c959368b688f37980f01d83cc8d6a5e7bc@c6m2hub4lh1mqp.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d3b819rv6qj0b1
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: <%= ENV['POSTGRES_DB'] %>
+
+production:
+  <<: *default
+  url: postgres://u7n1ftavqe4711:p451d271d37c961e1d784cd04099a69c959368b688f37980f01d83cc8d6a5e7bc@c6m2hub4lh1mqp.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d3b819rv6qj0b1

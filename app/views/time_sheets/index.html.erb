@@ -1,0 +1,66 @@
+<div class="container-fluid mt-3">
+  <section>
+    <div class="row ms-2 align-items-center justify-content-between">
+      <%if current_user.user? && !current_user.is_hr()%>
+        <div class="col-md-8 arrow_div">
+          <a>
+            <span id="prev_day">
+              <%= render 'prev_day' %>
+            </span>
+          </a>
+          <a>
+            <span id="next_day">
+              <%= render 'next_day' %>
+            </span>
+          </a>
+          <span id="update_date">
+            <%= render 'show_selected_date' %>
+            <% if params[:get_date].present? %>
+              <% if params[:get_date].strftime("%Y-%m-%d") != Date.today.strftime("%Y-%m-%d") %>
+                <a href="#" id="return_today">Return to Today</a>
+              <%end%>
+            <% end %>
+          </span>
+          <span id="return_today_js">
+            <a href="#" id="return-today">Return to Today</a>
+          </span>
+        </div>
+      <%end%>
+      <div class="row">
+        <div class="col-12">
+          <div id="time_sheets">
+            <div id= 'update-div'>
+              <%= render 'load_sheet_data' %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id='submit-button'>
+        <%= render 'submit_week' %>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+
+<script type = "text/javascript" >
+$('#return-today').hide();
+$( function() {
+  $('#return_today, #return_today_js').click(function(){
+    active_div = $('#time_sheets').find('.timesheetactive');
+    active_div.removeClass('timesheetactive');
+    status = $('#navbar-status').find('.timesheetactive').html();
+    day = "<%= Date.today %>"
+    $('#return_today').hide();
+    send_ajax(day, status)
+  });
+  function send_ajax(get_date, status){
+    response = $.ajax({
+        url: '/time_sheets',
+        method: 'Get',
+        data: {get_date, status},
+    });
+  }
+});
+</script>

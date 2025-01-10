@@ -1,0 +1,93 @@
+<%if false%>
+<div class="form__main">
+    <h2>Login</h2>
+    <p>Sign into your account</p>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>
+      <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label"><%= f.label :email %></label>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" ,class:"form-control", required: true%>
+      </div> 
+      <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label"><%= f.label :password %></label>
+      <%= f.password_field :password, autocomplete: "current-password",class:"form-control", required: true %>
+      </div>
+      <div class="d-grid gap-2 mb-3">
+      <%= f.submit "Log in",class:"btn btn-outline-danger" %>
+      </div>
+      <div class="d-grid gap-2">
+      <%= render "devise/shared/sign_up" %>
+      </div>
+      <div class="d-flex justify-content-end">
+      <%= render "devise/shared/forget_password" %>
+      </div>
+    <% end %>
+    
+</div>
+<%end%>
+<nav class="navbar navbar-light">
+  <div class="container">
+    <a href="<%=root_path%>"
+      ><img src="/assets/ISOFTSTUDIOS 2.png" alt=""
+    /></a>
+    <div>
+      <span class="me-1">Don’t have an account?</span>
+      <%= render "devise/shared/sign_up" %>
+    </div>
+  </div>
+</nav>
+<%= render "layouts/alerts"%>
+<section class="helllo">
+  <div class="container-fluid">
+    <div class="row justify-content-center mt-5">
+      <div class="col-lg-5 col-md-6 col-sm-6">
+        <div class="card card-border login_card">
+          <div class="card-title text-center">
+            <h2 class="p-3 login-heading">Login</h2>
+          </div>
+          <div class="card-body">
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>
+              <div class="mb-4">
+                <label for="username" class="form-label">Email</label>
+                <% if cookies[:remember_token] %>
+                  <%= f.email_field :email, autofocus: true, value: cookies[:remembered_email] ,class:"form-control", required: true,  placeholder:"Enter Your Email"%>
+                <% else %>
+                  <%= f.email_field :email, autofocus: true, autocomplete: true ,class:"form-control", required: true,  placeholder:"Enter Your Email"%>
+                <% end %>
+              </div>
+              <div class="mb-4 position-relative" data-controller="password-toggle">
+                <label for="password" class="form-label">Password </label>
+                <%= f.password_field :password, class:"form-control unhide password", required: true, placeholder: "Enter Your Password", "data-target": "password-toggle.unhide" %>
+                  <span
+                    id="visi--on"
+                    toggle="#password-field"
+                    class="password-field-icon-2 material-icons-outlined toggle-password"
+                  >visibility</span>
+                  <span
+                    id="visi--off"
+                    toggle="#password-field"
+                    class="password-field-icon-2 material-icons-outlined toggle-password"
+                  >visibility_off</span>
+              </div>
+              <div class="mb-4 d-flex justify-content-between conditions">
+                <% if devise_mapping.rememberable? %>
+                  <div class="condition">
+                    <input type="checkbox" value="1" name="user[remember_me]" id="user_remember_me" checked>
+                    <%= f.label :remember_me, style: "color: var(--bs-link-color);" %>
+                  </div>
+                <% end %>
+                <%= render "devise/shared/forget_password" %>
+              </div>
+              <div class="text-center pb-4">
+                <%= f.submit "Login",class:"btn text-light login-button" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<%= render "devise/shared/links" %>
+
+
+

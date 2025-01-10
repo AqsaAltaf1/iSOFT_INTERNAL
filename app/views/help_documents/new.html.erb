@@ -1,0 +1,11 @@
+<h1></h1>
+<div class="col-md-12 text-md-end mb-3">
+  <%= link_to help_documents_path, class: "btn attachmentuploadbtn text-end" do %>
+    All Documents
+  <% end %>
+</div>
+<%= render "remote_modal", title: "New help document" do %>
+  <%= render "form", help_document: @help_document %>
+
+<% end %>
+

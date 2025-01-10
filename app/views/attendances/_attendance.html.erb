@@ -1,0 +1,12 @@
+<div id="<%= dom_id attendance %>">
+  <p>
+    <strong>Check in:</strong>
+    <%= attendance.check_in&.strftime("%I:%M:%S %p") %>
+    
+  </p>
+
+  <p>
+    <strong>Check out:</strong>
+    <%= attendance.check_out&.strftime("%I:%M:%S %p") %>
+  </p>
+</div>

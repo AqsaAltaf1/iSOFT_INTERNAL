@@ -1,0 +1,368 @@
+@media(max-width:540px) {
+    .login_card {
+        height: auto;
+    }
+
+    .emp-profile {
+        width: 300px;
+    }
+
+    .sidebar {
+        display: none !important;
+    }
+
+    .offcanvasbtn {
+        display: block !important;
+    }
+
+    .offcanvas,
+    .offcanvas-start {
+        display: block !important;
+    }
+
+    .sidebar.close~.home {
+        left: 0 !important;
+        margin-left: -10px !important;
+        width: calc(100% - -10px) !important;
+    }
+
+    .navbar-brand img {
+        width: 110px;
+    }
+
+    .dashboard-container {
+        margin-left: 0px !important;
+    }
+
+    .navbar {
+        margin-left: 0px !important;
+    }
+
+    .navbar-toggler {
+        border: none;
+    }
+
+    .heading-text {
+        font-size: 22px;
+    }
+
+    .notificationdropdown {
+        width: auto;
+    }
+
+    .nav-item .indicator {
+        left: 0 !important;
+    }
+
+    .profilenavitem {
+        margin: 0px !important;
+    }
+
+    .timsheetlist {
+        margin-left: 0px !important;
+        padding-left: 0px !important;
+    }
+
+    .arrow_div span {
+        font-size: 14px;
+    }
+
+    .addtimesheet {
+        font-size: 12px;
+    }
+
+    .timeSheetDays a {
+        margin: 10px 5px;
+    }
+
+    .emplyeedetails span {
+        font-size: 14px;
+    }
+
+    .leavesdetails p {
+        font-size: 14px;
+    }
+
+    .openfoldertable thead tr th {
+        font-size: 12px;
+    }
+
+    .openfoldertable tbody tr td {
+        font-size: 12px;
+        width: 40px !important;
+    }
+
+    .openfoldertable tbody tr td img {
+        width: 18px;
+    }
+
+    .evaluationsmain .evaluationviewbtn {
+        font-size: 12px !important;
+    }
+
+    .evaluationsmain label {
+        font-size: 12px !important;
+    }
+
+    .evaluationname {
+        font-size: 18px;
+    }
+
+    .evaluationquestion :where(strong, span) {
+        font-size: 14px !important;
+    }
+
+    .emp-profile-content p {
+        font-size: 13px;
+    }
+
+    .notificationdropdown {
+        width: auto;
+    }
+}
+
+@media(min-width:541px) and (max-width:767px) {
+    .login_card {
+        height: auto;
+    }
+
+    .emp-profile {
+        width: 300px;
+    }
+
+    .sidebar {
+        display: none !important;
+    }
+
+    .offcanvasbtn {
+        display: block !important;
+    }
+
+    .offcanvas,
+    .offcanvas-start {
+        display: block !important;
+    }
+
+    .sidebar.close~.home {
+        left: 0 !important;
+        margin-left: -10px !important;
+        width: calc(100% - -10px) !important;
+    }
+
+    .navbar-brand img {
+        width: 110px;
+    }
+
+    .dashboard-container {
+        margin-left: 0px !important;
+    }
+
+    .navbar {
+        margin-left: 0px !important;
+    }
+
+    .navbar-toggler {
+        border: none;
+    }
+
+    .heading-text {
+        font-size: 22px;
+    }
+
+    .notificationdropdown {
+        width: auto;
+    }
+
+    .nav-item .indicator {
+        left: 0 !important;
+    }
+
+    .profilenavitem {
+        margin: 0px !important;
+    }
+
+    .timsheetlist {
+        margin-left: 0px !important;
+        padding-left: 0px !important;
+    }
+
+    .arrow_div span {
+        font-size: 14px;
+    }
+
+    .addtimesheet {
+        font-size: 12px;
+    }
+
+    .timeSheetDays a {
+        margin: 10px 5px;
+    }
+
+    .emplyeedetails span {
+        font-size: 14px;
+    }
+
+    .leavesdetails p {
+        font-size: 14px;
+    }
+
+    .openfoldertable thead tr th {
+        font-size: 12px;
+    }
+
+    .openfoldertable tbody tr td {
+        font-size: 12px;
+        width: 40px !important;
+    }
+
+    .openfoldertable tbody tr td img {
+        width: 18px;
+    }
+
+    .evaluationsmain .evaluationviewbtn {
+        font-size: 12px !important;
+    }
+
+    .evaluationsmain label {
+        font-size: 12px !important;
+    }
+
+    .evaluationname {
+        font-size: 18px;
+    }
+
+    .evaluationquestion :where(strong, span) {
+        font-size: 14px !important;
+    }
+
+    .emp-profile-content p {
+        font-size: 13px;
+    }
+
+    .notificationdropdown {
+        width: auto;
+    }
+}
+
+@media(min-width:768px) and (max-width:998px) {
+    .login_card {
+        height: auto;
+    }
+
+    .emp-profile {
+        width: 300px;
+    }
+
+    .sidebar {
+        display: none !important;
+    }
+
+    .offcanvasbtn {
+        display: block !important;
+    }
+
+    .offcanvas,
+    .offcanvas-start {
+        display: block !important;
+    }
+
+    .sidebar.close~.home {
+        left: 0 !important;
+        margin-left: -10px !important;
+        width: calc(100% - -10px) !important;
+    }
+
+    .navbar-brand img {
+        width: 110px;
+    }
+
+    .dashboard-container {
+        margin-left: 0px !important;
+    }
+
+    .navbar {
+        margin-left: 0px !important;
+    }
+
+    .navbar-toggler {
+        border: none;
+    }
+
+    .heading-text {
+        font-size: 22px;
+    }
+
+    .notificationdropdown {
+        width: auto;
+    }
+
+    .nav-item .indicator {
+        left: 0 !important;
+    }
+
+    .profilenavitem {
+        margin: 0px !important;
+    }
+
+    .timsheetlist {
+        margin-left: 0px !important;
+        padding-left: 0px !important;
+    }
+
+    .arrow_div span {
+        font-size: 14px;
+    }
+
+    .addtimesheet {
+        font-size: 12px;
+    }
+
+    .timeSheetDays a {
+        margin: 10px 5px;
+    }
+
+    .emplyeedetails span {
+        font-size: 14px;
+    }
+
+    .leavesdetails p {
+        font-size: 14px;
+    }
+
+    .openfoldertable thead tr th {
+        font-size: 12px;
+    }
+
+    .openfoldertable tbody tr td {
+        font-size: 12px;
+        width: 40px !important;
+    }
+
+    .openfoldertable tbody tr td img {
+        width: 18px;
+    }
+
+    .evaluationsmain .evaluationviewbtn {
+        font-size: 12px !important;
+    }
+
+    .evaluationsmain label {
+        font-size: 12px !important;
+    }
+
+    .evaluationname {
+        font-size: 18px;
+    }
+
+    .evaluationquestion :where(strong, span) {
+        font-size: 14px !important;
+    }
+
+    .emp-profile-content p {
+        font-size: 13px;
+    }
+
+    .notificationdropdown {
+        width: auto;
+    }
+}

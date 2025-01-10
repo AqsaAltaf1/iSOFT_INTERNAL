@@ -1,0 +1,65 @@
+<div class="ms-5 asset-detail-card" id="<%= dom_id company_asset %>">
+  <h6 class="text-center heading-text">Asset's Details</h6>
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="d-flex justify-content-between">
+        <strong>Name:</strong>
+        <%=company_asset.name %>
+      </div>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <strong>IMEI/Unique ID:</strong>
+        <%=company_asset.unique_identifier %>
+      </div>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <strong>Type:</strong>
+        <%= company_asset.company_assets_type %>
+      </div>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <strong>Model:</strong>
+        <%= company_asset.model %>
+      </div>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <strong>Purchase Date:</strong>
+        <%= company_asset.purchase_date %>
+      </div>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <strong>Price</strong>
+        <%=company_asset.price? ? company_asset.price: '-'%>
+      </div>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <strong>Added By:</strong>
+        <%=company_asset.added_by %>
+      </div>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <strong>Added Time:</strong>
+        <%=company_asset.created_at.strftime("%d %b,%Y %I:%M%p") %>
+      </div>
+      <hr>
+      <div class="d-flex justify-content-between">
+        <strong>Status:</strong>
+        <%=company_asset.status %>
+      </div>
+      <hr>
+      <div class = "d-flex justify-content-between" >
+        <strong> Description: </strong>
+        <div class="filler-space"><%= company_asset.description %></div>
+      </div>
+      <hr>
+      <div>
+        <% if company_asset.images.attached?%>
+          <p><strong>Asset Images:</strong></p>
+          <% company_asset.images.each do |image| %>
+            <%= company_asset_image(image) %>
+          <% end %>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>

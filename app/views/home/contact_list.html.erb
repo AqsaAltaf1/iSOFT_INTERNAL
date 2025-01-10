@@ -1,0 +1,33 @@
+<div class="container p-3">
+    <h1 class="mb-3">Employee Contact_list Detail</h1>
+        <div class="table-responsive">
+            <table class="table table-striped leave__table">
+  <thead>
+    <tr>
+      <th scope="col">No.</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% if @contact_list_users.present?%>
+  <% counter=1%>
+  <% @contact_list_users&.each do |contact_list| %>
+    <tr>
+      <th scope="row"><%=counter%></th>
+      <td><%= contact_list&.full_name %></td>
+      <td><%= contact_list&.email %></td>
+      <td><%= contact_list&.phone_number %></td>
+    </tr>
+    <% counter+=1%>
+    <% end %>
+<% else %>
+<tr>
+    <h2>Right now there is no user here!</h2>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+</div>
+</div>

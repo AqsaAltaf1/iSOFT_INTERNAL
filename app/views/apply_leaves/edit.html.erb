@@ -1,0 +1,11 @@
+<h1>Edit Leave Type</h1>
+
+<%= render "remote_modal", title: "Edit Leave Type" do %>
+  <%= render "form", apply_leave: @apply_leave %>
+<% end %>
+
+<br>
+
+<div>
+  <%= link_to "Back to leaves", apply_leaves_path %>
+</div>

@@ -1,0 +1,83 @@
+<div class="container-fluid">
+        <div class="ms-2 ms-lg-5">
+                <div class="text-center mb-3">
+                  <h3 class="evaluationname"><%= @evaluation.title.capitalize %></h3>
+                </div>
+                <div id="evaluations">
+                <% @evaluation.questions.each_with_index do |ques,index| %>
+                <div  class="mb-3">
+                  <div id="<%= ques.id %>" class="evaluationquestion mb-2">
+                    <strong><%=index+1%>:</strong> &nbsp;<span><%= ques.question.capitalize %></span>
+                    <input type="hidden" id="evaluation" value=<%=@evaluation.id%> />
+                  </div>
+                  <% if ques.evaluation_options.present? %>
+                  <div class="evaluationoptions" id="option-<%= ques.id %>">
+                    <ul style="list-style: none;">
+                      <% ques.evaluation_options.each do |opt| %>  
+                        <li id="<%= opt.id%>">
+                            <%= check_box_tag  opt.option %>
+                            <%= opt.option%>
+                        </li>
+                      <%end%>
+                    </ul>
+                  </div>
+                  <%else%>
+                        <textarea 
+                          id="textarea-<%= ques.id %>"
+                          name="feedback"
+                          class="form-control"
+                          rows="2" 
+                        ></textarea>
+                  <%end%>
+                </div>
+                <%end%>
+                </div>      
+                <div class="text-end mt-3">
+                  <button type="submit" id="click" class="btn evaluationsubmitbtn">
+                    Submit
+                  </button>
+                </div>
+        </div>
+</div>
+<script>
+        $(document).ready(function(){
+          $(function() {
+                $('input[type=checkbox]').click(function(){
+                    var $check_boxes = $(this).parent('li').siblings().find("input[type=checkbox]").prop('checked', false);
+                        $(this).prop('checked', true);
+                });
+            });
+        })
+           $("#click").click(function(){
+             var evaluation_id = $("#evaluation").val();
+             let result = [];
+             var questions = $("#evaluations").find('.evaluationquestion');
+             for(let i=0;i<questions.length;i++){
+              const question=questions[i]?.id;
+              const question_txt=($('#'+question).children("span").text())
+              var splited=($('#'+question).siblings()[0].id).split('-');
+              if (splited[0] == 'option')
+              {
+                var parentNode= $('#'+question).siblings().find('li').find('input[type=checkbox]:checked').parent();
+               if(!parentNode[0]?.id) return( alert(`please select the option for "${question_txt}" `))
+                var answer=parentNode[0]?.id;
+                result.push({question, answer, evaluation_id,questiontype:'mcqs'});
+                
+              }
+              else
+              {
+                feedback = $('#'+($('#'+question).siblings()[0].id)).val()
+                if(feedback == '') return (alert(`please type answer for "${question_txt}"`))
+                result.push({question, feedback, evaluation_id,questiontype:'question'});
+              }
+             }
+             $.ajax({
+             url: '/evaluations/create_feedback',
+             method: 'Post',
+             dataType: 'script',
+             data: {result},
+             success: function(data) {
+              }
+             })
+           })
+</script>

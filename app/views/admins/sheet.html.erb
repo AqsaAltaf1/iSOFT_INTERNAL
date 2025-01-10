@@ -1,0 +1,42 @@
+<div class="ms-2 ms-md-5 align-items-center justify-content-between">
+  <strong>All Pending Timesheets: </strong>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr></tr>
+        <tr>
+          <% if @weeks.present?%>
+            <% @weeks.each do |date| %>
+        </tr>
+        <tr>
+          <%= link_to (Admin.sheet_date(date)), admins_data_path(date: date, user_id: @user), class: "btn btn-primary"%><br><br>
+        </tr>
+        <tr>
+          <% end %>
+          <%else%>
+            <p>Currently you don't have any pending weeeks</p>
+          <%end%>
+        </tr>
+        <tr>
+          <td>
+            <% unless !@weeks.present? %>
+              <%= link_to "Approve" , admins_data_path(start_week: @weeks.first, end_week: @weeks.last, user_id: params[:user_id], status_update: "approved"),
+              class: "btn btn-primary" %>
+              <%= link_to "Reject" , admins_data_path(start_week: @weeks.first, end_week: @weeks.last, user_id: params[:user_id], status_update: "rejected"),
+              class: "btn btn-danger" %>
+            <%end%>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<%if false%>
+<% if current_user %>
+  <li class="nav-item dropdown position-relative not__dropdown ">
+    <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <%= render 'user/unread_count' %>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
+        <div id="notification_data">
+          <% @unread.each do |notification| %>
+              <%= render 'user/notification', notification: notification, read_count: 0%>
+          <% end %>
+          
+        </div>
+        <div id="check_notifications">
+          <% if @read.count > 0 && @unread.count > 0 %>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+          <% elsif @read.count + @unread.count == 0 %>
+            <li class="dropdown-item">
+              <span class="no_notifications">
+                No notifications yet.
+              </span>
+            </li>
+          <% end %>
+        </div>
+        <% @read.each do |notification| %>
+          <%= render 'user/notification', notification: notification, read_count: 0 %>
+        <% end %>
+          <span id="See-all-notification"   style="float: left">
+            <%= link_to 'See All', see_all_notification_time_sheets_path ,  class: "btn text-success ms-3  see-all see_allbtn p-0" %>
+          </span>
+          <span id="mark-all-as-read-button"  style="float: right">
+            <button class= "btn text-primary me-3 all-notification p-0"> Clear All </button>
+          </span>
+    </ul>
+  </li>
+<% end %>
+<%end%>
+<li class="nav-item dropdown notification-dropdown">
+  <%= render 'user/unread_count' %>
+  <div
+    class="dropdown-menu dropdown-menu-lg dropdown-menu-end py-0 notificationdropdown px-0"
+    aria-labelledby="alertsDropdown"
+  >
+    <%= render 'user/see_or_mark_all_as_read' %>
+    <div class="list-group">
+      <span id="notification_data">
+        <% @unread.each do |notification| %>
+          <%= render 'user/notification', notification: notification%>
+        <% end %>
+      </span>
+      <% @read.each do |notification| %>
+        <%= render 'user/notification', notification: notification%>
+      <% end %>
+      <%unless current_user.notifications.present?%>
+        <span class="no_notifications">
+          <a href="#" class="list-group-item px-1">
+            <div class="row g-0">
+              <div class="col-2">
+                <img src="../assets/icons/notiuser.svg" alt="" />
+              </div>
+              <div class="col-8">
+                <div class="text-dark">
+                  You do not have notifications available yet.
+                </div>
+              </div>
+            </div>
+          </a>
+        </span>
+      <%end%>
+    </div>
+  </div>
+</li>

@@ -1,0 +1,28 @@
+<div id="hide" class="hide" style="display:none">
+<table class="table" id="table">
+<tbody>
+
+<% @day_vise_log.each do |day_log| %>
+  <tr>
+    <th colspan="2"><%= "#{day_log[:date]} (#{day_log[:total_time]})" %><br></th>
+  </tr>
+  <% projects = day_log[:projects] %>
+  <% if projects.length > 0 %>
+    <% projects.each do |project| %>
+      <tr>
+        <td><%= project[:data].name %></td>
+        <td class="text-end">
+          <strong><%= project[:time_log] %></strong>
+        </td>
+      </tr>
+    <%end%>
+  <% else %>
+    <tr>
+      <td style="font-size: small;">No work!</td>
+    </tr>
+  <% end %>
+<% end %>
+
+</tbody>
+</table>
+</div>

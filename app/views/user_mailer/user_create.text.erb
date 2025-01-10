@@ -1,0 +1,9 @@
+<% if @receiver.email == @user.email %>
+  <h4>Hello <%= @user.email %>!</h4><br>
+  <p>Your Email has been registered.</p>
+  <p>click on Sign Up link given below for further updation.</p>
+  <p><%= link_to "Sign Up", new_user_registration_url( email: @user.email ) %></p>
+<% else %>
+  <h4>Hello <%= @receiver.email %>!</h4><br>
+  <p>A new user <%= @user.email %> has been created</p>
+<% end %>

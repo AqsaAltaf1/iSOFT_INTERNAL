@@ -1,0 +1,6 @@
+<% @admins.each do |admin| %>
+    <%= render admin, admin: admin %> 
+<% end %>
+
+<p><%= link_to 'Add new user', new_admin_path %></p>
+<p><%= link_to 'Dashboard', rails_admin_path %></p>

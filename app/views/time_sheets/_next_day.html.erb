@@ -1,0 +1,21 @@
+<span id="next_day_selected"><i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+<script type = "text/javascript" >
+$('#return-today').hide();
+$( function() {
+  $('#next_day_selected').click(function(){
+    active_div = $('#time_sheets').find('.timesheetactive');
+    active_div.removeClass('timesheetactive');
+    status = $('#navbar-status').find('.timesheetactive').html();
+    <% date = params[:get_date].next_day %>
+    day = "<%= date %>"
+    send_ajax(day, status)
+  });
+  function send_ajax(get_date, status) {
+    response = $.ajax({
+        url: '/time_sheets',
+        method: 'Get',
+        data: { get_date, status},
+    });
+  }
+});
+</script>

@@ -1,0 +1,144 @@
+<section>
+    <div class="container-fluid dashboard-container">
+        <div class="row">
+            <h3 class="text-center heading-text mt-2 mb-4">HR Dashboard</h3>
+            <div class="col-md-4 mb-3">
+                <a href="<%=home_employee_details_path%>" class="card-items">
+                    <div class="card card-shape">
+                        <div class="">
+                            <h5 class="card-title text-center fw-bold fs-12 pt-2">
+                                Employees
+                            </h5>
+                        </div>
+                        <%= image_tag("images/leaves.svg", class: "card-image img-fluid", alt: "...")%>
+                        <span class="card-text text-center py-1 fw-light"><%=pluralize(employees_count, "Emplyee")%></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="<%=admins_leave_section_path%>" class="card-items" >
+                    <div class="card card-shape">
+                        <div>
+                            <h5 class="card-title text-center fw-bold fs-12 pt-2">Leaves</h5>
+                        </div>
+                        <%= image_tag("images/leaves.svg", class: "card-image img-fluid", alt: "...")%>
+                        <span class="card-text text-center py-1 fw-light"><%=pluralize(leaves_count, "Pending Leave")%></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="<%=apply_leaves_path%>" class="card-items" >
+                    <div class="card card-shape">
+                        <div>
+                            <h5 class="card-title text-center fw-bold fs-12 pt-2">
+                                Leaves Type
+                            </h5>
+                        </div>
+                        <%= image_tag("images/leaves.svg", class: "card-image img-fluid", alt: "...")%>
+                        <span class="card-text text-center py-1 fw-light"><%=pluralize(leave_types_count, "Leave Type")%></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="<%=attachments_path%>" class="card-items">
+                    <div class="card card-shape">
+                        <div>
+                            <h5 class="card-title text-center fw-bold fs-12 pt-2">
+                                Attachment
+                            </h5>
+                        </div>
+                        <%= image_tag("images/attachment.svg", class: "card-image img-fluid", alt: "...")%>
+                        <span class="card-text text-center py-1 fw-light"><%=pluralize(attachements_count, "Attachment")%></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="<%=evaluations_path%>" class="card-items">
+                    <div class="card card-shape">
+                        <div>
+                            <h5 class="card-title text-center fw-bold fs-12 pt-2">
+                                Evalutions
+                            </h5>
+                        </div>
+                        <%= image_tag("images/evaluation.svg", class: "card-image img-fluid", alt: "...")%>
+                        <span class="card-text text-center py-1 fw-light"><%=pluralize(evaluations_count, "Pending Evaluations")%></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="<%=company_assets_path%>" class="card-items">
+                    <div class="card card-shape">
+                        <div>
+                            <h5 class="card-title text-center fw-bold fs-12 pt-2">Assets</h5>
+                        </div>
+                        <%= image_tag("images/profile.svg", class: "card-image img-fluid", alt: "...")%>
+                        <span class="card-text text-center py-1 fw-light"><%=pluralize(company_assets_count, "Company Asset")%></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="<%=new_announcement_path%>" class="card-items">
+                    <div class="card card-shape">
+                        <div>
+                            <h5 class="card-title text-center fw-bold fs-12 pt-2">
+                                Announcments
+                            </h5>
+                        </div>
+                        <%= image_tag("images/leaves.svg", class: "card-image img-fluid", alt: "...")%>
+                        <span class="card-text text-center py-1 fw-light"><%=pluralize(announcement_count, "New Announcement")%></span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="" class="card-items">
+                    <div class="card card-shape">
+                        <div>
+                            <h5 class="card-title text-center fw-bold fs-12 pt-2">Events</h5>
+                        </div>
+                        <%= image_tag("images/events.svg", class: "card-image img-fluid", alt: "...")%>
+                        <span class="card-text text-center py-1 fw-light">you have no data yet</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="<%= upcoming_holidays_path%>" class="card-items">
+                    <div class="card card-shape">
+                        <div>
+                            <h5 class="card-title text-center fw-bold fs-12 pt-2">
+                                Upcoming Holidays
+                            </h5>
+                        </div>
+                        <%= image_tag("images/holidays.svg", class: "card-image img-fluid", alt: "...")%>
+                        <span class="card-text text-center py-1 fw-light">you have no data yet</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <%= link_to(new_user_path, class: "card-items", data: { turbo_frame: "remote_modal" }) do %>
+                    <div class="card card-shape">
+                        <div>
+                            <h5 class="card-title text-center fw-bold fs-12 pt-2">
+                                New Hirings
+                            </h5>
+                        </div>
+                        <%= image_tag("images/leaves.svg", class: "card-image img-fluid", alt: "...")%>
+                        <span class="card-text text-center py-1 fw-light"><%=pluralize(employees_count, "Employee")%></span>
+                    </div>
+                <% end %>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a href="<%= admins_requests_section_path%>" class="card-items">
+                    <div class="card card-shape">
+                        <div>
+                            <h5 class="card-title text-center fw-bold fs-12 pt-2">
+                              Requests
+                            </h5>
+                        </div>
+                        <%= image_tag("images/holidays.svg", class: "card-image img-fluid", alt: "...")%>
+                        <span class="card-text text-center py-1 fw-light">you have no data yet</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

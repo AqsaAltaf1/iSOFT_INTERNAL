@@ -1,0 +1,21 @@
+<%if current_user.user? && !current_user.is_hr() && TimeSheet.check_submit_button_view(current_user, params[:get_date]).present? && date_is_in_current_week(params[:get_date])%>
+  <div class= "btn btn-outline-success float-end" id="submit" >Submit week for approval</div><br>
+<%end%>
+<script type = "text/javascript" >
+$('#return-today').hide();
+$( function() {
+  $('#submit').click(function(){
+    active_div = $('#time_sheets').find('.active');
+    active_div.removeClass('active');
+    approval_request = "submit"
+    send_ajax(approval_request)
+  });
+  function send_ajax(approval_request){
+    response = $.ajax({
+        url: '/time_sheets',
+        method: 'Get',
+        data: {approval_request},
+    });
+  }
+});
+</script>

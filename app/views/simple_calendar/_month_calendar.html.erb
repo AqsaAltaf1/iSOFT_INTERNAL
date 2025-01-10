@@ -1,0 +1,58 @@
+<div class="simple-calendar">
+  <div class="calendar-heading">
+      <span class="calendar-title d-flex align-items-center">
+      <div class="me-4">
+        <strong><label for="month-select" class="form-label">Select month</label></strong>
+        <%= select_month(start_date, {}, {name: 'month', id: 'month-select', class: 'form-select'}) %>
+      </div>
+       <div>
+        <strong><label for="year-select" class="form-label">Select year</label></strong>
+        <%= select_year(start_date, {start_year: Date.today.year - 10, end_year: Date.today.year + 10}, {name: 'year', id: 'year-select', class: 'form-select'}) %>
+      </div>
+      </span>
+  </div>
+    <table class="table table-bordered bg-white mt-3">
+      <thead>
+        <tr>
+          <% date_range.slice(0, 7).each do |day| %>
+            <th><%= t('date.day_names')[day.wday] %></th>
+          <% end %>
+        </tr>
+      </thead>
+  
+      <tbody>
+        <% date_range.each_slice(7) do |week| %>
+          <tr>
+            <% week.each do |day| %>
+              <% if day.month == start_date.month %>
+                <%= content_tag :td, class: calendar.td_classes_for(day) do %>
+                  <% if defined?(Haml) && respond_to?(:block_is_haml?) && block_is_haml?(passed_block) %>
+                    <% capture_haml(day, sorted_events.fetch(day, []), &passed_block) %>
+                  <% else %>
+                  <div class='text-center'>
+                    <% passed_block.call day, sorted_events.fetch(day, []) %>
+                  </div>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <%= content_tag :td, "", class: "disabled" %>
+              <% end %>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+</div>
+<script>
+  $(document).ready(function() {
+    $('#month-select, #year-select').on('change', function() {
+      var month = $('#month-select').val();
+      var year = $('#year-select').val();
+      var url = "/time_sheets/calander_view?start_date=" + year + "-" + month + "-01";
+        $.ajax({
+        url: url,
+        method: 'Get',
+      });
+    });
+  });
+</script>

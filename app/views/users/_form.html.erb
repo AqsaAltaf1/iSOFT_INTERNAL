@@ -1,0 +1,348 @@
+<%= form_for(user) do |f| %>
+  <div class="card-title text-center">
+    <%= user.new_record? ? "Create User" : "Update User" %>
+  </div>
+  <div class="row">
+    <div class="row justify-content-center mb-2">
+      <div class="col-6 text-center">
+        <div class="edit-profile-image-div">
+          <% if user.avatar.attached? %>
+              <%= cl_image_tag(user.avatar_thumbnail,class: 'rounded-circle border', id: 'preview-image') %>
+              <% end %>
+            <%= f.file_field :avatar, accept: "image/*" , id:'image-input' ,class:'visually-hidden' %>
+            <label for="image-input" class="form-label">
+              <span>
+                <i class="fa-solid fa-camera"></i>
+              </span>
+            </label>
+        </div>
+      </div>
+    </div>
+    <strong><p>Personal Information:(Fill in employee's personal info) </p></strong>
+    <div class="col-md-12 mb-3">
+      <label for="gender" class="form-label">Gender</label><br>
+      <%= f.collection_radio_buttons :gender, get_gender, :second, :first do |b| %>
+        <%= b.label { b.radio_button + b.text } %>
+      <% end %>
+    </div>
+    <div class="row">
+    <div class="col-md-6 mb-4">
+      <label for="first_name" class="form-label">First Name</label>
+      <%= f.text_field  :first_name, autofocus: true,class:"form-control", placeholder:"Enter Your First Name" %>
+      <% user.errors.full_messages_for(:first_name).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-4">
+      <label for="last_name" class="form-label">Last Name</label>
+      <%= f.text_field :last_name, class: "form-control", placeholder:"Enter your Last Name" %>
+    </div>
+  </div>
+  <div class="col-md-6 mb-4">
+    <label for="phoneno" class="form-label">Phone no</label>
+    <%= f.text_field :phone_number, placeholder: "+92-300-0000000",class:"form-control", min:0, integer: true, id: 'no_id' %>
+    <% user.errors.full_messages_for(:phone_number).each do |message| %>
+      <p class='text-danger user-error'><%= message %></p>
+    <% end %>
+  </div>
+    <div class="col-md-6 mb-3">
+      <label for="email" class="form-label">Email</label> 
+      <%= f.email_field :email, autofocus: true, autocomplete: "email",class:"form-control", placeholder:"Enter Your Email", readonly: !current_user.is_hr  && !current_user.admin? && !current_user.super_admin?%>
+      <% user.errors.full_messages_for(:email).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="father_name" class="form-label">Father Name</label>
+      <%= f.text_field :father_name, autofocus: true, autocomplete: "father_name",class:"form-control", placeholder:"Enter Father Name" %>
+      <% user.errors.full_messages_for(:father_name).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="mother_name" class="form-label">Mother Name</label>
+      <%= f.text_field :mother_name, autofocus: true, autocomplete: "mother_name",class:"form-control", placeholder:"Enter Mother Name" %>
+      <% user.errors.full_messages_for(:mother_name).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="blood_group" class="form-label">Blood Group</label>
+      <%= f.select :blood_group, get_blood_groups, { prompt: "Select Blood Group" }, class: 'form-select mb-2'%>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="martial_status" class="form-label">Martial Status</label>
+      <%= f.select :martial_status, get_martial_status, { prompt: "Select Martial status" }, class: 'form-select mb-2'%>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="qualification" class="form-label">Qualification</label>
+      <%= f.select :qualification, get_qualification, { prompt: "Select Qualification" }, class: 'form-select mb-2'%>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="religion" class="form-label">Religion</label>
+      <%= f.select :religion, get_religion, { prompt: "Select Religion" }, class: 'form-select mb-2'%>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="date_of_birth" class="form-label">Date of Birth</label>
+      <%= f.date_field :date_of_birth, class:'form-control' %>
+      <% user.errors.full_messages_for(:date_of_birth).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-label" for="avatar">Upload Profile Pic</label>
+      <%= f.file_field :avatar, class:"form-control", id:"formFile", data: { controller: 'image-preview', action: 'change->image-preview#preview' }%>
+      <img id="image-preview" src="#" alt="Image Preview" style="display:none; max-width: 100%; margin-top: 10px;" />
+      <% user.errors.full_messages_for(:avatar).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+  <div class="row">
+    <div class="col-md-6 mb-4 position-relative" data-controller="password-toggle">
+      <%= f.label :new_password,class:'form-label' %>
+      <%= f.password_field :password, autocomplete: "new-password",class:'password form-control' %>
+      <span
+        id="visi--on"
+        toggle="#password-field"
+        class="password-field-icon-2 material-icons-outlined toggle-password"
+        >visibility</span>
+      <span
+        id="visi--off"
+        toggle="#password-field"
+        class="password-field-icon-2 material-icons-outlined toggle-password"
+        >visibility_off</span>
+      <% user.errors.full_messages_for(:password_field).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-4  position-relative" data-controller="password-toggle">
+      <%= f.label :password_confirmation,class:'form-label'%>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password",class:'password-confirmation form-control' %>
+      <span
+        id="con-visi--on"
+        toggle="#password-field"
+        class="password-field-icon-2 material-icons-outlined toggle-password"
+      >visibility</span>
+      <span
+        id="con-visi--off"
+        toggle="#password-field"
+        class="password-field-icon-2 material-icons-outlined toggle-password"
+        >visibility_off</span>
+      <% user.errors.full_messages_for(:password_confirmation).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+  </div>
+  <div class='password-message'></div>
+  <% unless current_user.user? && !current_user.is_hr() %>
+    <strong><p>Contract:(Fill in employee's contract info) </p></strong>
+    <div class="col-md-6 mb-3">
+      <label for="employment_type" class="form-label">Type</label>
+      <%= f.select :employment_type, get_employment_type() , { prompt: "Select employment type" }, class: 'form-select mb-2' %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="joining_date" class="form-label">Joining Date</label>
+      <%= f.date_field :joining_date, class:'form-control' %>
+      <!-- min: Date.today condition is removed -->
+      <% user.errors.full_messages_for(:joining_date).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="hire_date" class="form-label">Hire Date</label>
+      <%= f.date_field :hire_date, class:'form-control' %>
+      <% user.errors.full_messages_for(:hire_date).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="probation_end_date" class="form-label">Probation End Date</label>
+      <%= f.date_field :probation_end_date, class:'form-control' %>
+      <% user.errors.full_messages_for(:probation_end_date).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="role" class="form-label">Role</label><%= link_to(new_role_path, class: "btn add-asset-btn role", data: { turbo_frame: "remote_modal" }) do %>
+        +Add
+      <% end %>
+      <%= f.collection_select :role_id, get_role(), :id, :name ,{:include_blank => 'Select user role'}, class: 'form-select  mb-2', id: 'user_role'%>
+      <% user.errors.full_messages_for(:role).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="department" class="form-label">Department</label><%= link_to(new_department_path, class: "btn add-asset-btn role", data: { turbo_frame: "remote_modal" }) do %>
+        +Add
+      <% end %>
+      <%= f.collection_select :department_id, get_department, :id, :name ,{:include_blank => 'Select user department'}, class: 'form-select  mb-2', id: 'user_department'%>
+      <% user.errors.full_messages_for(:department).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="location" class="form-label">Location:</label><%= link_to(new_location_path, class: "btn add-asset-btn location", data: { turbo_frame: "remote_modal" }) do %>
+          +Add
+        <% end %>
+        <%= f.collection_select :location_id, get_location(), :id, :work_location ,{:include_blank => 'Select user work location'}, class: 'form-select  mb-2', id: 'user_role'%>
+        <% user.errors.full_messages_for(:location).each do |message| %>
+          <p class='text-danger user-error'><%= message %></p>
+        <% end %>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="shift" class="form-label">Shift:</label><%= link_to(new_shift_path, class: "btn add-asset-btn shift", data: { turbo_frame: "remote_modal" }) do %>
+          +Add
+        <% end %>
+        <%= f.collection_select :shift_id, get_shift, :id, :name ,{:include_blank => 'Select user Shift'}, class: 'form-select  mb-2', id: 'user_shift'%>
+        <% user.errors.full_messages_for(:shift).each do |message| %>
+          <p class='text-danger user-error'><%= message %></p>
+        <% end %>
+      </div>
+    </div> 
+    <div class="col-md-6 mb-3">
+      <label for="report_to_id" class="form-label">Report To</label>
+      <%= f.collection_select :report_to_id, get_all_users, :id, :full_name, {:include_blank => 'Select reporting manager'}, class: 'form-select  mb-2'%>
+    </div> 
+    <div class="col-md-6 mb-3">
+      <label for="role" class="form-label">Designation</label><%= link_to(new_user_designation_path, class: "btn add-asset-btn role", data: { turbo_frame: "remote_modal" }) do %>
+        +Add
+      <% end %>
+      <%= f.collection_select :user_designation_id, get_designation, :id, :name ,{:include_blank => 'Select user designation'}, class: 'form-select  mb-2', id: 'user_designation'%>
+      <% user.errors.full_messages_for(:user_designation).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="machine_code" class="form-label">Machine Code</label>
+      <%= f.text_field :machine_code, autofocus: true,class:"form-control", placeholder:"Enter Attendance Machine Code" %>
+      <% user.errors.full_messages_for(:machine_code).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <strong><p>Identities:(Fill in employee's identities) </p></strong>
+    <div class="col-md-6 mb-3">
+      <label for="cnic_number" class="form-label">CNIC Number</label>
+      <%= f.text_field :cnic_number, autofocus: true, autocomplete: "cnic_number",class:"form-control", placeholder:"Enter CNIC Number" %>
+      <% user.errors.full_messages_for(:cnic_number).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="passport_number" class="form-label">Passport Number</label>
+      <%= f.text_field :passport_number, autofocus: true, autocomplete: "passport_number",class:"form-control", placeholder:"Enter Passport Number" %>
+      <% user.errors.full_messages_for(:passport_number).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="eoib_number" class="form-label">EOBI Number</label>
+      <%= f.text_field :eobi_number, autofocus: true, autocomplete: "eobi_number",class:"form-control", placeholder:"Enter EOBI Number" %>
+      <% user.errors.full_messages_for(:eobi_number).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="ntn_number" class="form-label">NTN Number</label>
+      <%= f.text_field :ntn_number, autofocus: true, autocomplete: "ntn_number",class:"form-control", placeholder:"Enter NTN Number" %>
+      <% user.errors.full_messages_for(:ntn_number).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <strong><p>Contact:(Fill in employee's contact) </p></strong>
+    <div class="col-md-6 mb-4">
+      <label for="home_phone_no" class="form-label">Home Phone Number</label>
+      <%= f.text_field :home_phone_no, placeholder: "+92-300-0000000", class:"form-control", integer: true %>
+      <% user.errors.full_messages_for(:home_phone_no).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-4">
+      <label for="emergency_contact_name" class="form-label">Emergency Contact Name</label>
+      <%= f.text_field :emergency_contact_name, placeholder: "Enter emergency contact name", class:"form-control"%>
+      <% user.errors.full_messages_for(:emergency_contact_name).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-4">
+      <label for="emergency_contact_phone_no" class="form-label">Emergency Contact Number</label>
+      <%= f.text_field :emergency_contact_phone_no, placeholder: "+92-300-0000000", class:"form-control", integer: true %>
+      <% user.errors.full_messages_for(:emergency_contact_phone_no).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <strong><p>Salary:(Fill in employee's salary details) </p></strong>
+    <div class="col-md-6 mb-3">
+      <label for="salary_type" class="form-label">Salary Type</label>
+      <%= f.select :salary_type, get_salary_type, { prompt: "Select Salary Type" }, class: 'form-select mb-2'%>
+      <% user.errors.full_messages_for(:salary_type).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="base_salary" class="form-label">Base Salary</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Rs</span>
+        </div>
+          <%= f.text_field :base_salary, placeholder: "Enetr Base salary", class:"form-control", integer: true%>
+      </div>
+      <% user.errors.full_messages_for(:base_salary).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="starting_date" class="form-label">Starting Date</label>
+      <%= f.date_field :starting_date, class:'form-control' %>
+      <% user.errors.full_messages_for(:starting_date).each do |message| %>
+        <p class='text-danger user-error'><%= message %></p>
+      <% end %>
+    </div>
+    <strong><p>Address:(Fill in employee's address details) </p></strong>
+    <div class="col-md-6 mb-3">
+      <%= f.fields_for :address, @address do |f|%>
+        <%render "users/address", f:f %>
+      <% end %>
+    </div>
+    <strong><p>Payment Details:(Fill in employee's payment details) </p></strong>
+    <div class="col-md-6 mb-3">
+      <%= f.fields_for :payment, @payment do |f|%>
+        <%render "users/payment", f:f %>
+      <% end %>
+    </div>
+    <% if user.subordinates.present? %>
+      <div class="col-md-6 mb-3">
+        <label for="allow_leave_approval" class="form-label">Allow Leave Approval</label>
+        <%= f.select :allow_leave_approval, get_leave_approval() ,{:include_blank => 'Allow leave approval of sub-ordinates'}, class: 'form-select  mb-2', id: 'allow_leave_Approval'%>
+      </div>
+    <% end %>
+  
+
+  <% end %>
+  <div class="d-flex justify-content-center">
+    <%= f.submit user.new_record? ? "Create User" : "Update Details " , class: 'register-button btn addempbtn mt-2' %>
+  </div>
+<% end %>
+<script>
+$(document).ready(function() {
+    $('#image-input').on('change', function() {
+      var input = this;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $('#preview-image').attr('src', e.target.result).show();
+      }
+      reader.readAsDataURL(input.files[0]);
+    });
+    $("#user_role").change(function() {
+        var role=$(this).val()
+        $.ajax({
+          url: `/users/report_to`,
+          type: "get",
+          data: {role: role}
+        });
+    });
+    $('.role').on("click",function(){
+        $('.modal').modal('hide');
+  });
+  });
+</script>

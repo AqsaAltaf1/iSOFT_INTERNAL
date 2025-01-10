@@ -1,0 +1,16 @@
+<% if @status == "announcements" %>
+  <%= turbo_stream.update "announcements_data" do %>
+    <%= render partial: "announcements/all_announcements", locals: { announcements: @announcements } %>
+  <% end %>
+<% elsif @status == "upcomingholidays" %>  
+  <%= turbo_stream.update "announcements_data" do %>
+    <%= render partial: "upcoming_holidays/all_upcoming_holidays", locals: { upcoming_holidays: @upcoming_holidays } %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.update "announcements_data" do %>
+    <p>No Event Yet</p>
+  <% end %>
+<% end %> 
+<%= turbo_stream.update "update_announcements_status" do %>
+  <%= render partial: "announcements/load_announcements_status", locals: { announcments: @announcements } %>
+<% end %>

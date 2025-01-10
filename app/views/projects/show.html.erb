@@ -1,0 +1,27 @@
+<div class="mt-5">
+  <section class="mb-5 pb-4">
+    <div class="row ms-2 ms-lg-5 ps-3">
+      <div class="col-md-6 col-lg-6 col-xl-4 mb-2">
+        <div class="card fullleavecard">
+          <div class="card-body">
+            <div class="row">
+              <% if @project%>
+                <div class="col-4">
+                  <p>Name:</p>
+                  <p>Description:</p>
+                </div>
+                <div class="col-7">
+                  <p><%= @project&.name%></p>
+                  <p><%= @project&.description%></p>
+                </div>
+              <%else%>
+                <p>Project has been deleted</p>
+              <%end%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+

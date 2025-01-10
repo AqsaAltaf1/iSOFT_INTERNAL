@@ -1,0 +1,89 @@
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container-fluid ps-0">
+    <div class="d-flex">
+    <% if current_user.company.avatar.attached? %>
+      <a class="navbar-brand" href="<%=root_path%>"><%= company_image(current_user.company) %></a>
+    <% else %>
+      <a class="navbar-brand" href="<%=root_path%>"><%= image_tag('company.png',style: 'width: 190; height: 50;')%></a>
+    <% end %>  
+      <button class="btn offcanvasbtn" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
+        <i class="fa-solid fa-grip-lines"></i>
+      </button>
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 w-50 position-relative">
+        <div data-controller="searchbar" style="width: 300px; margin-left: 100px;">           
+          <%= form_tag('/search', method: 'get') do %>
+            <%= text_field_tag(
+            :query,
+            params[:query],
+            id: 'search-input',
+            class: 'form-control search-bar rounded-pill bg-transparent d',
+            placeholder: 'Search for people',
+            autocomplete: 'off',
+            data: {
+                action: 'input->searchbar#onInput'
+            }
+            ) %>
+          <% end %>
+          <div id="search-results" data-searchbar-target="results">
+          </div>
+        </div>     
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 pe-5">
+        <span id="notifications_data">
+            <%= render 'user/notifications' %>
+        </span>
+        <li class="nav-item dropdown profile--dropdown pe-4">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <% if current_user.avatar.attached? %>
+              <%=cl_image_tag((Cloudinary::Utils.private_download_url(current_user.avatar.key, "jpg")), class:"profile--pic", alt:"")%>
+            <%else%>
+              <%= image_tag("icons/person.png", class: "profile--pic")%>
+            <% end %>
+            <%= current_user.full_name %>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="<%= user_path(current_user)%>">
+                <span class="material-icons-outlined">
+                  person
+                </span>
+                <span class="drop_name">
+                  Profile</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="<%= help_documents_path%>">
+                <span class="material-icons-outlined">
+                  help_outline
+                </span>
+                <span class="drop_name">Help Documents</span>
+              </a>
+            </li>
+              <li>
+              <%= link_to(new_support_path, class: "dropdown-item d-flex align-items-center", data: { turbo_frame: "remote_modal" }) do %>
+                <span class="material-icons-outlined">
+                  support
+                </span>
+                <span class="drop_name">Support</span>
+              <% end %>       
+            </li>
+            <hr class="dropdown-divider"/>
+            <li>
+              <%= link_to(destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item d-flex align-items-center") do %>
+                <span class="material-icons-outlined">logout</span>
+                <span class="drop_name">Log out</span>
+              <% end %>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+

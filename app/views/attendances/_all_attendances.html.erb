@@ -1,0 +1,27 @@
+<div id='all_attendances'> 
+<%= form_tag(attendances_path, method: :get, class: 'filter-form', data: { turbo_stream: true }) do %>
+
+  <div class="form-group" data-controller="attendance"><label>Filter by month*</label>
+    <div class="input-group mb-3" , style= "width:21% !important;">
+      <%= date_field_tag :date, options[:start_date], class: 'form-control datepicker', onchange: "this.form.requestSubmit()" %>
+    </div>
+  </div>  
+<%end%>
+<div class="text-left">Last Sync At: <%= current_user.company.last_sync_at&.strftime("%Y-%m-%d %I:%M:%S %p")%></div>  
+<div class="horizontal-calendar">
+  <div class="row flex-column p-3">
+    <div class='day col text-dark bg-light'>Name</div>
+    <div class='day col text-dark bg-light'><%= user.full_name%></div>
+  </div>
+  
+  <% (options[:start_date]..options[:end_date]).each do |date| %>
+    <div class="day <%= 'weekend' if date.saturday? || date.sunday? %>">
+      <div class="day_date">
+        <div class="date"><%= date.day %></div>
+        <div class="day-letter"><%= date.strftime("%a")[0] %></div>
+      </div>
+      <%= render partial: 'per_employee_attendance',locals: {attendances: attendances, date: date, user: current_user}%>
+    </div>
+  <%end%>    
+</div>
+</div>

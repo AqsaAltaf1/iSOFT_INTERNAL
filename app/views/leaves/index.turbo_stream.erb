@@ -1,0 +1,11 @@
+<%= turbo_stream.update "leave_data" do %>
+  <%= render partial: "leaves/load_leave_data", locals: { leaves: @leaves } %>
+<% end %>
+<%= turbo_stream.update "update_leave_status" do %>
+  <%= render partial: "leaves/load_leave_status", locals: { leaves: @leaves } %>
+<% end %>
+<% if current_user.is_hr() || current_user.admin? || @leave&.user&.report_to %>
+  <%= turbo_stream.update "approved_or_rejected" do %>
+    <%= render partial: "leaves/leave_with_status", locals: { leaves: @leaves } %>
+  <% end %>
+<% end %>

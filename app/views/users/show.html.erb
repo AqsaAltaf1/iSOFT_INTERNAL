@@ -1,0 +1,94 @@
+          <div class="container-fluid">
+            <div class="me-4">
+              <div class="d-flex justify-content-end mb-5">
+               <%if current_user.id == params[:id].to_i%>
+                  <%= link_to(edit_user_path(current_user), class: "btn edit-profile-button", data: { turbo_frame: "remote_modal" }) do %>
+                  Edit Profile
+                  <% end %>
+                <%end%>
+              </div>
+              <div class="card emp-profile">
+                <div class="card-body">
+                  <div class="row justify-content-center">
+                    <div class="col-6 text-center profile-picture">
+                      <% if @user.avatar.attached? %>
+                      <%= cl_image_tag(@user.avatar_thumbnail) %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div
+                    class="row justify-content-between emp-profile-content align-items-center"
+                  >
+                    <div class="col-6 fw-bolder"><p>Employee Id</p></div>
+                    <div class="col-6 text-end"><p><%=@user.id%></p></div>
+                  </div>
+                  <div
+                    class="row justify-content-between emp-profile-content align-items-center"
+                  >
+                    <div class="col-6 fw-bolder"><p>Employee Name</p></div>
+                    <div class="col-6 text-end"><p><%=@user.full_name%></p></div>
+                  </div>
+                  <div
+                    class="row justify-content-between emp-profile-content align-items-center"
+                  >
+                    <div class="col-6 fw-bolder"><p>Employee Email</p></div>
+                    <div class="col-6 text-end"><p><%=@user.email%></p></div>
+                  </div>
+                  <div
+                    class="row justify-content-between emp-profile-content align-items-center"
+                  >
+                    <div class="col-6 fw-bolder"><p>Role</p></div>
+                    <div class="col-6 text-end"><p><%=@user.role&.name%></p></div>
+                  </div>
+                  <div
+                    class="row justify-content-between emp-profile-content align-items-center"
+                  >
+                    <div class="col-6 fw-bolder"><p>Designation</p></div>
+                    <div class="col-6 text-end"><p><%=@user.user_designation&.name%></p></div>
+                  </div>
+                  <div
+                    class="row justify-content-between emp-profile-content align-items-center"
+                  >
+                    <div class="col-6 fw-bolder"><p>User Type</p></div>
+                    <div class="col-6 text-end"><p><%= @user.user_type %></p></div>
+                  </div>
+                  <div
+                    class="row justify-content-between emp-profile-content align-items-center"
+                  >
+                    <div class="col-6 fw-bolder"><p>Joining Date</p></div>
+                    <div class="col-6 text-end"><p><%=@user.joining_date? ? @user.joining_date: '-'%></p></div>
+                  </div>
+                  <div
+                    class="row justify-content-between emp-profile-content align-items-center"
+                  >
+                    <div class="col-6 fw-bolder"><p>Phone Number</p></div>
+                    <div class="col-6 text-end"><p><%=@user.phone_number? ? @user.phone_number: '-'%></p></div>
+                  </div>
+                  <div
+                    class="row justify-content-between emp-profile-content align-items-center"
+                  >
+                    <div class="col-6 fw-bolder"><p>Department</p></div>
+                    <div class="col-6 text-end"><p>
+                    <%= @user.department&.name
+                    %>
+                    </p></div>
+                  </div>
+                  <div
+                    class="row justify-content-between emp-profile-content align-items-center"
+                  >
+                    <div class="col-6 fw-bolder"><p>Employment Type</p></div>
+                    <div class="col-6 text-end"><p><%=@user.employment_type? ? @user.employment_type.humanize: '-'%></p></div>
+                  </div>
+                  <div
+                    class="row justify-content-between emp-profile-content align-items-center"
+                  >
+                    <div class="col-6 fw-bolder">
+                      <p>Reporting Manager</p>
+                    </div>
+                    <div class="col-6 text-end"><p><%=@user.report_to_id? ? @user.report_to.display_name : '-'%></p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- EDIT PROFILE MODAL -->
+          </div>

@@ -1,0 +1,113 @@
+<header>
+  <nav class="navbar navbar-light">
+    <div class="container">
+      <img src="/assets/ISOFTSTUDIOS 2.png" alt="" />
+      <div>
+        <span class="me-1">Already a member</span>
+        <%= render "devise/shared/log_in" %>
+      </div>
+    </div>
+  </nav>
+</header>
+<%= render "layouts/alerts"%>
+<section class="helllo">
+  <div class="container-fluid">
+    <div class="row justify-content-center mt-5">
+      <div class="col-lg-5 col-md-6 col-sm-6">
+        <div class="card card-border login_card">
+          <div class="card-title text-center">
+            <h2 class="p-3 login-heading">Sign Up</h2>
+          </div>
+          <div class="card-body">
+            <%= form_with model: @user, url: user_path(@user), method: :put do |f| %>
+              <div class="row">
+              <%= f.hidden_field :sign_up_view, value:'token' %>
+                <div class="col-md-6 mb-4">
+                  <label for="username" class="form-label">
+                    First Name
+                  </label>
+                  <%= f.text_field :first_name, autofocus: true , class: "form-control", required: true, placeholder:"Enter Your First Name" %>
+                  <% @user.errors.full_messages_for(:first_name).each do |message| %>
+                    <p class='text-danger user-error'><%= message %></p>
+                  <% end %>
+                </div>
+                <div class="col-md-6 mb-4">
+                  <label for="username" class="form-label">Last Name</label>
+                  <%= f.text_field :last_name, autofocus: true , class: "form-control", required: true, placeholder:"Enter Your Last Name" %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <label for="email" class="form-label">Email</label>
+                  <%= f.email_field :email, autofocus: true, autocomplete: "email",class:"form-control", required: true, readonly: true,  placeholder:"Enter Your Email" %>
+                </div>
+                <div class="col-md-6 mb-4">
+                  <label for="phoneno" class="form-label">Phone no</label>
+                  <%= f.text_field :phone_number, autofocus: true , placeholder: "+92-300-0000000", required: true,class:"form-control", min:0, integer: true, id: 'no_id' %>
+                  <% @user.errors.full_messages_for(:phone_number).each do |message| %>
+                    <p class='text-danger user-error'><%= message %></p>
+                  <% end %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-4 position-relative" data-controller="password-toggle">
+                  <label for="Password" class="form-label"
+                    >Password</label>
+                  <%= f.password_field :password, autocomplete: "new-password", required: true ,class:"password form-control" %>
+                  <span
+                    id="visi--on"
+                    toggle="#password-field"
+                    class="password-field-icon-2 material-icons-outlined toggle-password"
+                  >visibility</span>
+                  <span
+                    id="visi--off"
+                    toggle="#password-field"
+                    class="password-field-icon-2 material-icons-outlined toggle-password"
+                    >visibility_off</span>
+                  <% @user.errors.full_messages_for(:password).each do |message| %>
+                    <p class='text-danger user-error'><%= message %></p>
+                  <% end %>
+                </div>
+                <div class="col-md-6 mb-4 position-relative" data-controller="password-toggle">
+                  <label for="Password" class="form-label">Confirm Password</label>
+                  <%= f.password_field :password_confirmation, autocomplete: "new-password", required: true ,class:" password-confirmation form-control" %>
+                  <span
+                    id="con-visi--on"
+                    toggle="#password-field"
+                    class="password-field-icon-2 material-icons-outlined toggle-password"
+                  >visibility</span>
+                  <span
+                    id="con-visi--off"
+                    toggle="#password-field"
+                    class="password-field-icon-2 material-icons-outlined toggle-password"
+                    >visibility_off</span>
+                  <% @user.errors.full_messages_for(:password_confirmation).each do |message| %>
+                    <p class='text-danger user-error'><%= message %></p>
+                  <% end %>
+                </div>
+              </div>
+              <div class='password-message'></div>
+              <div class="text-center pb-4">
+                <%= f.submit "Sign Up",class:" register-button btn text-light login-button mt-2" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+var evt = $('#no_id');
+
+evt.on('keypress', myFunction);
+function myFunction() {
+    var charCode = (evt.which) ? evt.which : event.keyCode;
+  if (charCode != 46 && charCode != 45 && charCode > 31
+    && (charCode < 48 || charCode > 57))
+     return false;
+
+  return true;
+}
+</script>

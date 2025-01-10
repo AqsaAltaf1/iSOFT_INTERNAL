@@ -1,0 +1,88 @@
+<%= form_for @evaluation  do |f| %>
+  <% if @evaluation.errors.any? %>
+    <div class="evaluation_form_errors text-center text-danger">
+      <h5><%= pluralize(@evaluation.errors.count, "error") %> prohibited this evaluation from being saved:</h5>
+      <ul>
+        <% @evaluation.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+ <div class="container">
+          <div class="row ms-2 ms-lg-5 justify-content-center">
+            <div class="col-6">
+              <div class="card addnewevaluationcard">
+                <div class="card-body">
+                  <form action="">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="mb-3">
+                          <%= f.label :Evaluation_Title ,class:'form-label' %>
+                          <%= f.text_field :title, placeholder: "Please enter a title" ,required: true ,class:'form-control',id: 'title' %>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="mb-3">
+                          <%= f.label :Assign_Users ,class:'form-label' %>
+                          <%= f.collection_select :user_ids, User.employees_that_are_not_hrs, :id, :full_name, { } , { multiple: true, include_blank: false, class: 'form-select ' , id: 'assigned_user' } %>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                      <div id="question">
+                        <div  class="mb-">
+                          <%= f.fields_for :questions do |f|%>
+                          <%= render "question_fields", f: f %>
+                          <% end %>
+                        </div>
+                        <div class="text-center">
+                          <%= link_to_add_association 'Add New', f, :questions,class:'btn eva-sub-btn me-3  pressquestion' %>
+                          <%= link_to "Cancel", evaluations_path ,class: 'btn eva-can-btn'%>
+                        </div>
+                      </div>
+                        <div class="mt-3 d-grid gap-2">
+                          <%= f.submit @evaluation.new_record? ? "Create " : "Update ", class:"btn createevaluationbtn  ", id:"create_evaluation_btn" %>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+<%end%>
+<script>
+  $(".pressquestion").click(function(){ 
+    setTimeout(() => {$(".evaluation_question").last().focus(); }, 200);
+  });
+  $("#assigned_user").each(function () {
+        $(this).select2({
+          theme: "bootstrap-5",
+          placeholder: "Please select users",
+        });
+  });
+
+  $("#create_evaluation_btn").click(function(event) {
+      $(".question-type").each(function() {
+        var questionType = $(this).val();
+        if (questionType == "mcqs") {
+          var options = $(this).closest(".nested-fields").find(".options");
+          if (options.length < 2) {
+            alert("The previous question type is MCQs and it must have at least 2 options. Please add more options before adding a new question.");
+            event.preventDefault();
+            return false;
+          } 
+          else {
+            options.each(function() {
+              if ($(this).val() == "") {
+                alert("Please Add value for each option");
+                event.preventDefault();
+                return false;
+              }
+            });
+          }
+        }
+      });
+    });
+</script>

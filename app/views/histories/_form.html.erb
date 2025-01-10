@@ -1,0 +1,42 @@
+<%= form_with(model: history) do |form| %>
+  <% if history.errors.any? %>
+    <div style="color: red">
+      <ul>
+        <% history.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="col-md-6">
+    <div class="mb-3">
+      <%= form.label :user_id, class:'form-label' %>
+      <%= form.collection_select :user_id, User.user, :id, :full_name, {prompt: "Select user"},  class:'form-control', disabled: !(history.new_record? || current_user.admin?) %>
+    </div>
+  </div>
+  <%= form.hidden_field :company_asset_id, value: history.new_record? ? @company_asset.id : history.company_asset.id %>
+
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <%= form.label :given_date, class:'form-label' %>
+      <%= form.date_field :given_date, autocomplete: "given_date" , class:'form-control', disabled: !(history.new_record? || current_user.admin?) %>
+    </div>
+    <div class="col-md-6 mb-3">
+      <%= form.label :return_date, class:'form-label' %>
+      <%= form.date_field :return_date, autocomplete: "return_date", class:'form-control', disabled: (history.new_record? && !current_user.admin?) %>
+    </div>
+  </div>
+  <div class="mb-3">
+    <%= form.label :given_condition, class:'form-label' %>
+    <%= form.rich_text_area :given_condition, autocomplete: "given_condition", :rows => 3, :cols => 33 , class: "form-control", contenteditable: (history.new_record? || current_user.admin?) %><br>
+  </div>
+  
+  <div class="mb-3">
+    <%= form.label :return_condition, class:'form-label' %>
+    <%= form.rich_text_area :return_condition,  autocomplete: "return_condition", :rows => 3, :cols => 33 , class: 'form-control', contenteditable: (!history.new_record? || current_user.admin?) %><br>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <%= form.submit history.new_record? ? "Create History" : "Update History " , class: 'register-button btn addempbtn mt-2' %>
+  </div>
+<% end %>

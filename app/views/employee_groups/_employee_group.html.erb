@@ -1,0 +1,9 @@
+<div id="<%= dom_id employee_group %>">
+<td><%= employee_group.name %></td>
+<td><%= employee_group.code %></td>
+<td><%= employee_group.description %></td>
+<td><%= link_to  "View", employee_group_path(employee_group), class:"btn addemployeebtn" %>
+  <%= link_to('Edit', edit_employee_group_path(employee_group), data: { turbo_frame: "remote_modal" }, class: 'btn addemployeebtn') %>
+  <%= link_to  "Destroy", employee_group_path(employee_group), method: :delete, data: {confirm: "Are you sure?"}, class: "btn addemployeebtn" %>
+</td>
+</div>

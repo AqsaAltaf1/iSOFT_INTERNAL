@@ -1,0 +1,12 @@
+<h1>Editing help document</h1>
+
+<%= render "remote_modal", title: "Edit help document" do %>
+  <%= render "form", help_document: @help_document %>
+<% end %>
+
+<br>
+
+<div>
+  <%= link_to "Show this help document", @help_document %> |
+  <%= link_to "Back to help documents", help_documents_path %>
+</div>

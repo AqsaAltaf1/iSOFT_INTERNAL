@@ -1,0 +1,22 @@
+<%
+=begin
+<div>
+    <ol>
+        <% question&.evaluation_options&.each do |opt| %>
+            <%= check_box_tag  opt.option%>
+            <%= opt.option%>
+        <%end%>
+    </ol>
+</div>
+<script type = "text/javascript">
+$( function() {
+   $('input[type=checkbox]').click(function(){
+     var $check_boxes = $(this).parent('li').siblings().find("input[type=checkbox]").prop('checked', false);
+        $check_boxes.click(function() { 
+        $check_boxes.prop('checked', false);
+         $(this).prop('checked', true);
+        });
+});
+});
+</script>
+=end%>

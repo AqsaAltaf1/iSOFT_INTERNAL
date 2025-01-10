@@ -1,0 +1,28 @@
+<div class="container">
+  <% if f.object.errors.any? %>
+    <div class="error_messages">
+      <% f.object.errors.full_messages.each do |error| %>
+        <p style="color: red"><%= error %></p>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="form-control">
+    <div class="mt-2">
+      <%= f.text_field :street, class: "form-control", placeholder: "Street..." %>
+    </div>
+    <div class="input-group mt-2">
+      <%= f.text_field :zip, class: "form-control", placeholder: "Zip" %>
+    </div>
+    <div class="input-group mt-2" data-controller = "address">
+      <%= f.select :country, options_for_select(@countries, @selected_country), {prompt: "Select Country"}, data: { action: "change->address#states", id: "country" },class: "form-select" %>
+      <%= f.select :state, options_for_select(@states, @selected_state), {prompt: "Select State"}, data: { action: "change->address#states", id: "state" },class: "form-select" %>
+      <%= f.select :city, options_for_select(@cities), {prompt: "Select City"}, class: "form-select" %>
+    </div>
+    <div class="input-group mt-2">
+      <%= f.text_area :temporary_address, class: "form-control", placeholder: "Temporary Address"%>
+    </div>
+    <div class="input-group mt-2">
+      <%= f.text_area :permanent_address, class: "form-control", placeholder: "Permanent Address"%>
+    </div>
+  </div>
+</div>

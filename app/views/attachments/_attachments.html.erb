@@ -1,0 +1,142 @@
+<div id="gridview">
+    <section>
+        <div class="text-end">
+            <button class="btn" id="gridviewbtn">
+                <img src="../assets/icons/attchgrid.svg" alt=""/>
+            </button>
+        </div>
+    </section>
+    <section>
+        <div class="">
+            <strong>
+                <p>Files</p>
+            </strong>
+            <% if @attachments.present? %>
+                <div class="row align-items-center">
+                    <% @attachments.each do |attachment| %>
+                        <% attachment.files.each do |picture| %>
+                            <% if picture.blob.content_type != 'application/zip' %>
+                                <div class="col-md-6 col-lg-4 mb-2">
+                                    <div class="card">
+                                        <%=user_image_helper(picture)%>
+                                        <%=user_video_helper(picture)%>
+                                        <%=user_documents_helper(picture)%>
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                <%= picture.blob.filename %><br></p>
+                                                <p>
+                                                    Owner:<%= attachment.attachable&.full_name  %></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% end %>
+                            <% end %>
+                        <% end %>
+                    </div>
+                <% end %>
+            </div>
+        </section>
+        <section>
+            <div>
+                <strong>
+                    <p>Folders</p>
+                </strong>
+                <% if @attachments.present? %>
+                    <div class="row align-items-center">
+                        <% @attachments.each do |attachment| %>
+                            <% attachment.files.each do |picture| %>
+                                <% if picture.blob.content_type == 'application/zip' %>
+                                    <div class="col-md-6 col-lg-4">
+                                        <a href=<%= "#{folder_view_path(attachment_id: attachment, file_id: picture)}" %>>
+                                            <div class="card mb-2">
+                                                <div class="card-body">
+                                                    <img src="../../assets/icons/folder.svg" alt=""/>
+                                                    <span><%= "#{picture.blob.filename},"%></span>
+                                                    <% usr = User.find(attachment.attachable_id) %>
+                                                    <span>&nbsp&nbsp&nbsp Owner:<%=   usr.full_name  %></span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </a>
+                                </div>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                </div>
+            <% end %>
+        </div>
+    </section>
+    <br></div>
+    <div id="listview" class="mb-5">
+        <section>
+            <div class="text-end">
+                <button class="btn" id="listviewbtn">
+                    <img src="../assets/icons/attachrow.svg" alt=""/>
+                </button>
+            </div>
+        </section>
+        <section>
+            <div class="">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>File Image</th>
+                                <th>File Name</th>
+                                <th>Uploaded By</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if @attachments.present? %>
+                                <% @attachments.each do |attachment| %>
+                                    <% attachment.files.each do |picture| %>
+                                        <tr>
+                                            <% if picture.blob.content_type != 'application/zip' %>
+                                                <td>
+                                                    <%=user_image_helper(picture)%>
+                                                    <%=user_video_helper(picture)%>
+                                                    <%=user_documents_helper(picture)%>
+                                                </td>
+                                                <td><%= "#{picture.blob.filename}"%></td>
+                                                <td><%= attachment.attachable&.full_name  %></td>
+                                            </div>
+                                        <% else %>
+                                            <td>
+                                                <%= link_to folder_view_path(attachment_id: attachment, file_id: picture), style:"text-decoration: none;" do %>
+                                                    <img src="../assets/icons/smallfolder.svg" alt=""/>
+                                                <% end %>
+                                            </td>
+                                            <td><%= "#{picture.blob.filename}"%></td>
+                                            <td><%= attachment.attachable&.full_name  %></td>
+                                        <% end %>
+                                    </tr>
+                                <% end %>
+                            <% end %>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+    if (window.getComputedStyle(document.getElementById("gridview")).display === "none") {
+        $("#listview").show();
+    } else {
+        $("#listview").hide();
+    }
+
+    $("#gridviewbtn").click(function () {
+        $("#gridview").hide();
+        $(".card-img-list-display").removeClass("card-img-top");
+        $(".card-img-list-display").attr('height', 24);
+        $(".card-img-list-display").attr('width', 24);
+        $("#listview").show();
+    });
+    $("#listviewbtn").click(function () {
+        $("#listview").hide();
+        $(".card-img-list-display").addClass("card-img-top");
+        $(".card-img-top").attr('height', 330);
+        $("#gridview").show();
+    });
+</script>

@@ -1,0 +1,28 @@
+<%= render @company_asset %>
+<% if current_user.admin? || current_user.super_admin? || current_user.is_hr %>
+  <div class="container-fluid">
+    <div class="row text-end mb-4">
+      <div class="col-md-12">
+        <div class="d-inline-flex">
+          <%= link_to "Back", company_assets_path,class:"btn btn-outline-primary" %>
+          <%= link_to(edit_company_asset_path(@company_asset), class:"btn btn-outline-success mx-3", data: { turbo_frame: "remote_modal" }) do%>
+            Edit
+          <%end%>
+          <%= button_to "Delete", @company_asset, method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Do you want to delete this company_asset?' },class:"btn btn-outline-danger ms-2" %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row text-end mb-4">
+      <div class="col-md-12">
+        <div class="d-inline-flex">
+          <%= link_to(new_history_path(params: { company_asset_id: @company_asset.id }), class:"btn btn-outline-success mx-3", data: { turbo_frame: "remote_modal" }) do%>
+            Add History
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= render 'histories/histories', histories: @histories, company_asset: @company_asset %>
+<% end %>  
